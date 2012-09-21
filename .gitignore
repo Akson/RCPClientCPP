@@ -10,3 +10,8 @@
 *.lai
 *.la
 *.a
+Test/Debug
+Test/Release
+Test/ipch
+Test/RCPClientCPP.opensdf
+Test/RCPClientCPP.sdf

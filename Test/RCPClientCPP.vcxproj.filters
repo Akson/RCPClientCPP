@@ -9,12 +9,15 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
-    <Filter Include="Resource Files">
+    <Filter Include="JSON">
+      <UniqueIdentifier>{27739a41-df66-4074-8fa4-ef737c853c4c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="JSON">
-      <UniqueIdentifier>{27739a41-df66-4074-8fa4-ef737c853c4c}</UniqueIdentifier>
+    <Filter Include="RCPClient">
+      <UniqueIdentifier>{fe53991e-6ecd-44fd-b56c-9eb129daab8a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -27,13 +30,13 @@
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="RCPClient.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="..\Src\RCPClient.h">
+      <Filter>RCPClient</Filter>
     </ClInclude>
-    <ClInclude Include="json\json-forwards.h">
+    <ClInclude Include="..\3rdParty\JsonCpp_0.6.0-rc2\json\json.h">
       <Filter>JSON</Filter>
     </ClInclude>
-    <ClInclude Include="json\json.h">
+    <ClInclude Include="..\3rdParty\JsonCpp_0.6.0-rc2\json\json-forwards.h">
       <Filter>JSON</Filter>
     </ClInclude>
   </ItemGroup>
@@ -41,13 +44,13 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="RCPClient.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="RCPClientTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="jsoncpp.cpp">
+    <ClCompile Include="..\Src\RCPClient.cpp">
+      <Filter>RCPClient</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdParty\JsonCpp_0.6.0-rc2\jsoncpp.cpp">
       <Filter>JSON</Filter>
     </ClCompile>
   </ItemGroup>
