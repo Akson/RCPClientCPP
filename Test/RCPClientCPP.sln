@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RCPClientCPP", "RCPClientCPP.vcxproj", "{4E3F7635-5CC3-4195-AEEA-071D554B3516}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RCPClient", "..\Build\MSVS2010\RCPClient\RCPClient.vcxproj", "{0D270CF6-441A-4E9A-A833-61A98827F9FA}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RCPClient", "..\Build\MSVS2010\RCPClient.vcxproj", "{0D270CF6-441A-4E9A-A833-61A98827F9FA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

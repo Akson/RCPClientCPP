@@ -90,15 +90,10 @@ copy $(ProjectDir)..\Lib\$(Configuration)\RCPClient.dll $(TargetDir)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="stdafx.h" />
-    <ClInclude Include="targetver.h" />
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="RCPClientTest.cpp" />
-    <ClCompile Include="stdafx.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Build\MSVS2010\RCPClient\RCPClient.vcxproj">
+    <ProjectReference Include="..\Build\MSVS2010\RCPClient.vcxproj">
       <Project>{0d270cf6-441a-4e9a-a833-61a98827f9fa}</Project>
     </ProjectReference>
   </ItemGroup>
