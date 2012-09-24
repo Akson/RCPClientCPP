@@ -6,8 +6,6 @@
 #define RCPCLIENT_API __declspec(dllimport)
 #endif
 
-#include <string>
-
 class RCPCLIENT_API RCPClient
 {
 private:
