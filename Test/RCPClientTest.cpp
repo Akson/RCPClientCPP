@@ -7,6 +7,7 @@
 
 int _tmain(int argc, _TCHAR* argv[])
 {
+	RCPClient RCP;
 	RCP.ConnectToServer("tcp://127.0.0.1:55557");
 
 	while(true)

@@ -26,6 +26,9 @@ unsigned long RCPClient::GenerateLocalTimeStamp()
 
 void RCPClient::SendMessageToServer(const char* Value, const char* StreamName, const char* Filters, const char* Destinations, const void* pBinaryData, unsigned int binaryDataLength)
 {
+	//Send message only if we are connected
+	if(m_Socket == 0) return;
+
 	//Create JSON object
 	Json::Value root;
 
