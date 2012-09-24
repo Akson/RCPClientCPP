@@ -19,3 +19,9 @@ Build/MSVS2010/RCPClient/Debug
 Build/MSVS2010/RCPClient/Release
 Lib/Debug
 Lib/Release
+Build/MSVS2010/Debug
+Build/MSVS2010/Release
+Build/MSVS2010/ipch
+Build/MSVS2010/RCPClient.sdf
+Build/MSVS2010/RCPClient.suo
+Test/RCPClientCPP.suo

@@ -9,25 +9,27 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    <Filter Include="Json-cpp">
+      <UniqueIdentifier>{dac13d5f-9829-470f-ac57-014c93910a76}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="stdafx.h">
+    <ClInclude Include="..\..\Include\RCPClient.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="targetver.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="..\..\3rdParty\JsonCpp_0.6.0-rc2\json\json-forwards.h">
+      <Filter>Json-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdParty\JsonCpp_0.6.0-rc2\json\json.h">
+      <Filter>Json-cpp</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="stdafx.cpp">
+    <ClCompile Include="..\..\Src\RCPClient.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="RCPClientTest.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="..\..\3rdParty\JsonCpp_0.6.0-rc2\jsoncpp.cpp">
+      <Filter>Json-cpp</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
