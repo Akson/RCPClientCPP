@@ -48,7 +48,7 @@ void RCPClient::SendMessageToServer(const char* Value, const char* StreamName, c
 	memcpy (zmq_msg_data (&zmqMsg), jsonMsg.c_str(), jsonMsg.length());
 	
 	//Send ZMQ message to the server
-	int res = zmq_send(m_Socket, &zmqMsg, 0);
+	int res = zmq_msg_send(&zmqMsg, m_Socket, 0);
 }
 
 void RCPClient::Print(const char* Value, const char* StreamName, const char* Filters, const char* Destinations)
