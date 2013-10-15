@@ -26,3 +26,8 @@ Build/MSVS2010/RCPClient.sdf
 Build/MSVS2010/RCPClient.suo
 Test/RCPClientCPP.suo
 Build/MSVS2010/RCPClient.opensdf
+Build/MSVS2010/Debug32
+Build/MSVS2010/Debug64
+Build/MSVS2010/Release32
+Build/MSVS2010/Release64
+Lib
