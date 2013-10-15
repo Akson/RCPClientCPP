@@ -1,12 +1,7 @@
 #pragma once
+#include "RCPClientNetworkLayer.h"
 
-#ifdef RCPCLIENT_EXPORTS
-#define RCPCLIENT_API __declspec(dllexport)
-#else
-#define RCPCLIENT_API __declspec(dllimport)
-#endif
-
-class RCPCLIENT_API RCPClient
+class RCPCLIENT_API RCPClient : public RCPClientNetworkLayer
 {
 private:
 	//No copies
@@ -17,22 +12,10 @@ public:
 	RCPClient();
 	~RCPClient();
 
-	//Connect to a remote server
-	void ConnectToServer(const char* ServerAddress);
-
 	//Send string to a server
-	void RCPClient::Print(const char* Value, const char* StreamName = 0, const char* Filters = 0, const char* Destinations = 0);
+	void Print(const char* Value, const char* StreamName, const char* Commands = 0, const void* pBinaryData = 0, unsigned int binaryDataLength = 0);
 
-private:
-	//Internal implementation
-	unsigned long GenerateLocalTimeStamp();
-	void SendMessageToServer(const char* Value, const char* StreamName, const char* Filters, const char* Destinations, const void* pBinaryData, unsigned int binaryDataLength);
-
-private:
 	//Here we store the application start time for generating timestamps
+	unsigned long GenerateLocalTimeStamp();
 	unsigned long m_StartTime;
-
-	//ZMQ machinery
-	void *m_Socket;
-	void *m_Context;
 };

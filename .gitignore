@@ -32,3 +32,5 @@ Build/MSVS2010/Release32
 Build/MSVS2010/Release64
 Lib
 Bin
+Test/Win32
+Test/x64
