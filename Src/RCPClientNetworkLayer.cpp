@@ -1,18 +1,18 @@
 #include "RCPClientNetworkLayer.h"
 #include "zmq.h"
+#include <winbase.h>
+#include <stdio.h>
 
 RCPClientNetworkLayer::RCPClientNetworkLayer(void)
     : m_Context(0)
     , m_Socket(0)
+	, m_Connected(false)
 {
 }
 
 RCPClientNetworkLayer::~RCPClientNetworkLayer(void)
 {
-	if(m_Socket) zmq_close(m_Socket);
-	m_Socket = 0;
-	if(m_Context) zmq_ctx_destroy(m_Context);
-	m_Context = 0;
+	Disconnect();
 }
 
 void RCPClientNetworkLayer::SendMessageToServer(const char *streamName, const char *stringMessage, const void *pBinaryMessageBuffer, size_t binaryMessgeLengthInBytes)
@@ -54,16 +54,34 @@ void RCPClientNetworkLayer::SendMessageToServer(const char *streamName, const ch
     int res = zmq_msg_send(&zmqMsg, m_Socket, 0);
 }
 
-void RCPClientNetworkLayer::ConnectToServer(const char *ServerAddress)
+int RCPClientNetworkLayer::ConnectToServer(const char *ServerAddress)
 {
-	//Close existing connections
-	if(m_Socket) zmq_close(m_Socket);
-	m_Socket = 0;
-	if(m_Context) zmq_ctx_destroy(m_Context);
-	m_Context = 0;
+	Disconnect();
 
-	//Connect to the server
     m_Context = zmq_init(1);
+	if(m_Context == NULL)
+		return zmq_errno();
+
     m_Socket = zmq_socket(m_Context, ZMQ_PUB);
-    zmq_connect(m_Socket, ServerAddress);
+	if(m_Socket == NULL)
+		return zmq_errno();
+    
+	if(zmq_connect(m_Socket, ServerAddress))
+		return zmq_errno();
+
+	m_Connected = true;
+
+	return 0;
+}
+
+void RCPClientNetworkLayer::Disconnect()
+{
+	if(m_Connected)
+	{
+		zmq_close(m_Socket);
+		m_Socket = 0;
+		zmq_ctx_destroy(m_Context);
+		m_Context = 0;
+		m_Connected = false;
+	}
 }

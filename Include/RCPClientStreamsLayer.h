@@ -2,7 +2,7 @@
 #include "RCPClientSystemInfoLayer.h"
 #include <vector>
 
-class RCPCLIENT_API RCPClientStreamsLayer : public RCPClientSystemInfoLayer
+class RCPClientStreamsLayer : public RCPClientSystemInfoLayer
 {
 public:
 	RCPClientStreamsLayer();

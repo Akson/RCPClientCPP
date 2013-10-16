@@ -2,7 +2,7 @@
 #include "RCPClientNetworkLayer.h"
 #include <string>
 
-class RCPCLIENT_API RCPClientSystemInfoLayer : public RCPClientNetworkLayer
+class RCPClientSystemInfoLayer : public RCPClientNetworkLayer
 {
 public:
 	RCPClientSystemInfoLayer();

@@ -1,18 +1,13 @@
 #pragma once
 
-#ifdef RCPCLIENT_EXPORTS
-#define RCPCLIENT_API __declspec(dllexport)
-#else
-#define RCPCLIENT_API __declspec(dllimport)
-#endif
-
-class RCPCLIENT_API RCPClientNetworkLayer
+class RCPClientNetworkLayer
 {
 public:
 	RCPClientNetworkLayer();
 	virtual ~RCPClientNetworkLayer();
 
-	void ConnectToServer(const char* ServerAddress);
+	int ConnectToServer(const char* ServerAddress);
+	void Disconnect();
 
 protected:
 	void SendMessageToServer(const char *streamName, const char *stringMessage, const void *pBinaryMessageBuffer, size_t binaryMessgeLengthInBytes);
@@ -21,6 +16,7 @@ private:
 	//ZMQ machinery
 	void *m_Socket;
 	void *m_Context;
+	bool m_Connected;
 
 private:
 	//No copies
