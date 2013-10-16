@@ -26,6 +26,9 @@
     <ClInclude Include="..\..\Include\RCPClientNetworkLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\RCPClientSystemInfoLayer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Src\RCPClient.cpp">
@@ -35,6 +38,9 @@
       <Filter>Json-cpp</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Src\RCPClientNetworkLayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\RCPClientSystemInfoLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

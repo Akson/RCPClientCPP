@@ -3,18 +3,21 @@
 
 RCPClientNetworkLayer::RCPClientNetworkLayer(void)
     : m_Context(0)
-    , m_Socket(0)
 {
+	m_Context = zmq_init(1);
 }
 
 RCPClientNetworkLayer::~RCPClientNetworkLayer(void)
 {
+	CloseAllSockets();
+	zmq_ctx_destroy(m_Context);
 }
 
-void RCPClientNetworkLayer::SendMessageToServer(const char *streamName, const char *stringMessage, const void *pBinaryMessageBuffer, size_t binaryMessgeLengthInBytes)
+void RCPClientNetworkLayer::SendMessageToServer(const char *streamName, const char *stringMessage, const void *pBinaryMessageBuffer, size_t binaryMessgeLengthInBytes, unsigned long threadId)
 {
-    //Send message only if we are connected
-    if(m_Socket == 0) return;
+	//Skip this if we don't have a server address yet
+	if(m_ServerAddress.empty())
+		return;
 
 	//Create ZMQ message
     //Message format: <stream name>0<message>
@@ -47,13 +50,32 @@ void RCPClientNetworkLayer::SendMessageToServer(const char *streamName, const ch
 
 
     //Send ZMQ message to the server
-    int res = zmq_msg_send(&zmqMsg, m_Socket, 0);
+    int res = zmq_msg_send(&zmqMsg, GetSocketForThreadId(threadId), 0);
 }
 
-void RCPClientNetworkLayer::ConnectToServer(const char *ServerAddress)
+void RCPClientNetworkLayer::SetServerAddress(const char *ServerAddress)
 {
-    //Connect to the server
-    m_Context = zmq_init(1);
-    m_Socket = zmq_socket(m_Context, ZMQ_PUB);
-    zmq_connect(m_Socket, ServerAddress);
+	m_ServerAddress = std::string(ServerAddress);
+	//Since we may change a server name when this object already exists, we need to open new sockets
+	CloseAllSockets();
+}
+
+void * RCPClientNetworkLayer::GetSocketForThreadId( unsigned long threadId )
+{
+	auto socketIt = m_Sockets.find(threadId);
+	
+	if(socketIt == m_Sockets.end())
+	{//There is no opened socket for this threadId yet
+		void * socket = zmq_socket(m_Context, ZMQ_PUB);
+		zmq_connect(socket, m_ServerAddress.c_str());
+		socketIt = m_Sockets.insert(std::make_pair<unsigned long,void *>(threadId, socket)).first;
+	}
+
+	return socketIt->second;
+}
+
+void RCPClientNetworkLayer::CloseAllSockets()
+{
+	for(auto socketIt = m_Sockets.begin(); socketIt!=m_Sockets.end(); socketIt++)
+		zmq_close(socketIt->second);
 }
