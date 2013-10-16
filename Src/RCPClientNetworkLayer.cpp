@@ -9,6 +9,10 @@ RCPClientNetworkLayer::RCPClientNetworkLayer(void)
 
 RCPClientNetworkLayer::~RCPClientNetworkLayer(void)
 {
+	if(m_Socket) zmq_close(m_Socket);
+	m_Socket = 0;
+	if(m_Context) zmq_ctx_destroy(m_Context);
+	m_Context = 0;
 }
 
 void RCPClientNetworkLayer::SendMessageToServer(const char *streamName, const char *stringMessage, const void *pBinaryMessageBuffer, size_t binaryMessgeLengthInBytes)
@@ -17,7 +21,7 @@ void RCPClientNetworkLayer::SendMessageToServer(const char *streamName, const ch
     if(m_Socket == 0) return;
 
 	//Create ZMQ message
-    //Message format: <stream name>0<message>
+    //Message format: <stream name>0<message>0<binary data>
 	size_t streamNameLength = strlen(streamName);
 	size_t stringMessageLength = strlen(stringMessage);
     size_t messageLength = streamNameLength + 1 + stringMessageLength + 1 + binaryMessgeLengthInBytes;
@@ -52,7 +56,13 @@ void RCPClientNetworkLayer::SendMessageToServer(const char *streamName, const ch
 
 void RCPClientNetworkLayer::ConnectToServer(const char *ServerAddress)
 {
-    //Connect to the server
+	//Close existing connections
+	if(m_Socket) zmq_close(m_Socket);
+	m_Socket = 0;
+	if(m_Context) zmq_ctx_destroy(m_Context);
+	m_Context = 0;
+
+	//Connect to the server
     m_Context = zmq_init(1);
     m_Socket = zmq_socket(m_Context, ZMQ_PUB);
     zmq_connect(m_Socket, ServerAddress);

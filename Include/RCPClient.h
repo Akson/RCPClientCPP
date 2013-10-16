@@ -1,14 +1,10 @@
 #pragma once
-#include "RCPClientSystemInfoLayer.h"
+#include "RCPClientStreamsLayer.h"
 
-class RCPCLIENT_API RCPClient : public RCPClientSystemInfoLayer
+class RCPCLIENT_API RCPClient : public RCPClientStreamsLayer
 {
 public:
 	RCPClient();
 	~RCPClient();
 
-private:
-	//No copies
-	RCPClient(RCPClient const&);
-	void operator=(RCPClient const&);
 };

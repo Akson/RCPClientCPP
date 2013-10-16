@@ -162,6 +162,7 @@
     <ClInclude Include="..\..\3rdParty\JsonCpp_0.6.0-rc2\json\json-forwards.h" />
     <ClInclude Include="..\..\3rdParty\JsonCpp_0.6.0-rc2\json\json.h" />
     <ClInclude Include="..\..\Include\RCPClient.h" />
+    <ClInclude Include="..\..\Include\RCPClientStreamsLayer.h" />
     <ClInclude Include="..\..\include\RCPClientSystemInfoLayer.h" />
     <ClInclude Include="..\..\Include\RCPClientNetworkLayer.h" />
   </ItemGroup>
@@ -176,6 +177,12 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\RCPClientStreamsLayer.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\..\Src\RCPClientSystemInfoLayer.cpp">

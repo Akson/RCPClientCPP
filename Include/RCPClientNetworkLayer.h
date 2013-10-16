@@ -13,6 +13,8 @@ public:
 	virtual ~RCPClientNetworkLayer();
 
 	void ConnectToServer(const char* ServerAddress);
+
+protected:
 	void SendMessageToServer(const char *streamName, const char *stringMessage, const void *pBinaryMessageBuffer, size_t binaryMessgeLengthInBytes);
 
 private:

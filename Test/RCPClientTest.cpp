@@ -11,12 +11,12 @@ int main()
 
 	while(true)
 	{
-		RCP.PushToStreamWithAddedSystemInfo("Data1", "Stream1");
-		RCP.PushToStreamWithAddedSystemInfo("Data1a", "Stream1a");
-		RCP.PushToStreamWithAddedSystemInfo("Data1b", "Stream1b");
-		RCP.PushToStreamWithAddedSystemInfo("Data2", "Stream2");
+		RCP.SendMessageToCurrentStream("Data1", "Stream1");
+		RCP.SendMessageToCurrentStream("Data1a", "Stream1a");
+		RCP.SendMessageToCurrentStream("Data1b", "Stream1b");
+		RCP.SendMessageToCurrentStream("Data2", "Stream2");
 		RCP.SetThreadName("Main");
-		RCP.PushToStreamWithAddedSystemInfo("Data3", "Stream3", "sdfsdf", "Win 1", 5);
+		RCP.SendMessageToCurrentStream("Data3", "Stream3", "sdfsdf", "Win 1", 5);
 		Sleep(1000);
 	}
 	

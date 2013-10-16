@@ -52,7 +52,7 @@ RCPClientSystemInfoLayer::~RCPClientSystemInfoLayer(void)
 {
 }
 
-void RCPClientSystemInfoLayer::PushToStreamWithAddedSystemInfo(const char *value, const char *streamName, const char *commands, const void *pBinaryData, unsigned int binaryDataLength)
+void RCPClientSystemInfoLayer::SendMessageWithAddedSystemInfo(const char *value, const char *streamName, const char *commands, const void *pBinaryData, unsigned int binaryDataLength)
 {
 	unsigned long threadId = GetThreadId();
 
