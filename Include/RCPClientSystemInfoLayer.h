@@ -1,5 +1,6 @@
 #pragma once
 #include "RCPClientNetworkLayer.h"
+#include <string>
 
 class RCPCLIENT_API RCPClientSystemInfoLayer : public RCPClientNetworkLayer
 {
@@ -14,7 +15,7 @@ public:
 
 private:
 	//Thread alias name
-	std::map<unsigned long, std::string> m_ThreadNames;
+	std::string m_ThreadName;
 
 	//No copies
 	RCPClientSystemInfoLayer(RCPClientSystemInfoLayer const&);

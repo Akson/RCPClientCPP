@@ -63,19 +63,16 @@ void RCPClientSystemInfoLayer::PushToStreamWithAddedSystemInfo(const char *value
     root["Value"] = value;
 	root["ThreadId"] = (Json::UInt64) threadId;
     if(commands) root["Commands"] = commands;
-
-	auto nameIt = m_ThreadNames.find(threadId);
-	if(nameIt != m_ThreadNames.end())
-		root["ThreadName"] = nameIt->second.c_str();
+	if(!m_ThreadName.empty()) root["ThreadName"] = m_ThreadName.c_str();
 
     Json::StyledWriter writer;
     std::string jsonMsg = writer.write(root);
 
     //Send ZMQ message to the server
-    SendMessageToServer(streamName, jsonMsg.c_str(), pBinaryData, binaryDataLength, threadId);
+    SendMessageToServer(streamName, jsonMsg.c_str(), pBinaryData, binaryDataLength);
 }
 
 void RCPClientSystemInfoLayer::SetThreadName( const char* threadName )
 {
-	m_ThreadNames[GetThreadId()] = std::string(threadName);
+	m_ThreadName = std::string(threadName);
 }
