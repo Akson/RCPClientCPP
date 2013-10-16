@@ -4,12 +4,12 @@
 RCPClient::RCPClient(void)
     : m_pImplementation(0)
 {
-	m_pImplementation = new RCPClientStreamsLayer();
+    m_pImplementation = new RCPClientStreamsLayer();
 }
 
 RCPClient::~RCPClient(void)
 {
-	delete(m_pImplementation);
+    delete(m_pImplementation);
 }
 
 void RCPClient::ConnectToServer(const char *ServerAddress)

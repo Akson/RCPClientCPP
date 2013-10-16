@@ -22,15 +22,15 @@ struct RcpClientsStorage
 RCPClientsManager::RCPClientsManager(void)
 {
     m_pRCPClientsStorage = new RcpClientsStorage();
-	InitializeCriticalSectionAndSpinCount(&m_pRCPClientsStorage->m_CriticalSection, 0);
+    InitializeCriticalSectionAndSpinCount(&m_pRCPClientsStorage->m_CriticalSection, 0);
 }
 
 RCPClientsManager::~RCPClientsManager(void)
 {
     for(auto it = m_pRCPClientsStorage->m_pRcpClients.begin(); it != m_pRCPClientsStorage->m_pRcpClients.end(); it++)
         delete(it->second);
-	DeleteCriticalSection(&m_pRCPClientsStorage->m_CriticalSection);
-	delete (m_pRCPClientsStorage);
+    DeleteCriticalSection(&m_pRCPClientsStorage->m_CriticalSection);
+    delete(m_pRCPClientsStorage);
 }
 
 RCPClient *RCPClientsManager::GetRcpClientForCurrentThread()

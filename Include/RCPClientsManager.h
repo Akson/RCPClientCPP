@@ -6,25 +6,25 @@ struct RcpClientsStorage;
 
 class RCPCLIENT_API RCPClientsManager
 {
-	//////////////////////////////////////////////////////////////////////////
-	//SINGLETON
+    //////////////////////////////////////////////////////////////////////////
+    //SINGLETON
 public:
-	static RCPClientsManager& GetInstance()
-	{
-		static RCPClientsManager instance;
-		return instance;
-	}
+    static RCPClientsManager &GetInstance()
+    {
+        static RCPClientsManager instance;
+        return instance;
+    }
 private:
-	RCPClientsManager();
-	~RCPClientsManager();
-	RCPClientsManager(RCPClientsManager const&);
-	void operator=(RCPClientsManager const&);
-	//SINGLETON
-	//////////////////////////////////////////////////////////////////////////
+    RCPClientsManager();
+    ~RCPClientsManager();
+    RCPClientsManager(RCPClientsManager const &);
+    void operator=(RCPClientsManager const &);
+    //SINGLETON
+    //////////////////////////////////////////////////////////////////////////
 
 public:
-	RCPClient* GetRcpClientForCurrentThread();
+    RCPClient *GetRcpClientForCurrentThread();
 
 private:
-	RcpClientsStorage *m_pRCPClientsStorage;
+    RcpClientsStorage *m_pRCPClientsStorage;
 };
