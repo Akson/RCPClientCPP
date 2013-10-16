@@ -7,7 +7,7 @@
 int main()
 {
 	RCPClient RCP;
-	RCP.SetServerAddress("tcp://127.0.0.1:55557");
+	RCP.ConnectToServer("tcp://127.0.0.1:55557");
 
 	while(true)
 	{
