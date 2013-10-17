@@ -9,10 +9,10 @@ RCPClientStreamsLayer::RCPClientStreamsLayer(void)
 	std::ostringstream stringStream;
 	stringStream << "[";
 	stringStream << GetApplicationName();
-	stringStream << ":";
-	stringStream << GetApplicationInstanceId();
 	stringStream << "]";
 	m_ConstantPrefix = stringStream.str();
+
+	PushStreamName("DefaultStream");
 }
 
 RCPClientStreamsLayer::~RCPClientStreamsLayer(void)

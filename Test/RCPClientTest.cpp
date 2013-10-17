@@ -8,7 +8,6 @@
 int main()
 {
 	RCPClient RC;
-	RC.PushStreamName("RCPClientCPP");
 	RC.ConnectToServer("tcp://127.0.0.1:55557");
 	Sleep(1000);
 
@@ -42,7 +41,7 @@ int main()
 	Sleep(1000);
 	RC.Send("2.52.52.52.52.52.52.52.52.52.52.52.5===========================================");
 	int i=0;
-	while(++i<5)
+	while(++i<25)
 	{
 		RC.PushStreamName("sub2");
 		RC.Send("Data1", "Stream1");
@@ -56,7 +55,7 @@ int main()
 		RC.SetThreadName("Main");
 		RC.Send("Data3", "Stream3", "sdfsdf", "Win 1", 5);
 		RC.PopStreamName();
-		Sleep(100);
+		//Sleep(100);
 	}
 	
 	RC.Send("3333333333333333333333333333===========================================");
