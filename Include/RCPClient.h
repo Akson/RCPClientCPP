@@ -19,12 +19,13 @@ public:
     //Closes ZMQ socket and contexts (all other information is preseved)
     void Disconnect();
 
-    void Send(const char *value, const char *substreamName = 0, const char *commands = 0, const void *pBinaryData = 0, unsigned int binaryDataLength = 0);
+	void Send(const char *value, const char *substreamName = 0, const char *commands = 0, const void *pBinaryData = 0, unsigned int binaryDataLength = 0);
 
     void SetThreadName(const char *threadName);
 
     void PushStreamName(const char *substreamName);
     void PopStreamName();
+	void SetStreamPrefix(const char *prefix);
 
 private:
     RCPClientStreamsLayer *m_pImplementation;

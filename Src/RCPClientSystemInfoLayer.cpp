@@ -1,51 +1,12 @@
 #include "RCPClientSystemInfoLayer.h"
+#include <sstream>
 #include "json/json.h"
-
-#if !defined(_WIN32) && !defined(_WIN64) // Linux - Unix
-
-#include <sys/time.h>
-typedef timeval sys_time_t;
-inline void system_time(sys_time_t *t)
-{
-    gettimeofday(t, NULL);
-}
-
-inline unsigned __int64 time_to_msec(const sys_time_t &t)
-{
-    return t.tv_sec * 1000LL + t.tv_usec / 1000;
-}
-
-#else // Windows and MinGW
-
-#include <sys/timeb.h>
-typedef _timeb sys_time_t;
-inline void system_time(sys_time_t *t)
-{
-    _ftime64_s(t);
-}
-
-inline unsigned __int64 time_to_msec(const sys_time_t &t)
-{
-    return t.time * 1000LL + t.millitm;
-}
-
-#include <Windows.h>
-inline unsigned long GetThreadId()
-{
-    return GetCurrentThreadId();
-}
-
-#endif
-
-inline unsigned __int64 MillisecondsSince1970()
-{
-    sys_time_t t;
-    system_time(&t);
-    return time_to_msec(t);
-}
+#include "RCPTools.h"
 
 RCPClientSystemInfoLayer::RCPClientSystemInfoLayer(void)
 {
+	m_ApplicationName = GetApplicationName();
+	m_InstanceIdentifier = GetApplicationInstanceId();
 }
 
 RCPClientSystemInfoLayer::~RCPClientSystemInfoLayer(void)
@@ -54,7 +15,7 @@ RCPClientSystemInfoLayer::~RCPClientSystemInfoLayer(void)
 
 void RCPClientSystemInfoLayer::SendMessageWithAddedSystemInfo(const char *value, const char *streamName, const char *commands, const void *pBinaryData, unsigned int binaryDataLength)
 {
-    unsigned long threadId = GetThreadId();
+    unsigned long threadId = GetCurrentThreadIdentifier();
 
     //Write JSON string message
     Json::Value root;
@@ -63,7 +24,9 @@ void RCPClientSystemInfoLayer::SendMessageWithAddedSystemInfo(const char *value,
     root["Value"] = value;
     root["ThreadId"] = (Json::UInt64) threadId;
     if(commands) root["Commands"] = commands;
-    if(!m_ThreadName.empty()) root["ThreadName"] = m_ThreadName.c_str();
+	if(!m_ThreadName.empty()) root["ThreadName"] = m_ThreadName.c_str();
+	if(!m_ApplicationName.empty()) root["ApplicationName"] = m_ApplicationName.c_str();
+	if(!m_InstanceIdentifier.empty()) root["InstanceIdentifier"] = m_InstanceIdentifier.c_str();
 
     Json::StyledWriter writer;
     std::string jsonMsg = writer.write(root);

@@ -1,9 +1,18 @@
 #include "RCPClientStreamsLayer.h"
 #include "zmq.h"
+#include "RCPTools.h"
+#include <sstream>
 
 RCPClientStreamsLayer::RCPClientStreamsLayer(void)
     : m_SubstreamsSeparator("/")
 {
+	std::ostringstream stringStream;
+	stringStream << "[";
+	stringStream << GetApplicationName();
+	stringStream << ":";
+	stringStream << GetApplicationInstanceId();
+	stringStream << "]";
+	m_ConstantPrefix = stringStream.str();
 }
 
 RCPClientStreamsLayer::~RCPClientStreamsLayer(void)
@@ -22,7 +31,8 @@ void RCPClientStreamsLayer::PopStreamName()
 
 void RCPClientStreamsLayer::SendMessageToCurrentStream(const char *value, const char *substreamName /*= 0*/, const char *commands /*= 0*/, const void *pBinaryData /*= 0*/, unsigned int binaryDataLength /*= 0*/)
 {
-    std::string streamName;
+    std::string streamName = m_ConstantPrefix;
+    if(!m_ConstantPrefix.empty()) streamName += m_SubstreamsSeparator;
     for(auto substreamNameIt = m_SubstreamNamesStack.begin(); substreamNameIt != m_SubstreamNamesStack.end(); substreamNameIt++)
     {
         if(substreamNameIt != m_SubstreamNamesStack.begin())
@@ -38,4 +48,17 @@ void RCPClientStreamsLayer::SendMessageToCurrentStream(const char *value, const 
     }
 
     SendMessageWithAddedSystemInfo(value, streamName.c_str(), commands, pBinaryData, binaryDataLength);
+}
+
+void RCPClientStreamsLayer::SendMessageToSpecifiedStream(const char *value, const char *fullStreamName /*= 0*/, const char *commands /*= 0*/, const void *pBinaryData /*= 0*/, unsigned int binaryDataLength /*= 0*/)
+{
+    std::string streamName = m_ConstantPrefix;
+    if(!m_ConstantPrefix.empty()) streamName += m_SubstreamsSeparator;
+	streamName += fullStreamName;
+    SendMessageWithAddedSystemInfo(value, streamName.c_str(), commands, pBinaryData, binaryDataLength);
+}
+
+void RCPClientStreamsLayer::SetStreamPrefix( const char *prefix )
+{
+	m_ConstantPrefix = std::string(prefix);
 }

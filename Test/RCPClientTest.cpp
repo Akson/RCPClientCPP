@@ -8,9 +8,12 @@
 int main()
 {
 	RCPClient RC;
+	RC.PushStreamName("RCPClientCPP");
 	RC.ConnectToServer("tcp://127.0.0.1:55557");
+	Sleep(1000);
 
-	RC.Send("Data1", "Stream1");
+	RC.Send("111111111111111111===========================================");
+	RC.Send("Data1");
 	RC.Send("Data1a", "Stream1a");
 	RC.PushStreamName("sub1");
 	RC.Send("Data1b", "Stream1b");
@@ -31,19 +34,24 @@ int main()
 	RC.SetThreadName("Main");
 	RC.Send("Data3", "Stream3", "sdfsdf", "Win 1", 5);
 	RC.PopStreamName();
+	RC.Send("222222222222222222222222222===========================================");
 	Sleep(100);
 
 	
 	RC.ConnectToServer("tcp://127.0.0.1:55557");
+	Sleep(1000);
+	RC.Send("2.52.52.52.52.52.52.52.52.52.52.52.5===========================================");
 	int i=0;
 	while(++i<5)
 	{
+		RC.PushStreamName("sub2");
 		RC.Send("Data1", "Stream1");
 		RC.Send("Data1a", "Stream1a");
 		RC.PushStreamName("sub1");
 		RC.Send("Data1b", "Stream1b");
+		RC.Send("Data1b", "@AbsoluteStream");
 		RC.PushStreamName("sub2");
-		RC.Send("Data2", "Stream2");
+		RC.Send("Data2");
 		RC.PopStreamName();
 		RC.SetThreadName("Main");
 		RC.Send("Data3", "Stream3", "sdfsdf", "Win 1", 5);
@@ -51,11 +59,20 @@ int main()
 		Sleep(100);
 	}
 	
+	RC.Send("3333333333333333333333333333===========================================");
 	RC.Disconnect();
 
 	RCPClient *pRC = RCPClientsManager::GetInstance().GetRcpClientForCurrentThread();
 	pRC->ConnectToServer("tcp://127.0.0.1:55557");
+	RC.Send("*************************************************************");
+	RC.Send("*************************************************************");
+	RC.Send("*************************************************************");
+	RC.Send("*************************************************************");
+	RC.Send("*************************************************************");
+	Sleep(1000);
 	i=0;
+	pRC->Send("44444444444444444444444444444===========================================");
+	pRC->SetStreamPrefix("");
 	while(++i<5)
 	{
 		pRC->Send("Data1", "Stream1");
@@ -71,6 +88,7 @@ int main()
 		Sleep(1000);
 	}
 
+	pRC->Send("5555555555555555555555555555===========================================");
 	pRC->Disconnect();
 
 	return 0;

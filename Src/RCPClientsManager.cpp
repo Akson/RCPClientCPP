@@ -7,7 +7,7 @@
 #error NON-WINDOWS version is not implemented!!!
 #else // Windows and MinGW
 #include <Windows.h>
-inline unsigned long GetThreadId() {return GetCurrentThreadId();}
+inline unsigned long GetCurrentThreadIdentifier() {return GetCurrentThreadId();}
 #endif
 
 
