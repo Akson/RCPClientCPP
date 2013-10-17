@@ -4,8 +4,9 @@
 #include "RCPClient.h"
 #include "RCPClientsManager.h"
 #include <Windows.h>
+#include <sstream>
 
-int main()
+void Test1()
 {
 	RCPClient RC;
 	RC.ConnectToServer("tcp://127.0.0.1:55557");
@@ -36,12 +37,12 @@ int main()
 	RC.Send("222222222222222222222222222===========================================");
 	Sleep(100);
 
-	
+
 	RC.ConnectToServer("tcp://127.0.0.1:55557");
 	Sleep(1000);
 	RC.Send("2.52.52.52.52.52.52.52.52.52.52.52.5===========================================");
 	int i=0;
-	while(++i<25)
+	while(++i<2500)
 	{
 		RC.PushStreamName("sub2");
 		RC.Send("Data1", "Stream1");
@@ -55,9 +56,9 @@ int main()
 		RC.SetThreadName("Main");
 		RC.Send("Data3", "Stream3", "sdfsdf", "Win 1", 5);
 		RC.PopStreamName();
-		//Sleep(100);
+		Sleep(300);
 	}
-	
+
 	RC.Send("3333333333333333333333333333===========================================");
 	RC.Disconnect();
 
@@ -89,7 +90,33 @@ int main()
 
 	pRC->Send("5555555555555555555555555555===========================================");
 	pRC->Disconnect();
+}
 
+void Test2()
+{
+	RCPClient RC;
+	RC.ConnectToServer("tcp://127.0.0.1:55557");
+	Sleep(1000);
+
+	int i=0;
+	while(true)
+	{
+		i++;
+		std::ostringstream stringStream;
+		stringStream << "i=" << i;
+		RC.Send(stringStream.str().c_str(), "Stream1");
+		Sleep(1000);
+		if(i%1000 == 0)
+			printf("i=%d\n", i);
+	}
+
+	RC.Disconnect();
+}
+
+int main()
+{
+	//Test1();
+	Test2();
 	return 0;
 }
 
