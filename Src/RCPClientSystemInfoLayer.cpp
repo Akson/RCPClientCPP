@@ -19,7 +19,6 @@ void RCPClientSystemInfoLayer::SendMessageWithAddedSystemInfo(const char *value,
 
     //Write JSON string message
     Json::Value root;
-
     root["TimeStampMsSince1970"] = MillisecondsSince1970();
     root["Value"] = value;
     root["ThreadId"] = (Json::UInt64) threadId;
@@ -33,6 +32,7 @@ void RCPClientSystemInfoLayer::SendMessageWithAddedSystemInfo(const char *value,
 
     //Send ZMQ message to the server
     SendMessageToServer(streamName, jsonMsg.c_str(), pBinaryData, binaryDataLength);
+	printf("%s\n", jsonMsg.c_str());
 }
 
 void RCPClientSystemInfoLayer::SetThreadName(const char *threadName)

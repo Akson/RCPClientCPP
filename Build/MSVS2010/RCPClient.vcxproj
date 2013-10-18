@@ -162,6 +162,7 @@
     <ClInclude Include="..\..\3rdParty\JsonCpp_0.6.0-rc2\json\json-forwards.h" />
     <ClInclude Include="..\..\3rdParty\JsonCpp_0.6.0-rc2\json\json.h" />
     <ClInclude Include="..\..\Include\RCPClient.h" />
+    <ClInclude Include="..\..\Include\RCPClientDataTypes.h" />
     <ClInclude Include="..\..\Include\RCPClientsManager.h" />
     <ClInclude Include="..\..\Include\RCPClientStreamsLayer.h" />
     <ClInclude Include="..\..\include\RCPClientSystemInfoLayer.h" />

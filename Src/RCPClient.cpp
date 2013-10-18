@@ -34,15 +34,7 @@ void RCPClient::PopStreamName()
 
 void RCPClient::Send(const char *value, const char *substreamName /*= 0*/, const char *commands /*= 0*/, const void *pBinaryData /*= 0*/, unsigned int binaryDataLength /*= 0*/)
 {
-	//If substream name starts with @ symbol, it is threated as a full stream name
-	if(substreamName && substreamName[0] == '@')
-	{
-		m_pImplementation->SendMessageToSpecifiedStream(value, substreamName+1, commands, pBinaryData, binaryDataLength);
-	}
-	else
-	{
-		m_pImplementation->SendMessageToCurrentStream(value, substreamName, commands, pBinaryData, binaryDataLength);
-	}
+	m_pImplementation->SendMessageToStream(value, substreamName, commands, pBinaryData, binaryDataLength);
 }
 
 void RCPClient::Disconnect()
@@ -54,3 +46,4 @@ void RCPClient::SetStreamPrefix( const char *prefix )
 {
 	m_pImplementation->SetStreamPrefix(prefix);
 }
+

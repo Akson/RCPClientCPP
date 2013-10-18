@@ -99,14 +99,23 @@ void Test2()
 	Sleep(1000);
 
 	int i=0;
+	std::vector<int> values;
+	std::vector<float> valuesList;
 	while(true)
 	{
 		i++;
 		std::ostringstream stringStream;
 		stringStream << "i=" << i;
 		RC.Send(stringStream.str().c_str(), "Stream1");
+		RC.Send(i, "Stream2");
+		RC.Send(i*0.757, "Stream3");
+		RC.Send(values);
+		RC.Send(valuesList);
+		RC.Send(i%3 == 0);
+		values.push_back(i*i);
+		valuesList.push_back(1.0/i);
 		Sleep(1000);
-		if(i%1000 == 0)
+		if(i%100 == 0)
 			printf("i=%d\n", i);
 	}
 
