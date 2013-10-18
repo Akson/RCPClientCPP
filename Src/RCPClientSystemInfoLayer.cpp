@@ -27,12 +27,11 @@ void RCPClientSystemInfoLayer::SendMessageWithAddedSystemInfo(const char *value,
 	if(!m_ApplicationName.empty()) root["ApplicationName"] = m_ApplicationName.c_str();
 	if(!m_InstanceIdentifier.empty()) root["InstanceIdentifier"] = m_InstanceIdentifier.c_str();
 
-    Json::StyledWriter writer;
+    Json::FastWriter writer;
     std::string jsonMsg = writer.write(root);
 
     //Send ZMQ message to the server
     SendMessageToServer(streamName, jsonMsg.c_str(), pBinaryData, binaryDataLength);
-	printf("%s\n", jsonMsg.c_str());
 }
 
 void RCPClientSystemInfoLayer::SetThreadName(const char *threadName)
