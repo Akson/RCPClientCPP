@@ -32,18 +32,31 @@ void RCPClient::PopStreamName()
     m_pImplementation->PopStreamName();
 }
 
-void RCPClient::Send(const char *value, const char *substreamName /*= 0*/, const char *commands /*= 0*/, const void *pBinaryData /*= 0*/, unsigned int binaryDataLength /*= 0*/)
-{
-	m_pImplementation->SendMessageToStream(value, substreamName, commands, pBinaryData, binaryDataLength);
-}
-
 void RCPClient::Disconnect()
 {
     m_pImplementation->Disconnect();
 }
 
-void RCPClient::SetStreamPrefix( const char *prefix )
+void RCPClient::SetStreamPrefix(const char *prefix)
 {
-	m_pImplementation->SetStreamPrefix(prefix);
+    m_pImplementation->SetStreamPrefix(prefix);
 }
 
+void RCPClient::Send(const char *stringData, const char *substreamName /*= 0*/, const char *commands /*= 0*/)
+{
+    m_pImplementation->SendMessageToStream(substreamName, commands, stringData, strlen(stringData));
+}
+
+void RCPClient::SendBinary(const void *binaryData, unsigned int binaryDataLengthInBytes, const char *substreamName /*= 0*/, const char *commands /*= 0*/)
+{
+    m_pImplementation->SendMessageToStream(substreamName, commands, binaryData, binaryDataLengthInBytes);
+}
+
+void RCPClient::Send(bool value, const char *substreamName /*= 0*/, const char *commands /*= 0*/)
+{
+    Send(
+        value ? "{\"Data\":true}" : "{\"Data\":false}",
+        substreamName,
+        commands ? (std::string("ParseJson();") + std::string(commands)).c_str() : "ParseJson()"
+    );
+}

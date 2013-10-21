@@ -11,10 +11,16 @@ public:
     void SetThreadName(const char *threadName);
 
 protected:
-    void SendMessageWithAddedSystemInfo(const char *value, const char *streamName = 0, const char *commands = 0, const void *pBinaryData = 0, unsigned int binaryDataLength = 0);
+    void SendMessageWithAddedSystemInfo(const char *streamName, const char *commands, const void *messageData, unsigned int messageDataLengthInBytes);
 
 private:
     std::string m_ThreadName;//Thread alias name
 	std::string m_ApplicationName;
 	std::string m_InstanceIdentifier;
+
+	bool m_EnableTimeStampSending;
+	bool m_EnableThreadIdSending;
+	bool m_EnableThreadNameSending;
+	bool m_EnableApplicationNameSending;
+	bool m_EnableInstanceIdentifierSending;
 };

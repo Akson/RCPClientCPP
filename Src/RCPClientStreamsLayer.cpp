@@ -12,7 +12,7 @@ RCPClientStreamsLayer::RCPClientStreamsLayer(void)
 	stringStream << "]";
 	m_ConstantPrefix = stringStream.str();
 
-	PushStreamName("DefaultStream");
+	PushStreamName("StdOut");
 }
 
 RCPClientStreamsLayer::~RCPClientStreamsLayer(void)
@@ -29,11 +29,11 @@ void RCPClientStreamsLayer::PopStreamName()
     m_SubstreamNamesStack.erase(m_SubstreamNamesStack.end() - 1);
 }
 
-void RCPClientStreamsLayer::SendMessageToStream(const char *value, const char *substreamName /*= 0*/, const char *commands /*= 0*/, const void *pBinaryData /*= 0*/, unsigned int binaryDataLength /*= 0*/)
+void RCPClientStreamsLayer::SendMessageToStream(const char *substreamName, const char *commands, const void *messageData, unsigned int messgeLengthInBytes)
 {
 	//If substream name starts with @ symbol, it is threated as a full stream name
 	if(substreamName && substreamName[0] == '@')
-		SendMessageToSpecifiedStream(value, substreamName+1, commands, pBinaryData, binaryDataLength);
+		SendMessageToSpecifiedStream(substreamName+1, commands, messageData, messgeLengthInBytes);
 	
 	std::string streamName = m_ConstantPrefix;
     if(!m_ConstantPrefix.empty()) streamName += m_SubstreamsSeparator;
@@ -51,15 +51,15 @@ void RCPClientStreamsLayer::SendMessageToStream(const char *value, const char *s
         streamName.append(substreamName);
     }
 
-    SendMessageWithAddedSystemInfo(value, streamName.c_str(), commands, pBinaryData, binaryDataLength);
+    SendMessageWithAddedSystemInfo(streamName.c_str(), commands, messageData, messgeLengthInBytes);
 }
 
-void RCPClientStreamsLayer::SendMessageToSpecifiedStream(const char *value, const char *fullStreamName /*= 0*/, const char *commands /*= 0*/, const void *pBinaryData /*= 0*/, unsigned int binaryDataLength /*= 0*/)
+void RCPClientStreamsLayer::SendMessageToSpecifiedStream(const char *absoluteStreamName, const char *commands, const void *messageData, unsigned int messgeLengthInBytes)
 {
     std::string streamName = m_ConstantPrefix;
     if(!m_ConstantPrefix.empty()) streamName += m_SubstreamsSeparator;
-	streamName += fullStreamName;
-    SendMessageWithAddedSystemInfo(value, streamName.c_str(), commands, pBinaryData, binaryDataLength);
+	streamName += absoluteStreamName;
+    SendMessageWithAddedSystemInfo(streamName.c_str(), commands, messageData, messgeLengthInBytes);
 }
 
 void RCPClientStreamsLayer::SetStreamPrefix( const char *prefix )

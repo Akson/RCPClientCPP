@@ -15,7 +15,7 @@ RCPClientNetworkLayer::~RCPClientNetworkLayer(void)
     Disconnect();
 }
 
-void RCPClientNetworkLayer::SendMessageToServer(const char *streamName, const char *stringMessage, const void *pBinaryMessageBuffer, size_t binaryMessgeLengthInBytes)
+void RCPClientNetworkLayer::SendMessageToServer(const char *streamName, const char *messageInfo, const void *messageData, size_t dataLengthInBytes)
 {
     //Send message only if we are connected
     if(m_Socket == 0) return;
@@ -23,8 +23,8 @@ void RCPClientNetworkLayer::SendMessageToServer(const char *streamName, const ch
     //Create ZMQ message
     //Message format: <stream name>0<message>0<binary data>
     size_t streamNameLength = strlen(streamName);
-    size_t stringMessageLength = strlen(stringMessage);
-    size_t messageLength = streamNameLength + 1 + stringMessageLength + 1 + binaryMessgeLengthInBytes;
+    size_t infoLength = strlen(messageInfo);
+    size_t messageLength = streamNameLength + 1 + infoLength + 1 + dataLengthInBytes;
     zmq_msg_t zmqMsg;
     zmq_msg_init_size(&zmqMsg, messageLength);
     char *pZmqMessage = reinterpret_cast<char *>(zmq_msg_data(&zmqMsg));
@@ -39,15 +39,15 @@ void RCPClientNetworkLayer::SendMessageToServer(const char *streamName, const ch
     pZmqMessage += 1;
 
     //Copy string message data
-    memcpy(pZmqMessage, stringMessage, stringMessageLength);
-    pZmqMessage += stringMessageLength;
+    memcpy(pZmqMessage, messageInfo, infoLength);
+    pZmqMessage += infoLength;
 
     //Add 0 divider
     *pZmqMessage = 0;
     pZmqMessage += 1;
 
     //Copy binary data
-    memcpy(pZmqMessage, pBinaryMessageBuffer, binaryMessgeLengthInBytes);
+    memcpy(pZmqMessage, messageData, dataLengthInBytes);
 
 
     //Send ZMQ message to the server

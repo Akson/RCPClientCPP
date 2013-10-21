@@ -21,7 +21,7 @@ void Test1()
 	RC.Send("Data2", "Stream2");
 	RC.PopStreamName();
 	RC.SetThreadName("Main");
-	RC.Send("Data3", "Stream3", "sdfsdf", "Win 1", 5);
+	RC.Send("Data3", "Stream3");
 	RC.PopStreamName();
 	Sleep(1000);
 	RC.Send("Data1", "Stream1");
@@ -32,7 +32,7 @@ void Test1()
 	RC.Send("Data2", "Stream2");
 	RC.PopStreamName();
 	RC.SetThreadName("Main");
-	RC.Send("Data3", "Stream3", "sdfsdf", "Win 1", 5);
+	RC.Send("Data3", "Stream3");
 	RC.PopStreamName();
 	RC.Send("222222222222222222222222222===========================================");
 	Sleep(100);
@@ -54,7 +54,7 @@ void Test1()
 		RC.Send("Data2");
 		RC.PopStreamName();
 		RC.SetThreadName("Main");
-		RC.Send("Data3", "Stream3", "sdfsdf", "Win 1", 5);
+		RC.Send("Data3", "Stream3", "sdfsdf");
 		RC.PopStreamName();
 		Sleep(300);
 	}
@@ -83,7 +83,7 @@ void Test1()
 		pRC->Send("Data2", "Stream2");
 		pRC->PopStreamName();
 		pRC->SetThreadName("Main");
-		pRC->Send("Data3", "Stream3", "sdfsdf", "Win 1", 5);
+		pRC->Send("Data3", "Stream3", "sdfsdf");
 		pRC->PopStreamName();
 		Sleep(1000);
 	}

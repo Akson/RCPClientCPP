@@ -10,7 +10,7 @@ public:
     void Disconnect();
 
 protected:
-    void SendMessageToServer(const char *streamName, const char *stringMessage, const void *pBinaryMessageBuffer, size_t binaryMessgeLengthInBytes);
+    void SendMessageToServer(const char *streamName, const char *info, const void *messageData, size_t messgeLengthInBytes);
 
 private:
     //ZMQ machinery

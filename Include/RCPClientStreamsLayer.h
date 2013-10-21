@@ -11,8 +11,8 @@ public:
 	void SetStreamPrefix(const char *prefix);
     void PushStreamName(const char *substreamName);
     void PopStreamName();
-    void SendMessageToStream(const char *value, const char *substreamName = 0, const char *commands = 0, const void *pBinaryData = 0, unsigned int binaryDataLength = 0);
-	void SendMessageToSpecifiedStream(const char *value, const char *fullStreamName  = 0, const char *commands = 0, const void *pBinaryData = 0, unsigned int binaryDataLength = 0);
+    void SendMessageToStream(const char *substreamName, const char *commands, const void *messageData, unsigned int messgeLengthInBytes);
+	void SendMessageToSpecifiedStream(const char *absoluteStreamName, const char *commands, const void *messageData, unsigned int messgeLengthInBytes);
 
 private:
     std::vector<std::string> m_SubstreamNamesStack;
