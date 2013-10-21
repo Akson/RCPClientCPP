@@ -55,7 +55,7 @@ void RCPClient::SendBinary(const void *binaryData, unsigned int binaryDataLength
 void RCPClient::Send(bool value, const char *substreamName /*= 0*/, const char *commands /*= 0*/)
 {
     Send(
-        value ? "{\"Data\":true}" : "{\"Data\":false}",
+        value ? "{\"Value\":true}" : "{\"Value\":false}",
         substreamName,
         commands ? (std::string("ParseJson();") + std::string(commands)).c_str() : "ParseJson()"
     );

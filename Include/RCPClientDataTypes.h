@@ -7,7 +7,7 @@
 template <class T> void RCPClient::Send(T value, const char *substreamName /*= 0*/, const char *commands /*= 0*/)
 {
     std::ostringstream valueStream;
-    valueStream << "{\"Data\":";
+    valueStream << "{\"Value\":";
     valueStream << value;
     valueStream << "}";
     RCPClient::Send(
@@ -37,7 +37,7 @@ template void RCPClient::Send(double value, const char *substreamName, const cha
 template <class T> void RCPClient::Send(std::vector<T> values, const char *substreamName /*= 0*/, const char *commands /*= 0*/)
 {
     std::ostringstream valueStream;
-    valueStream << "{\"Data\":[";
+    valueStream << "{\"Value\":[";
     for(auto it = values.begin(); it != values.end(); it++)
     {
         if(it != values.begin())
@@ -74,7 +74,7 @@ template void RCPClient::Send(std::vector<double> values, const char *substreamN
 template <class T> void RCPClient::Send(std::list<T> values, const char *substreamName /*= 0*/, const char *commands /*= 0*/)
 {
     std::ostringstream valueStream;
-    valueStream << "{\"Data\":[";
+    valueStream << "{\"Value\":[";
     for(auto it = values.begin(); it != values.end(); it++)
     {
         if(it != values.begin())
