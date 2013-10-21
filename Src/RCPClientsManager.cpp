@@ -35,7 +35,6 @@ RCPClientsManager::~RCPClientsManager(void)
 
 RCPClient *RCPClientsManager::GetRcpClientForCurrentThread()
 {
-
     ThreadId threadId = GetCurrentThreadId();
     auto &pRcpClients = RCPClientsManager::GetInstance().m_pRCPClientsStorage->m_pRcpClients;
 

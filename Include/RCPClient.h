@@ -21,12 +21,16 @@ public:
     //Closes ZMQ socket and contexts (all other information is preseved)
     void Disconnect();
 
+	void Send(char *stringData, const char *substreamName = 0, const char *commands = 0);
 	void Send(const char *stringData, const char *substreamName = 0, const char *commands = 0);
+	void SendBinary(void *binaryData, unsigned int binaryDataLengthInBytes, const char *substreamName /*= 0*/, const char *commands /*= 0*/);
 	void SendBinary(const void *binaryData, unsigned int binaryDataLengthInBytes, const char *substreamName /*= 0*/, const char *commands /*= 0*/);
+	
 	void Send(bool value, const char *substreamName = 0, const char *commands = 0);
 	template <class T> void Send(T value, const char *substreamName = 0, const char *commands = 0);
-	template <class T> void Send(std::vector<T> values, const char *substreamName = 0, const char *commands = 0);
-	template <class T> void Send(std::list<T> values, const char *substreamName = 0, const char *commands = 0);
+
+	void SendFormated(const char *fmt, ...);
+	void SendFormated(const char *streamName, const char *fmt, ...);
 
     void SetThreadName(const char *threadName);
 

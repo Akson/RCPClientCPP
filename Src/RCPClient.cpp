@@ -1,5 +1,6 @@
 #include "RCPClient.h"
 #include "RCPClientStreamsLayer.h"
+#include <stdarg.h>
 
 RCPClient::RCPClient(void)
     : m_pImplementation(0)
@@ -44,12 +45,22 @@ void RCPClient::SetStreamPrefix(const char *prefix)
 
 void RCPClient::Send(const char *stringData, const char *substreamName /*= 0*/, const char *commands /*= 0*/)
 {
-    m_pImplementation->SendMessageToStream(substreamName, commands, stringData, strlen(stringData));
+	m_pImplementation->SendMessageToStream(substreamName, commands, stringData, strlen(stringData));
+}
+
+void RCPClient::Send(char *stringData, const char *substreamName /*= 0*/, const char *commands /*= 0*/)
+{
+	m_pImplementation->SendMessageToStream(substreamName, commands, stringData, strlen(stringData));
 }
 
 void RCPClient::SendBinary(const void *binaryData, unsigned int binaryDataLengthInBytes, const char *substreamName /*= 0*/, const char *commands /*= 0*/)
 {
-    m_pImplementation->SendMessageToStream(substreamName, commands, binaryData, binaryDataLengthInBytes);
+	m_pImplementation->SendMessageToStream(substreamName, commands, binaryData, binaryDataLengthInBytes);
+}
+
+void RCPClient::SendBinary(void *binaryData, unsigned int binaryDataLengthInBytes, const char *substreamName /*= 0*/, const char *commands /*= 0*/)
+{
+	m_pImplementation->SendMessageToStream(substreamName, commands, binaryData, binaryDataLengthInBytes);
 }
 
 void RCPClient::Send(bool value, const char *substreamName /*= 0*/, const char *commands /*= 0*/)
@@ -60,3 +71,33 @@ void RCPClient::Send(bool value, const char *substreamName /*= 0*/, const char *
         commands ? (std::string("ParseJson();") + std::string(commands)).c_str() : "ParseJson()"
     );
 }
+
+void RCPClient::SendFormated( const char *fmt, ... )
+{
+	char buffer[4096];
+
+	//Just copy output to a standard console for now.
+	int res;
+	va_list ap;
+	va_start(ap, fmt);
+	res = vsprintf(buffer, fmt, ap);
+	va_end(ap);
+
+	Send(buffer);
+}
+
+void RCPClient::SendFormated( const char *streamName, const char *fmt, ... )
+{
+	char buffer[4096];
+
+	//Just copy output to a standard console for now.
+	int res;
+	va_list ap;
+	va_start(ap, fmt);
+	res = vsprintf(buffer, fmt, ap);
+	va_end(ap);
+
+	Send(buffer, streamName);
+}
+
+

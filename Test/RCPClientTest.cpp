@@ -40,7 +40,7 @@ void Test1()
 	Sleep(1000);
 	RC.Send("2.52.52.52.52.52.52.52.52.52.52.52.5===========================================");
 	int i=0;
-	while(++i<2500)
+	while(GetAsyncKeyState(VK_ESCAPE) == false)
 	{
 		RC.PushStreamName("sub2");
 		RC.Send("Data1", "Stream1");
@@ -71,7 +71,7 @@ void Test1()
 	i=0;
 	pRC->Send("44444444444444444444444444444===========================================");
 	pRC->SetStreamPrefix("");
-	while(++i<5)
+	while(GetAsyncKeyState(VK_ESCAPE) == false)
 	{
 		pRC->Send("Data1", "Stream1");
 		pRC->Send("Data1a", "Stream1a");
@@ -99,7 +99,7 @@ void Test2()
 	int i=0;
 	std::vector<int> values;
 	std::vector<float> valuesList;
-	while(getchar())
+	while(GetAsyncKeyState(VK_ESCAPE) == false)
 	{
 		i++;
 		std::ostringstream stringStream;
@@ -129,18 +129,20 @@ void Test3()
 	std::vector<float> valuesList;
 	while(GetAsyncKeyState(VK_ESCAPE) == false)
 	{
-		RCVar(i);
-		RCVar(values);
-		RCVar(valuesList);
-		
-		RCPrint("test1");
-		RCPrint("test2", "streamA");
-		RCPrint("test3", "@streamB");
+// 		RCVar(i);
+// 		RCVar(values);
+// 		RCVar(valuesList);
+// 		
+ 		RCPrint("test1");
+// 		RCPrint("test2", "streamA");
+// 		RCPrint("test3", "@streamB");
+
+		RCPrintf("formating %d, %f", i*i, 10.0/i);
 
 		i++;
 		values.push_back(i*i);
 		valuesList.push_back(1.0/i);
-		Sleep(1000);
+		Sleep(500);
 		if(i%100 == 0)
 			printf("i=%d\n", i);
 	}
@@ -148,8 +150,17 @@ void Test3()
 	RCDisconnect();
 }
 
+BOOL WINAPI CtrlHandler(DWORD dwType)
+{
+	RCDisconnect();
+	return TRUE;
+}
+
 int main()
 {
+	//We need this to close ZMQ connection correctly
+	SetConsoleCtrlHandler(CtrlHandler, TRUE);
+
 	//Test1();
 	//Test2();
 	Test3();

@@ -7,6 +7,10 @@
 #define RCConnect(ServerName) RCPClientsManager::GetRcpClientForCurrentThread()->ConnectToServer(ServerName)
 #define RCDisconnect RCPClientsManager::GetRcpClientForCurrentThread()->Disconnect
 
-#define RCVar(Variable) RCPClientsManager::GetRcpClientForCurrentThread()->Send(Variable, 0, "VariableName("#Variable")")
-#define RCVar2Stream(Variable, Stream) RCPClientsManager::GetRcpClientForCurrentThread()->Send(Variable, Stream, "VariableName("#Variable")")
+#define RCVar(Variable) \
+	RCPClientsManager::GetRcpClientForCurrentThread()->Send \
+	(( std::string("{\"Value\":") + ConvertToString(Variable) + std::string(",\"Name\":\""#Variable"\"}")).c_str(), \
+	0, "ParseJson(); Variable()")
+
 #define RCPrint RCPClientsManager::GetRcpClientForCurrentThread()->Send
+#define RCPrintf RCPClientsManager::GetRcpClientForCurrentThread()->SendFormated
