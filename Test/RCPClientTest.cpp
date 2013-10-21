@@ -1,8 +1,6 @@
 // RCClientCPP.cpp : Defines the entry point for the console application.
 //
-
-#include "RCPClient.h"
-#include "RCPClientsManager.h"
+#include "RCP.h"
 #include <Windows.h>
 #include <sstream>
 
@@ -101,7 +99,7 @@ void Test2()
 	int i=0;
 	std::vector<int> values;
 	std::vector<float> valuesList;
-	while(true)
+	while(getchar())
 	{
 		i++;
 		std::ostringstream stringStream;
@@ -122,10 +120,39 @@ void Test2()
 	RC.Disconnect();
 }
 
+void Test3()
+{
+	RCConnect("tcp://127.0.0.1:55557");
+
+	int i=0;
+	std::vector<int> values;
+	std::vector<float> valuesList;
+	while(GetAsyncKeyState(VK_ESCAPE) == false)
+	{
+		RCVar(i);
+		RCVar(values);
+		RCVar(valuesList);
+		
+		RCPrint("test1");
+		RCPrint("test2", "streamA");
+		RCPrint("test3", "@streamB");
+
+		i++;
+		values.push_back(i*i);
+		valuesList.push_back(1.0/i);
+		Sleep(1000);
+		if(i%100 == 0)
+			printf("i=%d\n", i);
+	}
+
+	RCDisconnect();
+}
+
 int main()
 {
 	//Test1();
-	Test2();
+	//Test2();
+	Test3();
 	return 0;
 }
 

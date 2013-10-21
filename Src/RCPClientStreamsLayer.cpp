@@ -33,7 +33,7 @@ void RCPClientStreamsLayer::SendMessageToStream(const char *substreamName, const
 {
 	//If substream name starts with @ symbol, it is threated as a full stream name
 	if(substreamName && substreamName[0] == '@')
-		SendMessageToSpecifiedStream(substreamName+1, commands, messageData, messgeLengthInBytes);
+		return SendMessageToSpecifiedStream(substreamName+1, commands, messageData, messgeLengthInBytes);
 	
 	std::string streamName = m_ConstantPrefix;
     if(!m_ConstantPrefix.empty()) streamName += m_SubstreamsSeparator;
@@ -44,7 +44,7 @@ void RCPClientStreamsLayer::SendMessageToStream(const char *substreamName, const
         streamName += *substreamNameIt;
     }
 
-    if(substreamName)
+    if(substreamName && strlen(substreamName))
     {
         if(m_SubstreamNamesStack.size() > 0)
             streamName += m_SubstreamsSeparator;

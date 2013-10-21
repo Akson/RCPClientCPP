@@ -23,7 +23,7 @@ private:
     //////////////////////////////////////////////////////////////////////////
 
 public:
-    RCPClient *GetRcpClientForCurrentThread();
+    static RCPClient *GetRcpClientForCurrentThread();
 
 private:
     RcpClientsStorage *m_pRCPClientsStorage;

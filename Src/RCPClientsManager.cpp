@@ -35,17 +35,18 @@ RCPClientsManager::~RCPClientsManager(void)
 
 RCPClient *RCPClientsManager::GetRcpClientForCurrentThread()
 {
-    ThreadId threadId = GetCurrentThreadId();
-    auto &pRcpClients = m_pRCPClientsStorage->m_pRcpClients;
 
-    EnterCriticalSection(&m_pRCPClientsStorage->m_CriticalSection);
+    ThreadId threadId = GetCurrentThreadId();
+    auto &pRcpClients = RCPClientsManager::GetInstance().m_pRCPClientsStorage->m_pRcpClients;
+
+    EnterCriticalSection(&(RCPClientsManager::GetInstance().m_pRCPClientsStorage->m_CriticalSection));
     auto implementationIt = pRcpClients.find(threadId);
     if(implementationIt == pRcpClients.end())
     {
         //This thread does not have initialized implementation yet, so create it
         implementationIt = pRcpClients.insert(std::make_pair(threadId, new RCPClient())).first;
     }
-    LeaveCriticalSection(&m_pRCPClientsStorage->m_CriticalSection);
+    LeaveCriticalSection(&(RCPClientsManager::GetInstance().m_pRCPClientsStorage->m_CriticalSection));
 
     return implementationIt->second;
 }
