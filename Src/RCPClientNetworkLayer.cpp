@@ -3,6 +3,8 @@
 #include <winbase.h>
 #include <stdio.h>
 
+using namespace RCP;
+
 RCPClientNetworkLayer::RCPClientNetworkLayer(void)
     : m_Context(0)
     , m_Socket(0)

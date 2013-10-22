@@ -2,6 +2,9 @@
 #include "RCPClientNetworkLayer.h"
 #include <string>
 
+namespace RCP
+{
+
 class RCPClientSystemInfoLayer : public RCPClientNetworkLayer
 {
 public:
@@ -11,12 +14,12 @@ public:
     void SetThreadName(const char *threadName);
 
 protected:
-    void SendMessageWithAddedSystemInfo(const char *streamName, const char *commands, const void *messageData, unsigned int messageDataLengthInBytes);
+    void SendMessageWithAddedSystemInfo(const char *streamName, const char *commands, const void *messageData, size_t messageDataLengthInBytes);
 
 private:
-    std::string m_ThreadName;//Thread alias name
-	std::string m_ApplicationName;
-	std::string m_InstanceIdentifier;
+    ::std::string m_ThreadName;//Thread alias name
+	::std::string m_ApplicationName;
+	::std::string m_InstanceIdentifier;
 
 	bool m_EnableTimeStampSending;
 	bool m_EnableThreadIdSending;
@@ -24,3 +27,5 @@ private:
 	bool m_EnableApplicationNameSending;
 	bool m_EnableInstanceIdentifierSending;
 };
+
+}

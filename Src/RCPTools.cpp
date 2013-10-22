@@ -1,5 +1,7 @@
 #include "RCPTools.h"
 
+using namespace RCP;
+
 #if !defined(_WIN32) && !defined(_WIN64) // Linux - Unix
 
 #include <sys/time.h>
@@ -31,12 +33,12 @@ inline unsigned __int64 time_to_msec(const sys_time_t &t)
 }
 
 #include <Windows.h>
-unsigned long GetCurrentThreadIdentifier()
+unsigned long RCP::GetCurrentThreadIdentifier()
 {
 	return GetCurrentThreadId();
 }
 
-std::string GetApplicationName()
+std::string RCP::GetApplicationName()
 {
 	char buffer[MAX_PATH];
 	GetModuleFileNameA( NULL, buffer, MAX_PATH );
@@ -48,20 +50,20 @@ std::string GetApplicationName()
 #endif
 #include <sstream>
 
-unsigned __int64 MillisecondsSince1970()
+unsigned __int64 RCP::MillisecondsSince1970()
 {
 	sys_time_t t;
 	system_time(&t);
 	return time_to_msec(t);
 }
 
-std::string GetApplicationInstanceId()
+std::string RCP::GetApplicationInstanceId()
 {
 	//Instance identifier is the time of the first call to this function
 	static unsigned long long firstCallTime = 0;
 	
 	if(firstCallTime == 0)
-		firstCallTime = MillisecondsSince1970();
+		firstCallTime = RCP::MillisecondsSince1970();
 
 	std::string instanceIdentifier;
 	std::ostringstream stringStream;

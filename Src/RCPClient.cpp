@@ -2,6 +2,8 @@
 #include "RCPClientStreamsLayer.h"
 #include <stdarg.h>
 
+using namespace RCP;
+
 RCPClient::RCPClient(void)
     : m_pImplementation(0)
 {
@@ -80,7 +82,7 @@ void RCPClient::SendFormated( const char *fmt, ... )
 	int res;
 	va_list ap;
 	va_start(ap, fmt);
-	res = vsprintf(buffer, fmt, ap);
+	res = vsprintf_s(buffer, fmt, ap);
 	va_end(ap);
 
 	Send(buffer);
@@ -94,7 +96,7 @@ void RCPClient::SendFormated( const char *streamName, const char *fmt, ... )
 	int res;
 	va_list ap;
 	va_start(ap, fmt);
-	res = vsprintf(buffer, fmt, ap);
+	res = vsprintf_s(buffer, fmt, ap);
 	va_end(ap);
 
 	Send(buffer, streamName);

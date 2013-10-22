@@ -2,6 +2,9 @@
 #include "RCPExport.h"
 #include "RCPClient.h"
 
+namespace RCP
+{
+
 struct RcpClientsStorage;
 
 class RCPCLIENT_API RCPClientsManager
@@ -28,3 +31,5 @@ public:
 private:
     RcpClientsStorage *m_pRCPClientsStorage;
 };
+
+}

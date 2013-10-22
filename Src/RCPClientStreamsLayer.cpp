@@ -3,6 +3,8 @@
 #include "RCPTools.h"
 #include <sstream>
 
+using namespace RCP;
+
 RCPClientStreamsLayer::RCPClientStreamsLayer(void)
     : m_SubstreamsSeparator("/")
 {
@@ -29,7 +31,7 @@ void RCPClientStreamsLayer::PopStreamName()
     m_SubstreamNamesStack.erase(m_SubstreamNamesStack.end() - 1);
 }
 
-void RCPClientStreamsLayer::SendMessageToStream(const char *substreamName, const char *commands, const void *messageData, unsigned int messgeLengthInBytes)
+void RCPClientStreamsLayer::SendMessageToStream(const char *substreamName, const char *commands, const void *messageData, size_t messgeLengthInBytes)
 {
 	//If substream name starts with @ symbol, it is threated as a full stream name
 	if(substreamName && substreamName[0] == '@')
@@ -54,7 +56,7 @@ void RCPClientStreamsLayer::SendMessageToStream(const char *substreamName, const
     SendMessageWithAddedSystemInfo(streamName.c_str(), commands, messageData, messgeLengthInBytes);
 }
 
-void RCPClientStreamsLayer::SendMessageToSpecifiedStream(const char *absoluteStreamName, const char *commands, const void *messageData, unsigned int messgeLengthInBytes)
+void RCPClientStreamsLayer::SendMessageToSpecifiedStream(const char *absoluteStreamName, const char *commands, const void *messageData, size_t messgeLengthInBytes)
 {
     std::string streamName = m_ConstantPrefix;
     if(!m_ConstantPrefix.empty()) streamName += m_SubstreamsSeparator;

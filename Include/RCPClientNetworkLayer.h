@@ -1,5 +1,8 @@
 #pragma once
 
+namespace RCP
+{
+
 class RCPClientNetworkLayer
 {
 public:
@@ -23,3 +26,5 @@ private:
     RCPClientNetworkLayer(RCPClientNetworkLayer const &);
     void operator=(RCPClientNetworkLayer const &);
 };
+
+}

@@ -3,6 +3,10 @@
 #include <vector>
 #include <list>
 
+
+namespace RCP
+{
+
 class RCPClientStreamsLayer;
 
 class RCPCLIENT_API RCPClient
@@ -41,5 +45,7 @@ public:
 private:
     RCPClientStreamsLayer *m_pImplementation;
 };
+
+}
 
 #include "RCPClientDataTypes.h"

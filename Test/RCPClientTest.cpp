@@ -6,7 +6,7 @@
 
 void Test1()
 {
-	RCPClient RC;
+	RCP::RCPClient RC;
 	RC.ConnectToServer("tcp://127.0.0.1:55557");
 	Sleep(1000);
 
@@ -60,7 +60,7 @@ void Test1()
 	RC.Send("3333333333333333333333333333===========================================");
 	RC.Disconnect();
 
-	RCPClient *pRC = RCPClientsManager::GetInstance().GetRcpClientForCurrentThread();
+	RCP::RCPClient *pRC = RCP::RCPClientsManager::GetInstance().GetRcpClientForCurrentThread();
 	pRC->ConnectToServer("tcp://127.0.0.1:55557");
 	RC.Send("*************************************************************");
 	RC.Send("*************************************************************");
@@ -92,7 +92,7 @@ void Test1()
 
 void Test2()
 {
-	RCPClient RC;
+	RCP::RCPClient RC;
 	RC.ConnectToServer("tcp://127.0.0.1:55557");
 	Sleep(1000);
 

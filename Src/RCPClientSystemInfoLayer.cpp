@@ -3,6 +3,8 @@
 #include "json/json.h"
 #include "RCPTools.h"
 
+using namespace RCP;
+
 RCPClientSystemInfoLayer::RCPClientSystemInfoLayer(void)
     : m_EnableTimeStampSending(true)
     , m_EnableThreadIdSending(true)
@@ -19,7 +21,7 @@ RCPClientSystemInfoLayer::~RCPClientSystemInfoLayer(void)
 {
 }
 
-void RCPClientSystemInfoLayer::SendMessageWithAddedSystemInfo(const char *streamName, const char *commands, const void *messageData, unsigned int messageDataLengthInBytes)
+void RCPClientSystemInfoLayer::SendMessageWithAddedSystemInfo(const char *streamName, const char *commands, const void *messageData, size_t messageDataLengthInBytes)
 {
     unsigned long threadId = GetCurrentThreadIdentifier();
 

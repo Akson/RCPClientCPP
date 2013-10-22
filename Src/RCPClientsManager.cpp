@@ -2,6 +2,7 @@
 #include "RCPClient.h"
 #include <map>
 
+using namespace RCP;
 
 #if !defined(_WIN32) && !defined(_WIN64) // Linux - Unix
 #error NON-WINDOWS version is not implemented!!!
@@ -12,7 +13,7 @@ inline unsigned long GetCurrentThreadIdentifier() {return GetCurrentThreadId();}
 
 
 typedef unsigned long ThreadId;
-struct RcpClientsStorage
+struct RCP::RcpClientsStorage
 {
     std::map<ThreadId, RCPClient *> m_pRcpClients;
     CRITICAL_SECTION m_CriticalSection;
