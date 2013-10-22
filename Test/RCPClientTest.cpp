@@ -150,6 +150,16 @@ void Test3()
 	RCDisconnect();
 }
 
+void Test4()
+{
+	RCSetServerAddress("tcp://127.0.0.1:55557");
+	while(GetAsyncKeyState(VK_ESCAPE) == false)
+	{
+		RCPrint(rand());
+	}
+	RCDisconnect();
+}
+
 BOOL WINAPI CtrlHandler(DWORD dwType)
 {
 	RCDisconnect();
@@ -161,9 +171,10 @@ int main()
 	//We need this to close ZMQ connection correctly
 	SetConsoleCtrlHandler(CtrlHandler, TRUE);
 
-	//Test1();
-	//Test2();
-	Test3();
+// 	Test1();
+// 	Test2();
+// 	Test3();
+	Test4();
 	return 0;
 }
 

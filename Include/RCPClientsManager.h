@@ -27,9 +27,11 @@ private:
 
 public:
     static RCPClient *GetRcpClientForCurrentThread();
+	void SetServerAddress(const char *pServerName);
 
 private:
     RcpClientsStorage *m_pRCPClientsStorage;
+	::std::string m_DefaultServerAddreess;
 };
 
 }

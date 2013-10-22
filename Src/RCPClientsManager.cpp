@@ -21,6 +21,7 @@ struct RCP::RcpClientsStorage
 
 
 RCPClientsManager::RCPClientsManager(void)
+	:m_pRCPClientsStorage(NULL)
 {
     m_pRCPClientsStorage = new RcpClientsStorage();
     InitializeCriticalSectionAndSpinCount(&m_pRCPClientsStorage->m_CriticalSection, 0);
@@ -45,8 +46,16 @@ RCPClient *RCPClientsManager::GetRcpClientForCurrentThread()
     {
         //This thread does not have initialized implementation yet, so create it
         implementationIt = pRcpClients.insert(std::make_pair(threadId, new RCPClient())).first;
+		//Connect to default server when a new thread is created
+		if(RCPClientsManager::GetInstance().m_DefaultServerAddreess.size()>0) 
+			implementationIt->second->ConnectToServer(RCPClientsManager::GetInstance().m_DefaultServerAddreess.c_str());
     }
     LeaveCriticalSection(&(RCPClientsManager::GetInstance().m_pRCPClientsStorage->m_CriticalSection));
 
     return implementationIt->second;
+}
+
+void RCP::RCPClientsManager::SetServerAddress( const char *pServerName )
+{
+	RCPClientsManager::GetInstance().m_DefaultServerAddreess = ::std::string(pServerName);
 }
