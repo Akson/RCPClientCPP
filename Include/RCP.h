@@ -3,7 +3,7 @@
 
 #include "RCPClientsManager.h"
 
-#define RCSetServerAddress(ServerName) RCP::RCPClientsManager::GetRcpClientForCurrentThread()->ConnectToServer(ServerName)
+#define RCSetServerAddress(ServerName) RCP::RCPClientsManager::GetInstance().SetServerAddress(ServerName)
 #define RCConnect(ServerName) RCP::RCPClientsManager::GetRcpClientForCurrentThread()->ConnectToServer(ServerName)
 #define RCDisconnect RCP::RCPClientsManager::GetRcpClientForCurrentThread()->Disconnect
 
