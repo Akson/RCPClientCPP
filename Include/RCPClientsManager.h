@@ -34,4 +34,22 @@ private:
 	::std::string m_DefaultServerAddreess;
 };
 
+class RCPCLIENT_API RCPThreadGuard
+{
+public:
+	RCPThreadGuard(RCPClient *pRCPClient, const char *threadName)
+	{
+		pRCPClient->SetThreadName(threadName);
+		m_pRCPClient = pRCPClient;
+	}
+	~RCPThreadGuard()
+	{
+		m_pRCPClient->Disconnect();
+	}
+private:
+	RCPThreadGuard(RCPThreadGuard const &);
+	void operator=(RCPThreadGuard const &);
+	RCPClient *m_pRCPClient;
+};
+
 }

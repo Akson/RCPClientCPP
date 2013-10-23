@@ -6,67 +6,67 @@
 
 void Test1()
 {
-	RCP::RCPClient RC;
-	RC.ConnectToServer("tcp://127.0.0.1:55557");
+	RCP::RCPClient rc;
+	rc.ConnectToServer("tcp://127.0.0.1:55557");
 	Sleep(1000);
 
-	RC.Send("111111111111111111===========================================");
-	RC.Send("Data1");
-	RC.Send("Data1a", "Stream1a");
-	RC.PushStreamName("sub1");
-	RC.Send("Data1b", "Stream1b");
-	RC.PushStreamName("sub2");
-	RC.Send("Data2", "Stream2");
-	RC.PopStreamName();
-	RC.SetThreadName("Main");
-	RC.Send("Data3", "Stream3");
-	RC.PopStreamName();
+	rc.Send("111111111111111111===========================================");
+	rc.Send("Data1");
+	rc.Send("Data1a", "Stream1a");
+	rc.PushStreamName("sub1");
+	rc.Send("Data1b", "Stream1b");
+	rc.PushStreamName("sub2");
+	rc.Send("Data2", "Stream2");
+	rc.PopStreamName();
+	rc.SetThreadName("Main");
+	rc.Send("Data3", "Stream3");
+	rc.PopStreamName();
 	Sleep(1000);
-	RC.Send("Data1", "Stream1");
-	RC.Send("Data1a", "Stream1a");
-	RC.PushStreamName("sub1");
-	RC.Send("Data1b", "Stream1b");
-	RC.PushStreamName("sub2");
-	RC.Send("Data2", "Stream2");
-	RC.PopStreamName();
-	RC.SetThreadName("Main");
-	RC.Send("Data3", "Stream3");
-	RC.PopStreamName();
-	RC.Send("222222222222222222222222222===========================================");
+	rc.Send("Data1", "Stream1");
+	rc.Send("Data1a", "Stream1a");
+	rc.PushStreamName("sub1");
+	rc.Send("Data1b", "Stream1b");
+	rc.PushStreamName("sub2");
+	rc.Send("Data2", "Stream2");
+	rc.PopStreamName();
+	rc.SetThreadName("Main");
+	rc.Send("Data3", "Stream3");
+	rc.PopStreamName();
+	rc.Send("222222222222222222222222222===========================================");
 	Sleep(100);
 
 
-	RC.ConnectToServer("tcp://127.0.0.1:55557");
+	rc.ConnectToServer("tcp://127.0.0.1:55557");
 	Sleep(1000);
-	RC.Send("2.52.52.52.52.52.52.52.52.52.52.52.5===========================================");
+	rc.Send("2.52.52.52.52.52.52.52.52.52.52.52.5===========================================");
 	int i=0;
 	while(GetAsyncKeyState(VK_ESCAPE) == false)
 	{
-		RC.PushStreamName("sub2");
-		RC.Send("Data1", "Stream1");
-		RC.Send("Data1a", "Stream1a");
-		RC.PushStreamName("sub1");
-		RC.Send("Data1b", "Stream1b");
-		RC.Send("Data1b", "@AbsoluteStream");
-		RC.PushStreamName("sub2");
-		RC.Send("Data2");
-		RC.PopStreamName();
-		RC.SetThreadName("Main");
-		RC.Send("Data3", "Stream3", "sdfsdf");
-		RC.PopStreamName();
+		rc.PushStreamName("sub2");
+		rc.Send("Data1", "Stream1");
+		rc.Send("Data1a", "Stream1a");
+		rc.PushStreamName("sub1");
+		rc.Send("Data1b", "Stream1b");
+		rc.Send("Data1b", "@AbsoluteStream");
+		rc.PushStreamName("sub2");
+		rc.Send("Data2");
+		rc.PopStreamName();
+		rc.SetThreadName("Main");
+		rc.Send("Data3", "Stream3", "sdfsdf");
+		rc.PopStreamName();
 		Sleep(300);
 	}
 
-	RC.Send("3333333333333333333333333333===========================================");
-	RC.Disconnect();
+	rc.Send("3333333333333333333333333333===========================================");
+	rc.Disconnect();
 
 	RCP::RCPClient *pRC = RCP::RCPClientsManager::GetInstance().GetRcpClientForCurrentThread();
 	pRC->ConnectToServer("tcp://127.0.0.1:55557");
-	RC.Send("*************************************************************");
-	RC.Send("*************************************************************");
-	RC.Send("*************************************************************");
-	RC.Send("*************************************************************");
-	RC.Send("*************************************************************");
+	rc.Send("*************************************************************");
+	rc.Send("*************************************************************");
+	rc.Send("*************************************************************");
+	rc.Send("*************************************************************");
+	rc.Send("*************************************************************");
 	Sleep(1000);
 	i=0;
 	pRC->Send("44444444444444444444444444444===========================================");
@@ -92,8 +92,8 @@ void Test1()
 
 void Test2()
 {
-	RCP::RCPClient RC;
-	RC.ConnectToServer("tcp://127.0.0.1:55557");
+	RCP::RCPClient rc;
+	rc.ConnectToServer("tcp://127.0.0.1:55557");
 	Sleep(1000);
 
 	int i=0;
@@ -104,12 +104,12 @@ void Test2()
 		i++;
 		std::ostringstream stringStream;
 		stringStream << "i=" << i;
-		RC.Send(stringStream.str().c_str(), "Stream1");
-		RC.Send(i, "Stream2");
-		RC.Send(i*0.757, "Stream3");
-		RC.Send(values);
-		RC.Send(valuesList);
-		RC.Send(i%3 == 0);
+		rc.Send(stringStream.str().c_str(), "Stream1");
+		rc.Send(i, "Stream2");
+		rc.Send(i*0.757, "Stream3");
+		rc.Send(values);
+		rc.Send(valuesList);
+		rc.Send(i%3 == 0);
 		values.push_back(i*i);
 		valuesList.push_back(1.0/i);
 		Sleep(1000);
@@ -117,7 +117,7 @@ void Test2()
 			printf("i=%d\n", i);
 	}
 
-	RC.Disconnect();
+	rc.Disconnect();
 }
 
 void Test3()
@@ -153,11 +153,11 @@ void Test3()
 void Test4()
 {
 	RCSetServerAddress("tcp://127.0.0.1:55557");
+	RCThreadGuard("MainThread");
 	while(GetAsyncKeyState(VK_ESCAPE) == false)
 	{
 		RCPrint(rand());
 	}
-	RCDisconnect();
 }
 
 BOOL WINAPI CtrlHandler(DWORD dwType)

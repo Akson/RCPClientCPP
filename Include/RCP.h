@@ -14,3 +14,6 @@
 
 #define RCPrint RCP::RCPClientsManager::GetRcpClientForCurrentThread()->Send
 #define RCPrintf RCP::RCPClientsManager::GetRcpClientForCurrentThread()->SendFormated
+
+#define RC RCP::RCPClientsManager::GetRcpClientForCurrentThread()
+#define RCThreadGuard(ThreadName) RCP::RCPThreadGuard _rcpThreadGuard(RCP::RCPClientsManager::GetRcpClientForCurrentThread(), ThreadName)

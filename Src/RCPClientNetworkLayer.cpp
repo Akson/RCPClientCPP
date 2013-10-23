@@ -51,7 +51,7 @@ void RCPClientNetworkLayer::SendMessageToServer(const char *streamName, const ch
     //Copy binary data
     memcpy(pZmqMessage, messageData, dataLengthInBytes);
 
-	printf("%s | %s | %s\n", streamName, messageInfo, (char*)messageData);
+	//printf("%s | %s | %s\n", streamName, messageInfo, (char*)messageData);
 
     //Send ZMQ message to the server
     int res = zmq_msg_send(&zmqMsg, m_Socket, 0);
