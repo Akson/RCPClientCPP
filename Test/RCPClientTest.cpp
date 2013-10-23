@@ -157,6 +157,8 @@ void Test4()
 	while(GetAsyncKeyState(VK_ESCAPE) == false)
 	{
 		RCPrint(rand());
+		RC->Set("FileName", __FILE__)->Set("CodeLine", S__LINE__)->Set("FunctionSignature", __FUNCSIG__)->Send("test file");
+		Sleep(500);
 	}
 }
 

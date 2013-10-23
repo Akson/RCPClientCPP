@@ -42,6 +42,8 @@ public:
     void PopStreamName();
 	void SetStreamPrefix(const char *prefix);
 
+	RCPClient* Set(const char *key, const char *value);
+
 private:
     RCPClientStreamsLayer *m_pImplementation;
 };

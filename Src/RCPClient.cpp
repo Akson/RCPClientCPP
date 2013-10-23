@@ -102,4 +102,10 @@ void RCPClient::SendFormated( const char *streamName, const char *fmt, ... )
 	Send(buffer, streamName);
 }
 
+RCPClient* RCP::RCPClient::Set( const char *key, const char *value )
+{
+	m_pImplementation->SetExtraData(key, value);
+	return this;
+}
+
 

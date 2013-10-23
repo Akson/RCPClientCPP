@@ -1,6 +1,7 @@
 #pragma once
 #include "RCPClientNetworkLayer.h"
 #include <string>
+#include <map>
 
 namespace RCP
 {
@@ -12,6 +13,7 @@ public:
     ~RCPClientSystemInfoLayer();
 
     void SetThreadName(const char *threadName);
+	void SetExtraData(const char *key, const char *value);
 
 protected:
     void SendMessageWithAddedSystemInfo(const char *streamName, const char *commands, const void *messageData, size_t messageDataLengthInBytes);
@@ -26,6 +28,8 @@ private:
 	bool m_EnableThreadNameSending;
 	bool m_EnableApplicationNameSending;
 	bool m_EnableInstanceIdentifierSending;
+
+	::std::map<::std::string, ::std::string> m_ExtraData;
 };
 
 }

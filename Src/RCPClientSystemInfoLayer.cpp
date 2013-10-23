@@ -27,6 +27,10 @@ void RCPClientSystemInfoLayer::SendMessageWithAddedSystemInfo(const char *stream
 
     //Write JSON string message
     Json::Value root;
+
+	for(auto mapIt = m_ExtraData.begin(); mapIt != m_ExtraData.end(); mapIt++)
+		root[mapIt->first.c_str()] = mapIt->second.c_str();
+
     if(commands)
         root["Commands"] = commands;
 
@@ -46,9 +50,17 @@ void RCPClientSystemInfoLayer::SendMessageWithAddedSystemInfo(const char *stream
 
     //Send ZMQ message to the server
     SendMessageToServer(streamName, messageInfoJson.c_str(), messageData, messageDataLengthInBytes);
+
+	//All extra data are passed, new data will be added later
+	m_ExtraData.clear();
 }
 
 void RCPClientSystemInfoLayer::SetThreadName(const char *threadName)
 {
     m_ThreadName = std::string(threadName);
+}
+
+void RCP::RCPClientSystemInfoLayer::SetExtraData( const char *key, const char *value )
+{
+	m_ExtraData[key] = value;
 }
