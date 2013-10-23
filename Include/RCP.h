@@ -9,7 +9,7 @@
 
 #define RCVar(Variable) \
 	RCP::RCPClientsManager::GetRcpClientForCurrentThread()->Send \
-	(( ::std::string("{\"Value\":") + ConvertToString(Variable) + ::std::string(",\"Name\":\""#Variable"\"}")).c_str(), \
+	(( ::std::string("{\"Value\":") + RCP::ConvertToString(Variable) + ::std::string(",\"Name\":\""#Variable"\"}")).c_str(), \
 	0, "ParseJson(); Variable()")
 
 #define RCPrint RCP::RCPClientsManager::GetRcpClientForCurrentThread()->Send
