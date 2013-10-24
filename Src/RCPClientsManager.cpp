@@ -35,7 +35,7 @@ RCPClientsManager::~RCPClientsManager(void)
     delete(m_pRCPClientsStorage);
 }
 
-RCPClient *RCPClientsManager::GetRcpClientForCurrentThread()
+RCPClient &RCPClientsManager::GetRcpClientForCurrentThread()
 {
     ThreadId threadId = GetCurrentThreadId();
     auto &pRcpClients = RCPClientsManager::GetInstance().m_pRCPClientsStorage->m_pRcpClients;
@@ -52,7 +52,7 @@ RCPClient *RCPClientsManager::GetRcpClientForCurrentThread()
     }
     LeaveCriticalSection(&(RCPClientsManager::GetInstance().m_pRCPClientsStorage->m_CriticalSection));
 
-    return implementationIt->second;
+    return *(implementationIt->second);
 }
 
 void RCP::RCPClientsManager::SetServerAddress( const char *pServerName )

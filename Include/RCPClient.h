@@ -25,16 +25,15 @@ public:
     //Closes ZMQ socket and contexts (all other information is preseved)
     void Disconnect();
 
-	void Send(char *stringData, const char *substreamName = 0, const char *commands = 0);
-	void Send(const char *stringData, const char *substreamName = 0, const char *commands = 0);
-	void SendBinary(void *binaryData, unsigned int binaryDataLengthInBytes, const char *substreamName /*= 0*/, const char *commands /*= 0*/);
-	void SendBinary(const void *binaryData, unsigned int binaryDataLengthInBytes, const char *substreamName /*= 0*/, const char *commands /*= 0*/);
+	void Send(char *stringData, const char *commands = 0);
+	void Send(const char *stringData, const char *commands = 0);
+	void SendBinary(void *binaryData, unsigned int binaryDataLengthInBytes, const char *commands /*= 0*/);
+	void SendBinary(const void *binaryData, unsigned int binaryDataLengthInBytes, const char *commands /*= 0*/);
 	
-	void Send(bool value, const char *substreamName = 0, const char *commands = 0);
-	template <class T> void Send(T value, const char *substreamName = 0, const char *commands = 0);
+	void Send(bool value, const char *commands = 0);
+	template <class T> void Send(T value, const char *commands = 0);
 
 	void SendFormated(const char *fmt, ...);
-	void SendFormated(const char *streamName, const char *fmt, ...);
 
     void SetThreadName(const char *threadName);
 
@@ -42,7 +41,8 @@ public:
     void PopStreamName();
 	void SetStreamPrefix(const char *prefix);
 
-	RCPClient* Set(const char *key, const char *value);
+	RCPClient& Set(const char *key, const char *value);
+	RCPClient& Stream(const char *stream);
 
 private:
     RCPClientStreamsLayer *m_pImplementation;

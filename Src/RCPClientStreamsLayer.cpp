@@ -33,6 +33,9 @@ void RCPClientStreamsLayer::PopStreamName()
 
 void RCPClientStreamsLayer::SendMessageToStream(const char *substreamName, const char *commands, const void *messageData, size_t messgeLengthInBytes)
 {
+	if(substreamName == 0)
+		substreamName = m_StreamNameForNextMessage.c_str();
+
 	//If substream name starts with @ symbol, it is threated as a full stream name
 	if(substreamName && substreamName[0] == '@')
 		return SendMessageToSpecifiedStream(substreamName+1, commands, messageData, messgeLengthInBytes);
@@ -54,17 +57,29 @@ void RCPClientStreamsLayer::SendMessageToStream(const char *substreamName, const
     }
 
     SendMessageWithAddedSystemInfo(streamName.c_str(), commands, messageData, messgeLengthInBytes);
+
+	m_StreamNameForNextMessage.clear();
 }
 
 void RCPClientStreamsLayer::SendMessageToSpecifiedStream(const char *absoluteStreamName, const char *commands, const void *messageData, size_t messgeLengthInBytes)
 {
-    std::string streamName = m_ConstantPrefix;
+	if(absoluteStreamName == 0)
+		absoluteStreamName = m_StreamNameForNextMessage.c_str();
+
+	std::string streamName = m_ConstantPrefix;
     if(!m_ConstantPrefix.empty()) streamName += m_SubstreamsSeparator;
 	streamName += absoluteStreamName;
     SendMessageWithAddedSystemInfo(streamName.c_str(), commands, messageData, messgeLengthInBytes);
+
+	m_StreamNameForNextMessage.clear();
 }
 
 void RCPClientStreamsLayer::SetStreamPrefix( const char *prefix )
 {
 	m_ConstantPrefix = std::string(prefix);
+}
+
+void RCP::RCPClientStreamsLayer::SetStreamNameForNextMessage( const char *substreamName )
+{
+	m_StreamNameForNextMessage = substreamName;
 }

@@ -26,7 +26,7 @@ private:
     //////////////////////////////////////////////////////////////////////////
 
 public:
-    static RCPClient *GetRcpClientForCurrentThread();
+	static RCPClient &GetRcpClientForCurrentThread();
 	void SetServerAddress(const char *pServerName);
 
 private:

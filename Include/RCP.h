@@ -9,16 +9,17 @@
 #define S__LINE__ S_(__LINE__)
 
 #define RCSetServerAddress(ServerName) RCP::RCPClientsManager::GetInstance().SetServerAddress(ServerName)
-#define RCConnect(ServerName) RCP::RCPClientsManager::GetRcpClientForCurrentThread()->ConnectToServer(ServerName)
-#define RCDisconnect RCP::RCPClientsManager::GetRcpClientForCurrentThread()->Disconnect
+#define RCConnect(ServerName) RCP::RCPClientsManager::GetRcpClientForCurrentThread().ConnectToServer(ServerName)
+#define RCDisconnect RCP::RCPClientsManager::GetRcpClientForCurrentThread().Disconnect
+
+#define RC RCP::RCPClientsManager::GetRcpClientForCurrentThread().Set("FileName", __FILE__).Set("CodeLine", S__LINE__).Set("FunctionSignature", __FUNCSIG__)
 
 #define RCVar(Variable) \
-	RCP::RCPClientsManager::GetRcpClientForCurrentThread()->Set("FileName", __FILE__)->Set("CodeLine", S__LINE__)->Set("FunctionSignature", __FUNCSIG__)->Send \
+	RC.Send \
 	(( ::std::string("{\"Value\":") + RCP::ConvertToString(Variable) + ::std::string(",\"Name\":\""#Variable"\"}")).c_str(), \
-	0, "ParseJson(); Variable()")
+	"ParseJson(); Variable()")
 
-#define RCPrint RCP::RCPClientsManager::GetRcpClientForCurrentThread()->Set("FileName", __FILE__)->Set("CodeLine", S__LINE__)->Set("FunctionSignature", __FUNCSIG__)->Send
-#define RCPrintf RCP::RCPClientsManager::GetRcpClientForCurrentThread()->Set("FileName", __FILE__)->Set("CodeLine", S__LINE__)->Set("FunctionSignature", __FUNCSIG__)->SendFormated
+#define RCPrint RCP::RCPClientsManager::GetRcpClientForCurrentThread().Set("FileName", __FILE__).Set("CodeLine", S__LINE__).Set("FunctionSignature", __FUNCSIG__).Send
+#define RCPrintf RCP::RCPClientsManager::GetRcpClientForCurrentThread().Set("FileName", __FILE__).Set("CodeLine", S__LINE__).Set("FunctionSignature", __FUNCSIG__).SendFormated
 
-#define RC RCP::RCPClientsManager::GetRcpClientForCurrentThread()->Set("FileName", __FILE__)->Set("CodeLine", S__LINE__)->Set("FunctionSignature", __FUNCSIG__)
-#define RCThreadGuard(ThreadName) RCP::RCPThreadGuard _rcpThreadGuard(RCP::RCPClientsManager::GetRcpClientForCurrentThread(), ThreadName)
+#define RCThreadGuard(ThreadName) RCP::RCPThreadGuard _rcpThreadGuard(&(RCP::RCPClientsManager::GetRcpClientForCurrentThread()), ThreadName)
