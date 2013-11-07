@@ -7,7 +7,8 @@
 namespace RCP
 {
 
-class RCPClientStreamsLayer;
+class RCPClientNetworkLayer;
+struct RCPClientData;
 
 class RCPCLIENT_API RCPClient
 {
@@ -43,9 +44,12 @@ public:
 
 	RCPClient& Set(const char *key, const char *value);
 	RCPClient& Stream(const char *stream);
-
+	void SendMessageToStream(const char *substreamName, const char *commands, const void *messageData, size_t messgeLengthInBytes);
+	void SendMessageToSpecifiedStream(const char *absoluteStreamName, const char *commands, const void *messageData, size_t messgeLengthInBytes);
+	void SendMessageWithAddedSystemInfo(const char *streamName, const char *commands, const void *messageData, size_t messageDataLengthInBytes);
 private:
-    RCPClientStreamsLayer *m_pImplementation;
+    RCPClientNetworkLayer *m_pNetworkLayerImplementation;
+	RCPClientData *m_pData;
 };
 
 }

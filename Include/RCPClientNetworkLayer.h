@@ -12,7 +12,6 @@ public:
     int ConnectToServer(const char *ServerAddress);
     void Disconnect();
 
-protected:
     void SendMessageToServer(const char *streamName, const char *info, const void *messageData, size_t messgeLengthInBytes);
 
 private:
