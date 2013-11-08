@@ -1,8 +1,5 @@
 #pragma once
 #include "RCPExport.h"
-#include <vector>
-#include <list>
-
 
 namespace RCP
 {
@@ -21,37 +18,74 @@ private: //No copying
     void operator=(RCPClient const &);
 
 public:
+	//////////////////////////////////////////////////////////////////////////
+	// NETWORK
+	//////////////////////////////////////////////////////////////////////////
+	
+	//Connects to a give server and port. Use ZMQ format like "tcp://127.0.0.1:55557"
     void ConnectToServer(const char *ServerAddress);
 
-    //Closes ZMQ socket and contexts (all other information is preseved)
+    //Closes ZMQ socket and contexts (all other information is preserved)
     void Disconnect();
 
+	//////////////////////////////////////////////////////////////////////////
+	// STREAMS
+	//////////////////////////////////////////////////////////////////////////
+
+	//Set current stream name. All stream names in current stack will be added in front.
+	//Use @ if this is an absolute stream name and there is no need to add streams stack.
+	RCPClient& Stream(const char *stream);
+
+	//Push/pop stream name to a streams stack. 
+	//All stack components will be joined with stream separator between them.
+	//This joint combination will be used as a stream name.
+	void PushStreamName(const char *substreamName);
+	void PopStreamName();
+
+	//Stream prefix will be added to all stream names, even to absolute stream names starting with @.
+	void SetStreamPrefix(const char *prefix);
+
+	//////////////////////////////////////////////////////////////////////////
+	// EXTRA INFO
+	//////////////////////////////////////////////////////////////////////////
+
+	//Set parameter value that will be passed to the server in a next message in JSON format
+	RCPClient& Set(const char *key, const char *value);
+
+	//Set parameter value that will be passed to the server in every message in JSON format
+	void SetPermanent(const char *key, const char *value);
+
+	//////////////////////////////////////////////////////////////////////////
+	// SENDING MESSAGES
+	//////////////////////////////////////////////////////////////////////////
+
+	//Send test data to a stream
 	void Send(char *stringData, const char *commands = 0);
 	void Send(const char *stringData, const char *commands = 0);
+
+	//Send specified amount of binary data to a stream
 	void SendBinary(void *binaryData, unsigned int binaryDataLengthInBytes, const char *commands /*= 0*/);
 	void SendBinary(const void *binaryData, unsigned int binaryDataLengthInBytes, const char *commands /*= 0*/);
 	
+	//Send boolean data to a stream.
 	void Send(bool value, const char *commands = 0);
+
+	//Convert value to string format and send to a stream.
 	template <class T> void Send(T value, const char *commands = 0);
 
+	//Send formated (printf format) string to a stream.
 	void SendFormated(const char *fmt, ...);
 
-    void SetThreadName(const char *threadName);
-
-    void PushStreamName(const char *substreamName);
-    void PopStreamName();
-	void SetStreamPrefix(const char *prefix);
-
-	RCPClient& Set(const char *key, const char *value);
-	RCPClient& Stream(const char *stream);
+private:
 	void SendMessageToStream(const char *substreamName, const char *commands, const void *messageData, size_t messgeLengthInBytes);
 	void SendMessageToSpecifiedStream(const char *absoluteStreamName, const char *commands, const void *messageData, size_t messgeLengthInBytes);
 	void SendMessageWithAddedSystemInfo(const char *streamName, const char *commands, const void *messageData, size_t messageDataLengthInBytes);
-private:
-    RCPClientNetworkLayer *m_pNetworkLayerImplementation;
+
+	RCPClientNetworkLayer *m_pNetworkLayerImplementation;
 	RCPClientData *m_pData;
 };
 
 }
 
+//This header contains templates for popular types popular data structures (vectors and lists)
 #include "RCPClientDataTypes.h"

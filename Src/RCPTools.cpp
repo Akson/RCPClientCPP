@@ -1,4 +1,5 @@
 #include "RCPTools.h"
+#include <sstream>
 
 using namespace RCP;
 
@@ -33,9 +34,11 @@ inline unsigned __int64 time_to_msec(const sys_time_t &t)
 }
 
 #include <Windows.h>
-unsigned long RCP::GetCurrentThreadIdentifier()
+std::string RCP::GetCurrentThreadIdentifier()
 {
-	return GetCurrentThreadId();
+	std::ostringstream ss;
+	ss << GetCurrentThreadId();
+	return ss.str();
 }
 
 std::string RCP::GetApplicationName()

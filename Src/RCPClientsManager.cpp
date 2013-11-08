@@ -44,15 +44,27 @@ RCPClient &RCPClientsManager::GetRcpClientForCurrentThread()
     auto implementationIt = pRcpClients.find(threadId);
     if(implementationIt == pRcpClients.end())
     {
+		RCPClient *pRCPClient = new RCPClient();
+
+
+		pRCPClient->SetPermanent("ApplicationName", GetApplicationName().c_str());
+		pRCPClient->SetPermanent("InstanceIdentifier", GetApplicationInstanceId().c_str());
+		pRCPClient->SetPermanent("ThreadId", GetCurrentThreadIdentifier().c_str());
+		std::ostringstream ss;
+		ss << "[" << GetApplicationName() << "]";
+		pRCPClient->SetStreamPrefix(ss.str().c_str());
+		pRCPClient->PushStreamName("StdOut");
+
+
         //This thread does not have initialized implementation yet, so create it
-        implementationIt = pRcpClients.insert(std::make_pair(threadId, new RCPClient())).first;
+        implementationIt = pRcpClients.insert(std::make_pair(threadId, pRCPClient)).first;
 		//Connect to default server when a new thread is created
 		if(RCPClientsManager::GetInstance().m_DefaultServerAddreess.size()>0) 
 			implementationIt->second->ConnectToServer(RCPClientsManager::GetInstance().m_DefaultServerAddreess.c_str());
     }
     LeaveCriticalSection(&(RCPClientsManager::GetInstance().m_pRCPClientsStorage->m_CriticalSection));
 
-    return *(implementationIt->second);
+	return *(implementationIt->second);
 }
 
 void RCP::RCPClientsManager::SetServerAddress( const char *pServerName )

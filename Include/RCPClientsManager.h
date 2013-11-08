@@ -1,6 +1,7 @@
 #pragma once
 #include "RCPExport.h"
 #include "RCPClient.h"
+#include "RCPTools.h"
 
 namespace RCP
 {
@@ -38,9 +39,9 @@ class RCPCLIENT_API RCPThreadGuard
 {
 public:
 	RCPThreadGuard(RCPClient *pRCPClient, const char *threadName)
+		:m_pRCPClient(pRCPClient)
 	{
-		pRCPClient->SetThreadName(threadName);
-		m_pRCPClient = pRCPClient;
+		pRCPClient->SetPermanent("ThreadName", threadName);
 	}
 	~RCPThreadGuard()
 	{

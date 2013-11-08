@@ -16,40 +16,42 @@ struct RCP::RCPClientData
     std::string m_ApplicationName;
     std::string m_InstanceIdentifier;
     std::map<std::string, std::string> m_ExtraData;
+	std::map<std::string, std::string> m_PermanentExtraData;
 };
 
 RCPClient::RCPClient(void)
     : m_pNetworkLayerImplementation(0)
+	, m_pData(0)
 {
     m_pNetworkLayerImplementation = new RCP::RCPClientNetworkLayer();
     m_pData = new RCPClientData;
 
     m_pData->m_SubstreamsSeparator = "/";
-    m_pData->m_ApplicationName = GetApplicationName();
-    m_pData->m_InstanceIdentifier = GetApplicationInstanceId();
-
-    std::ostringstream stringStream;
-    stringStream << "[";
-    stringStream << GetApplicationName();
-    stringStream << "]";
-    m_pData->m_ConstantPrefix = stringStream.str();
-
-    PushStreamName("StdOut");
 }
 
 RCPClient::~RCPClient(void)
 {
+	delete(m_pData);
     delete(m_pNetworkLayerImplementation);
 }
 
+#pragma region NETWORKING
 void RCPClient::ConnectToServer(const char *ServerAddress)
 {
     m_pNetworkLayerImplementation->ConnectToServer(ServerAddress);
 }
 
-void RCPClient::SetThreadName(const char *threadName)
+void RCPClient::Disconnect()
 {
-    m_pData->m_ThreadName = threadName;
+    m_pNetworkLayerImplementation->Disconnect();
+}
+#pragma endregion NETWORKING
+
+#pragma region STREAMS
+RCPClient& RCPClient::Stream(const char *stream)
+{
+    m_pData->m_StreamNameForNextMessage = stream;
+    return *this;
 }
 
 void RCPClient::PushStreamName(const char *substreamName)
@@ -62,16 +64,26 @@ void RCPClient::PopStreamName()
     m_pData->m_SubstreamNamesStack.erase(m_pData->m_SubstreamNamesStack.end() - 1);
 }
 
-void RCPClient::Disconnect()
-{
-    m_pNetworkLayerImplementation->Disconnect();
-}
-
 void RCPClient::SetStreamPrefix(const char *prefix)
 {
     m_pData->m_ConstantPrefix = prefix;
 }
+#pragma endregion STREAMS
 
+#pragma region EXTRA INFO
+RCPClient& RCPClient::Set(const char *key, const char *value)
+{
+    m_pData->m_ExtraData[key] = value;
+    return *this;
+}
+
+void RCPClient::SetPermanent( const char *key, const char *value )
+{
+	m_pData->m_PermanentExtraData[key] = value;
+}
+#pragma endregion EXTRA INFO
+
+#pragma region SENDING MESSAGES
 void RCPClient::Send(const char *stringData, const char *commands /*= 0*/)
 {
     SendMessageToStream(0, commands, stringData, strlen(stringData));
@@ -113,19 +125,9 @@ void RCPClient::SendFormated(const char *fmt, ...)
 
     Send(buffer);
 }
+#pragma endregion SENDING MESSAGES
 
-RCPClient &RCP::RCPClient::Set(const char *key, const char *value)
-{
-    m_pData->m_ExtraData[key] = value;
-    return *this;
-}
-
-RCPClient &RCP::RCPClient::Stream(const char *stream)
-{
-    m_pData->m_StreamNameForNextMessage = stream;
-    return *this;
-}
-
+#pragma region PRIVATE IMPLEMENTATION
 void RCP::RCPClient::SendMessageToStream(const char *substreamName, const char *commands, const void *messageData, size_t messgeLengthInBytes)
 {
     if(substreamName == 0)
@@ -171,22 +173,19 @@ void RCP::RCPClient::SendMessageToSpecifiedStream(const char *absoluteStreamName
 
 void RCP::RCPClient::SendMessageWithAddedSystemInfo(const char *streamName, const char *commands, const void *messageData, size_t messageDataLengthInBytes)
 {
-    unsigned long threadId = GetCurrentThreadIdentifier();
-
     //Write JSON string message
     Json::Value root;
 
-    for(auto mapIt = m_pData->m_ExtraData.begin(); mapIt != m_pData->m_ExtraData.end(); mapIt++)
-        root[mapIt->first.c_str()] = mapIt->second.c_str();
+	for(auto mapIt = m_pData->m_PermanentExtraData.begin(); mapIt != m_pData->m_PermanentExtraData.end(); mapIt++)
+		root[mapIt->first.c_str()] = mapIt->second.c_str();
+
+	for(auto mapIt = m_pData->m_ExtraData.begin(); mapIt != m_pData->m_ExtraData.end(); mapIt++)
+		root[mapIt->first.c_str()] = mapIt->second.c_str();
 
     if(commands)
         root["Commands"] = commands;
 
     root["TimeStampMsSince1970"] = MillisecondsSince1970();
-    root["ThreadId"] = (Json::UInt64) threadId;
-    root["ThreadName"] = m_pData->m_ThreadName.c_str();
-    root["ApplicationName"] = m_pData->m_ApplicationName.c_str();
-    root["InstanceIdentifier"] = m_pData->m_InstanceIdentifier.c_str();
 
     Json::FastWriter writer;
     std::string messageInfoJson = writer.write(root);
@@ -197,3 +196,5 @@ void RCP::RCPClient::SendMessageWithAddedSystemInfo(const char *streamName, cons
     //All extra data are passed, new data will be added later
     m_pData->m_ExtraData.clear();
 }
+
+#pragma endregion PRIVATE IMPLEMENTATION

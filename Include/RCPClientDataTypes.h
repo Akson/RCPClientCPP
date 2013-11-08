@@ -1,6 +1,7 @@
 #pragma once
 
-
+#include <vector>
+#include <list>
 #include <sstream>
 
 namespace RCP
@@ -10,6 +11,13 @@ template <class T> ::std::string ConvertToString(T value)
 {
 	::std::ostringstream valueStream;
 	valueStream << value;
+	return valueStream.str();
+}
+
+template <bool> ::std::string ConvertToString(bool value)
+{
+	::std::ostringstream valueStream;
+	valueStream << "aaa";
 	return valueStream.str();
 }
 
