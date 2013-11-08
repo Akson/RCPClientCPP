@@ -135,39 +135,37 @@ void RCP::RCPClient::SendMessageToStream(const char *substreamName, const char *
 
     //If substream name starts with @ symbol, it is threated as a full stream name
     if(substreamName && substreamName[0] == '@')
-        return SendMessageToSpecifiedStream(substreamName + 1, commands, messageData, messgeLengthInBytes);
+	{
+		const char *absoluteStreamName = substreamName + 1;
 
-    std::string streamName = m_pData->m_ConstantPrefix;
-    if(!m_pData->m_ConstantPrefix.empty()) streamName += m_pData->m_SubstreamsSeparator;
-    for(auto substreamNameIt = m_pData->m_SubstreamNamesStack.begin(); substreamNameIt != m_pData->m_SubstreamNamesStack.end(); substreamNameIt++)
-    {
-        if(substreamNameIt != m_pData->m_SubstreamNamesStack.begin())
-            streamName += m_pData->m_SubstreamsSeparator;
-        streamName += *substreamNameIt;
-    }
+		if(absoluteStreamName == 0)
+			absoluteStreamName = m_pData->m_StreamNameForNextMessage.c_str();
 
-    if(substreamName && strlen(substreamName))
-    {
-        if(m_pData->m_SubstreamNamesStack.size() > 0)
-            streamName += m_pData->m_SubstreamsSeparator;
-        streamName.append(substreamName);
-    }
+		std::string streamName = m_pData->m_ConstantPrefix;
+		if(!m_pData->m_ConstantPrefix.empty()) streamName += m_pData->m_SubstreamsSeparator;
+		streamName += absoluteStreamName;
+		SendMessageWithAddedSystemInfo(streamName.c_str(), commands, messageData, messgeLengthInBytes);
+	}
+	else
+	{
+		std::string streamName = m_pData->m_ConstantPrefix;
+		if(!m_pData->m_ConstantPrefix.empty()) streamName += m_pData->m_SubstreamsSeparator;
+		for(auto substreamNameIt = m_pData->m_SubstreamNamesStack.begin(); substreamNameIt != m_pData->m_SubstreamNamesStack.end(); substreamNameIt++)
+		{
+			if(substreamNameIt != m_pData->m_SubstreamNamesStack.begin())
+				streamName += m_pData->m_SubstreamsSeparator;
+			streamName += *substreamNameIt;
+		}
 
-    SendMessageWithAddedSystemInfo(streamName.c_str(), commands, messageData, messgeLengthInBytes);
+		if(substreamName && strlen(substreamName))
+		{
+			if(m_pData->m_SubstreamNamesStack.size() > 0)
+				streamName += m_pData->m_SubstreamsSeparator;
+			streamName.append(substreamName);
+		}
 
-    m_pData->m_StreamNameForNextMessage.clear();
-}
-
-void RCP::RCPClient::SendMessageToSpecifiedStream(const char *absoluteStreamName, const char *commands, const void *messageData, size_t messgeLengthInBytes)
-{
-    if(absoluteStreamName == 0)
-        absoluteStreamName = m_pData->m_StreamNameForNextMessage.c_str();
-
-    std::string streamName = m_pData->m_ConstantPrefix;
-    if(!m_pData->m_ConstantPrefix.empty()) streamName += m_pData->m_SubstreamsSeparator;
-    streamName += absoluteStreamName;
-    SendMessageWithAddedSystemInfo(streamName.c_str(), commands, messageData, messgeLengthInBytes);
-
+		SendMessageWithAddedSystemInfo(streamName.c_str(), commands, messageData, messgeLengthInBytes);
+	}
     m_pData->m_StreamNameForNextMessage.clear();
 }
 

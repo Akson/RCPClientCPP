@@ -78,7 +78,6 @@ public:
 
 private:
 	void SendMessageToStream(const char *substreamName, const char *commands, const void *messageData, size_t messgeLengthInBytes);
-	void SendMessageToSpecifiedStream(const char *absoluteStreamName, const char *commands, const void *messageData, size_t messgeLengthInBytes);
 	void SendMessageWithAddedSystemInfo(const char *streamName, const char *commands, const void *messageData, size_t messageDataLengthInBytes);
 
 	RCPClientNetworkLayer *m_pNetworkLayerImplementation;
