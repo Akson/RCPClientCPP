@@ -55,30 +55,33 @@ public:
 	//Set parameter value that will be passed to the server in every message in JSON format
 	void SetPermanent(const char *key, const char *value);
 
+	//Add command to a list of commands that server should perform
+	RCPClient& Command(const char *command);
+
 	//////////////////////////////////////////////////////////////////////////
 	// SENDING MESSAGES
 	//////////////////////////////////////////////////////////////////////////
 
 	//Send test data to a stream
-	void Send(char *stringData, const char *commands = 0);
-	void Send(const char *stringData, const char *commands = 0);
+	void Send(char *stringData);
+	void Send(const char *stringData);
 
 	//Send specified amount of binary data to a stream
-	void SendBinary(void *binaryData, unsigned int binaryDataLengthInBytes, const char *commands /*= 0*/);
-	void SendBinary(const void *binaryData, unsigned int binaryDataLengthInBytes, const char *commands /*= 0*/);
+	void SendBinary(void *binaryData, unsigned int binaryDataLengthInBytes);
+	void SendBinary(const void *binaryData, unsigned int binaryDataLengthInBytes);
 	
 	//Send boolean data to a stream.
-	void Send(bool value, const char *commands = 0);
+	void Send(bool value);
 
 	//Convert value to string format and send to a stream.
-	template <class T> void Send(T value, const char *commands = 0);
+	template <class T> void Send(T value);
 
 	//Send formated (printf format) string to a stream.
 	void SendFormated(const char *fmt, ...);
 
 private:
-	void SendMessageToStream(const char *substreamName, const char *commands, const void *messageData, size_t messgeLengthInBytes);
-	void SendMessageWithAddedSystemInfo(const char *streamName, const char *commands, const void *messageData, size_t messageDataLengthInBytes);
+	void SendMessageToStream(const char *substreamName, const void *messageData, size_t messgeLengthInBytes);
+	void SendMessageWithAddedSystemInfo(const char *streamName, const void *messageData, size_t messageDataLengthInBytes);
 
 	RCPClientNetworkLayer *m_pNetworkLayerImplementation;
 	RCPClientData *m_pData;

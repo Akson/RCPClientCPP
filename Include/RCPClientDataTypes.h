@@ -14,13 +14,6 @@ template <class T> ::std::string ConvertToString(T value)
 	return valueStream.str();
 }
 
-template <bool> ::std::string ConvertToString(bool value)
-{
-	::std::ostringstream valueStream;
-	valueStream << "aaa";
-	return valueStream.str();
-}
-
 template <class T> ::std::string ConvertToString(::std::list<T> values)
 {
 	::std::ostringstream valueStream;
@@ -49,16 +42,14 @@ template <class T> ::std::string ConvertToString(::std::vector<T> values)
 	return valueStream.str();
 }
 
-template <class T> void RCPClient::Send(T value, const char *commands /*= 0*/)
+template <class T> void RCPClient::Send(T value)
 {
     ::std::ostringstream valueStream;
     valueStream << "{\"Value\":";
     valueStream << ConvertToString(value);
     valueStream << "}";
-    RCPClient::Send(
-        valueStream.str().c_str(),
-        commands ? (::std::string("ParseJson();") + ::std::string(commands)).c_str() : "ParseJson()"
-    );
+	RCPClient::Command("ParseJson()");
+    RCPClient::Send(valueStream.str().c_str());
 }
 
 }

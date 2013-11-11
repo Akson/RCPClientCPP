@@ -15,9 +15,8 @@
 #define RC RCP::RCPClientsManager::GetRcpClientForCurrentThread().Set("FileName", __FILE__).Set("CodeLine", S__LINE__).Set("FunctionSignature", __FUNCSIG__)
 
 #define RCVar(Variable) \
-	RC.Send \
-	(( ::std::string("{\"Value\":") + RCP::ConvertToString(Variable) + ::std::string(",\"Name\":\""#Variable"\"}")).c_str(), \
-	"ParseJson(); Variable()")
+	RC.Command("ParseJson()").Command("Variable()").Send \
+	(( ::std::string("{\"Value\":") + RCP::ConvertToString(Variable) + ::std::string(",\"Name\":\""#Variable"\"}")).c_str())
 
 #define RCPrint RCP::RCPClientsManager::GetRcpClientForCurrentThread().Set("FileName", __FILE__).Set("CodeLine", S__LINE__).Set("FunctionSignature", __FUNCSIG__).Send
 #define RCPrintf RCP::RCPClientsManager::GetRcpClientForCurrentThread().Set("FileName", __FILE__).Set("CodeLine", S__LINE__).Set("FunctionSignature", __FUNCSIG__).SendFormated

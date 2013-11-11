@@ -17,6 +17,7 @@ struct RCP::RCPClientData
     std::string m_InstanceIdentifier;
     std::map<std::string, std::string> m_ExtraData;
 	std::map<std::string, std::string> m_PermanentExtraData;
+	std::vector<::std::string> m_Commands;
 };
 
 RCPClient::RCPClient(void)
@@ -81,35 +82,39 @@ void RCPClient::SetPermanent( const char *key, const char *value )
 {
 	m_pData->m_PermanentExtraData[key] = value;
 }
+RCPClient& RCPClient::Command( const char *command )
+{
+	m_pData->m_Commands.push_back(std::string(command));
+	return *this;
+}
+
 #pragma endregion EXTRA INFO
 
 #pragma region SENDING MESSAGES
-void RCPClient::Send(const char *stringData, const char *commands /*= 0*/)
+void RCPClient::Send(const char *stringData)
 {
-    SendMessageToStream(0, commands, stringData, strlen(stringData));
+    SendMessageToStream(0, stringData, strlen(stringData));
 }
 
-void RCPClient::Send(char *stringData, const char *commands /*= 0*/)
+void RCPClient::Send(char *stringData)
 {
-    SendMessageToStream(0, commands, stringData, strlen(stringData));
+    SendMessageToStream(0, stringData, strlen(stringData));
 }
 
-void RCPClient::SendBinary(const void *binaryData, unsigned int binaryDataLengthInBytes, const char *commands /*= 0*/)
+void RCPClient::SendBinary(const void *binaryData, unsigned int binaryDataLengthInBytes)
 {
-    SendMessageToStream(0, commands, binaryData, binaryDataLengthInBytes);
+    SendMessageToStream(0, binaryData, binaryDataLengthInBytes);
 }
 
-void RCPClient::SendBinary(void *binaryData, unsigned int binaryDataLengthInBytes, const char *commands /*= 0*/)
+void RCPClient::SendBinary(void *binaryData, unsigned int binaryDataLengthInBytes)
 {
-    SendMessageToStream(0, commands, binaryData, binaryDataLengthInBytes);
+    SendMessageToStream(0, binaryData, binaryDataLengthInBytes);
 }
 
-void RCPClient::Send(bool value, const char *commands /*= 0*/)
+void RCPClient::Send(bool value)
 {
-    Send(
-        value ? "{\"Value\":true}" : "{\"Value\":false}",
-        commands ? (std::string("ParseJson();") + std::string(commands)).c_str() : "ParseJson()"
-    );
+	Command("ParseJson()");
+    Send(value ? "{\"Value\":true}" : "{\"Value\":false}");
 }
 
 void RCPClient::SendFormated(const char *fmt, ...)
@@ -128,7 +133,7 @@ void RCPClient::SendFormated(const char *fmt, ...)
 #pragma endregion SENDING MESSAGES
 
 #pragma region PRIVATE IMPLEMENTATION
-void RCP::RCPClient::SendMessageToStream(const char *substreamName, const char *commands, const void *messageData, size_t messgeLengthInBytes)
+void RCP::RCPClient::SendMessageToStream(const char *substreamName, const void *messageData, size_t messgeLengthInBytes)
 {
     if(substreamName == 0)
         substreamName = m_pData->m_StreamNameForNextMessage.c_str();
@@ -144,7 +149,7 @@ void RCP::RCPClient::SendMessageToStream(const char *substreamName, const char *
 		std::string streamName = m_pData->m_ConstantPrefix;
 		if(!m_pData->m_ConstantPrefix.empty()) streamName += m_pData->m_SubstreamsSeparator;
 		streamName += absoluteStreamName;
-		SendMessageWithAddedSystemInfo(streamName.c_str(), commands, messageData, messgeLengthInBytes);
+		SendMessageWithAddedSystemInfo(streamName.c_str(), messageData, messgeLengthInBytes);
 	}
 	else
 	{
@@ -164,14 +169,14 @@ void RCP::RCPClient::SendMessageToStream(const char *substreamName, const char *
 			streamName.append(substreamName);
 		}
 
-		SendMessageWithAddedSystemInfo(streamName.c_str(), commands, messageData, messgeLengthInBytes);
+		SendMessageWithAddedSystemInfo(streamName.c_str(), messageData, messgeLengthInBytes);
 	}
     m_pData->m_StreamNameForNextMessage.clear();
 }
 
-void RCP::RCPClient::SendMessageWithAddedSystemInfo(const char *streamName, const char *commands, const void *messageData, size_t messageDataLengthInBytes)
+void RCP::RCPClient::SendMessageWithAddedSystemInfo(const char *streamName, const void *messageData, size_t messageDataLengthInBytes)
 {
-    //Write JSON string message
+	//Write JSON string message
     Json::Value root;
 
 	for(auto mapIt = m_pData->m_PermanentExtraData.begin(); mapIt != m_pData->m_PermanentExtraData.end(); mapIt++)
@@ -180,8 +185,11 @@ void RCP::RCPClient::SendMessageWithAddedSystemInfo(const char *streamName, cons
 	for(auto mapIt = m_pData->m_ExtraData.begin(); mapIt != m_pData->m_ExtraData.end(); mapIt++)
 		root[mapIt->first.c_str()] = mapIt->second.c_str();
 
-    if(commands)
-        root["Commands"] = commands;
+	for(auto commandIt = m_pData->m_Commands.begin(); commandIt != m_pData->m_Commands.end() ; commandIt++)
+		root["Commands"].append(*commandIt);
+
+//     if(commands)
+//         root["Commands"] = commands;
 
     root["TimeStampMsSince1970"] = MillisecondsSince1970();
 
@@ -193,6 +201,7 @@ void RCP::RCPClient::SendMessageWithAddedSystemInfo(const char *streamName, cons
 
     //All extra data are passed, new data will be added later
     m_pData->m_ExtraData.clear();
+	m_pData->m_Commands.clear();
 }
 
 #pragma endregion PRIVATE IMPLEMENTATION
