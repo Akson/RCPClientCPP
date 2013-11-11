@@ -12,9 +12,6 @@ struct RCP::RCPClientData
     std::string m_SubstreamsSeparator;
     std::string m_ConstantPrefix;
     std::string m_StreamNameForNextMessage;
-    std::string m_ThreadName;//Thread alias name
-    std::string m_ApplicationName;
-    std::string m_InstanceIdentifier;
     std::map<std::string, std::string> m_ExtraData;
 	std::map<std::string, std::string> m_PermanentExtraData;
 	std::vector<::std::string> m_Commands;
@@ -187,9 +184,6 @@ void RCP::RCPClient::SendMessageWithAddedSystemInfo(const char *streamName, cons
 
 	for(auto commandIt = m_pData->m_Commands.begin(); commandIt != m_pData->m_Commands.end() ; commandIt++)
 		root["Commands"].append(*commandIt);
-
-//     if(commands)
-//         root["Commands"] = commands;
 
     root["TimeStampMsSince1970"] = MillisecondsSince1970();
 
