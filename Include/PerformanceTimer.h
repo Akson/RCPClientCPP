@@ -1,26 +1,30 @@
-#ifndef _PERFORMANCE_TIMER_H_
-#define _PERFORMANCE_TIMER_H_
+#pragma once
 
-#include <windows.h>
+#include "RCPExport.h"
+#include <stdint.h>
 
-///Just a simple timer class. It starts at the creating momen and stores the last time value inside.
-class PerformanceTimer
+///Just a simple timer class. It starts at the creating moment and stores the last time value inside.
+class RCPCLIENT_API PerformanceTimer
 {
 public:
 	PerformanceTimer();
 	~PerformanceTimer();
 
-	void Start();
+	//Restarts a timer and returns number of ms since start or last restart
 	double ReStart();
+
+	//Returns number of ms since start or last restart
 	double GetCount();
-	void Print(char * name, bool reset = false);
-	void PrintLocal(char * name, bool reset = false);
+	
+	//Prints to RCP
+	void Print(const char * name, bool reset = false);
+	
+	//Print to local console
+	void PrintLocal(const char * name, bool reset = false);
 
 private:
-	double PCFreq;
-	__int64 CounterStart;
-	double LastPrintedValue;
-
+	void Start();
+	int64_t m_CounterStart;
+	double m_PCFreq;
+	double m_LastPrintedValue;
 };
-
-#endif
