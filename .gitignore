@@ -156,3 +156,4 @@ $RECYCLE.BIN/
 .DS_Store
 Lib
 Project/MSVS/Debug32
+Project/MSVS/Release32
