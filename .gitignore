@@ -157,3 +157,5 @@ $RECYCLE.BIN/
 Lib
 Project/MSVS/Debug32
 Project/MSVS/Release32
+Project/MSVS/Debug64
+Project/MSVS/Release64
