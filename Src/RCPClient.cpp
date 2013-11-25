@@ -132,6 +132,13 @@ void RCPClient::SendFormated(const char *fmt, ...)
 #pragma region PRIVATE IMPLEMENTATION
 void RCP::RCPClient::SendMessageToStream(const char *substreamName, const void *messageData, size_t messgeLengthInBytes)
 {
+	//Do nothing if there is no connection to a server
+	if (!m_pNetworkLayerImplementation->IsConnected())
+	{
+		ClearDataForNextMessage();
+		return;
+	}
+
     if(substreamName == 0)
         substreamName = m_pData->m_StreamNameForNextMessage.c_str();
 
@@ -194,7 +201,13 @@ void RCP::RCPClient::SendMessageWithAddedSystemInfo(const char *streamName, cons
     m_pNetworkLayerImplementation->SendMessageToServer(streamName, messageInfoJson.c_str(), messageData, messageDataLengthInBytes);
 
     //All extra data are passed, new data will be added later
-    m_pData->m_ExtraData.clear();
+	ClearDataForNextMessage();
+}
+
+void RCP::RCPClient::ClearDataForNextMessage()
+{
+	m_pData->m_StreamNameForNextMessage.clear();
+	m_pData->m_ExtraData.clear();
 	m_pData->m_Commands.clear();
 }
 

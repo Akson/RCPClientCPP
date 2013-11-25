@@ -13,6 +13,7 @@ public:
     void Disconnect();
 
     void SendMessageToServer(const char *streamName, const char *info, const void *messageData, size_t messgeLengthInBytes);
+	bool IsConnected(){ return m_Socket!=0; }
 
 private:
     //ZMQ machinery
