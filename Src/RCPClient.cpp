@@ -10,7 +10,6 @@ struct RCP::RCPClientData
 {
     std::vector<::std::string> m_SubstreamNamesStack;
     std::string m_SubstreamsSeparator;
-    std::string m_ConstantPrefix;
     std::string m_StreamNameForNextMessage;
     std::map<std::string, std::string> m_ExtraData;
 	std::map<std::string, std::string> m_PermanentExtraData;
@@ -60,11 +59,6 @@ void RCPClient::PushStreamName(const char *substreamName)
 void RCPClient::PopStreamName()
 {
     m_pData->m_SubstreamNamesStack.erase(m_pData->m_SubstreamNamesStack.end() - 1);
-}
-
-void RCPClient::SetStreamPrefix(const char *prefix)
-{
-    m_pData->m_ConstantPrefix = prefix;
 }
 #pragma endregion STREAMS
 
@@ -143,22 +137,19 @@ void RCP::RCPClient::SendMessageToStream(const char *substreamName, const void *
         substreamName = m_pData->m_StreamNameForNextMessage.c_str();
 
     //If substream name starts with @ symbol, it is threated as a full stream name
-    if(substreamName && substreamName[0] == '@')
+	std::string streamName;
+	
+	if(substreamName && substreamName[0] == '@')
 	{
 		const char *absoluteStreamName = substreamName + 1;
 
 		if(absoluteStreamName == 0)
 			absoluteStreamName = m_pData->m_StreamNameForNextMessage.c_str();
 
-		std::string streamName = m_pData->m_ConstantPrefix;
-		if(!m_pData->m_ConstantPrefix.empty()) streamName += m_pData->m_SubstreamsSeparator;
 		streamName += absoluteStreamName;
-		SendMessageWithAddedSystemInfo(streamName.c_str(), messageData, messgeLengthInBytes);
 	}
 	else
 	{
-		std::string streamName = m_pData->m_ConstantPrefix;
-		if(!m_pData->m_ConstantPrefix.empty()) streamName += m_pData->m_SubstreamsSeparator;
 		for(auto substreamNameIt = m_pData->m_SubstreamNamesStack.begin(); substreamNameIt != m_pData->m_SubstreamNamesStack.end(); substreamNameIt++)
 		{
 			if(substreamNameIt != m_pData->m_SubstreamNamesStack.begin())
@@ -172,10 +163,9 @@ void RCP::RCPClient::SendMessageToStream(const char *substreamName, const void *
 				streamName += m_pData->m_SubstreamsSeparator;
 			streamName.append(substreamName);
 		}
-
-		SendMessageWithAddedSystemInfo(streamName.c_str(), messageData, messgeLengthInBytes);
 	}
-    m_pData->m_StreamNameForNextMessage.clear();
+	SendMessageWithAddedSystemInfo(streamName.c_str(), messageData, messgeLengthInBytes);
+	m_pData->m_StreamNameForNextMessage.clear();
 }
 
 void RCP::RCPClient::SendMessageWithAddedSystemInfo(const char *streamName, const void *messageData, size_t messageDataLengthInBytes)

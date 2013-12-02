@@ -50,9 +50,6 @@ RCPClient &RCPClientsManager::GetRcpClientForCurrentThread()
 		pRCPClient->SetPermanent("ApplicationName", GetApplicationName().c_str());
 		pRCPClient->SetPermanent("InstanceIdentifier", GetApplicationInstanceId().c_str());
 		pRCPClient->SetPermanent("ThreadId", GetCurrentThreadIdentifier().c_str());
-		std::ostringstream ss;
-		ss << "[" << GetApplicationName() << "]";
-		pRCPClient->SetStreamPrefix(ss.str().c_str());
 		pRCPClient->PushStreamName("StdOut");
 
 

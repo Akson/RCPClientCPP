@@ -42,9 +42,6 @@ public:
 	void PushStreamName(const char *substreamName);
 	void PopStreamName();
 
-	//Stream prefix will be added to all stream names, even to absolute stream names starting with @.
-	void SetStreamPrefix(const char *prefix);
-
 	//////////////////////////////////////////////////////////////////////////
 	// EXTRA INFO
 	//////////////////////////////////////////////////////////////////////////
