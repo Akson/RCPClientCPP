@@ -1,6 +1,5 @@
 // RCClientCPP.cpp : Defines the entry point for the console application.
 //
-#define RCP_STATIC
 #include "RCP.h"
 #include <Windows.h>
 #include <sstream>

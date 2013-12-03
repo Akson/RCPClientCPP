@@ -11,91 +11,74 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{AE24ECD1-7025-4DEC-8B90-3A05FCEFD365}</ProjectGuid>
-    <RootNamespace>Distribution</RootNamespace>
+    <ProjectGuid>{B916258A-CD24-492B-A921-8B857A545BDC}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>RCPClientTest</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v120</PlatformToolset>
-    <CharacterSet>MultiByte</CharacterSet>
+    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v120</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>MultiByte</CharacterSet>
+    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\Project\RCPClientCPPStatic.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\Project\RCPClientCPPStatic.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
+      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
-    <CustomBuildStep>
-      <Command>
-      </Command>
-    </CustomBuildStep>
-    <PostBuildEvent>
-      <Command>rd $(SolutionDir)..\Distribution\$(Platform)\$(Configuration) /Q /S
-md $(SolutionDir)..\Distribution\$(Platform)\$(Configuration)
-xcopy $(SolutionDir)..\Lib\*.lib $(SolutionDir)..\Distribution\$(Platform)\$(Configuration)\
-xcopy $(SolutionDir)..\Bin\*.lib $(SolutionDir)..\Distribution\$(Platform)\$(Configuration)\
-xcopy $(SolutionDir)..\Bin\*.dll $(SolutionDir)..\Distribution\$(Platform)\$(Configuration)\
-xcopy $(SolutionDir)..\Include\RCP.h $(SolutionDir)..\Distribution\$(Platform)\$(Configuration)\
-xcopy $(SolutionDir)..\Include\RCPClient.h $(SolutionDir)..\Distribution\$(Platform)\$(Configuration)\
-xcopy $(SolutionDir)..\Include\RCPClientsManager.h $(SolutionDir)..\Distribution\$(Platform)\$(Configuration)\
-xcopy $(SolutionDir)..\Include\RCPExport.h $(SolutionDir)..\Distribution\$(Platform)\$(Configuration)\
-xcopy $(SolutionDir)..\Include\RCPTools.h $(SolutionDir)..\Distribution\$(Platform)\$(Configuration)\</Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
+      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
-    <CustomBuildStep>
-      <Command>
-      </Command>
-    </CustomBuildStep>
-    <PostBuildEvent>
-      <Command>rd $(SolutionDir)..\Distribution\$(Platform)\$(Configuration) /Q /S
-md $(SolutionDir)..\Distribution\$(Platform)\$(Configuration)
-xcopy $(SolutionDir)..\Lib\*.lib $(SolutionDir)..\Distribution\$(Platform)\$(Configuration)\
-xcopy $(SolutionDir)..\Bin\*.lib $(SolutionDir)..\Distribution\$(Platform)\$(Configuration)\
-xcopy $(SolutionDir)..\Bin\*.dll $(SolutionDir)..\Distribution\$(Platform)\$(Configuration)\
-xcopy $(SolutionDir)..\Include\RCP.h $(SolutionDir)..\Distribution\$(Platform)\$(Configuration)\
-xcopy $(SolutionDir)..\Include\RCPClient.h $(SolutionDir)..\Distribution\$(Platform)\$(Configuration)\
-xcopy $(SolutionDir)..\Include\RCPClientsManager.h $(SolutionDir)..\Distribution\$(Platform)\$(Configuration)\
-xcopy $(SolutionDir)..\Include\RCPExport.h $(SolutionDir)..\Distribution\$(Platform)\$(Configuration)\
-xcopy $(SolutionDir)..\Include\RCPTools.h $(SolutionDir)..\Distribution\$(Platform)\$(Configuration)\</Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="RCPClientTest.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
