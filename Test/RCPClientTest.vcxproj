@@ -59,6 +59,11 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <PreBuildEvent>
+      <Command>xcopy $(SolutionDir)..\Bin\* $(SolutionDir)RCPClientCPP\Bin\ /y /i
+xcopy $(SolutionDir)..\Include\* $(SolutionDir)RCPClientCPP\Include\ /y /i
+xcopy $(SolutionDir)..\Bin\*.dll $(TargetDir) /y /i</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -76,6 +81,11 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
+    <PreBuildEvent>
+      <Command>xcopy $(SolutionDir)..\Bin\* $(SolutionDir)RCPClientCPP\Bin\ /y /i
+xcopy $(SolutionDir)..\Include\* $(SolutionDir)RCPClientCPP\Include\ /y /i
+xcopy $(SolutionDir)..\Bin\*.dll $(TargetDir) /y /i</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="RCPClientTest.cpp" />
