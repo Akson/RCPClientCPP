@@ -159,3 +159,5 @@ Project/MSVS/Debug32
 Project/MSVS/Release32
 Project/MSVS/Debug64
 Project/MSVS/Release64
+Project/MSVS/StaticDebug32
+Project/MSVS/StaticRelease32

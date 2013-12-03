@@ -1,5 +1,6 @@
 // RCClientCPP.cpp : Defines the entry point for the console application.
 //
+#define RCP_STATIC
 #include "RCP.h"
 #include <Windows.h>
 #include <sstream>
@@ -27,9 +28,9 @@ void Test4()
 		std::vector<int> v;
 		v.push_back(3);
 		v.push_back(5);
-		RC.Stream("vector").Send(v);
-
-		RC.Stream("bool").Send(true);
+// 		RC.Stream("vector").Send(v);
+// 
+// 		RC.Stream("bool").Send(true);
 
 
 		//Sleep(5);

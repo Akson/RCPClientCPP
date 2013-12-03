@@ -1,0 +1,3 @@
+[submodule "3rdParty/libzmq"]
+	path = 3rdParty/libzmq
+	url = https://github.com/Akson/libzmq.git
