@@ -24,6 +24,18 @@ void MatrixPrint()
 		for each (auto var in matrix)
 			printf("%f ", var);
 
+		std::array<float, 4 * 4> m1;
+		std::generate(m1.begin(), m1.end(), rand);
+		RC.Stream("@MatrixPrinter/4x4f").SendBinary(m1.data(), (m1.end() - m1.begin())* sizeof(float));
+		for each (auto var in m1)
+			printf("%f ", var);
+
+		std::array<float, 4 * 4> m2;
+		std::generate(m2.begin(), m2.end(), rand);
+		RC.Set("BinaryDataFormat", "f").Set("Dimensions", "4x4").SendBinary(m2.data(), (m2.end() - m2.begin())* sizeof(float));
+		for each (auto var in m2)
+			printf("%f ", var);
+
 		std::array<int, 4 * 4> matrixInt;
 		std::generate(matrixInt.begin(), matrixInt.end(), rand);
 		RC.Stream("@MatrixPrinter").Set("BinaryDataFormat", "i").SendBinary(matrixInt.data(), (matrixInt.end() - matrixInt.begin())* sizeof(int));
