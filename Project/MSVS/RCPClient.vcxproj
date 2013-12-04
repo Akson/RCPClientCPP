@@ -237,8 +237,8 @@
       </Command>
     </PostBuildEvent>
     <PreBuildEvent>
-      <Command>xcopy $(ProjectDir)..\..\3rdParty\libzmq\bin\libzmq$(PlatformArchitecture)$(Configuration).dll $(ProjectDir)..\..\Bin\ /y /i
-xcopy $(ProjectDir)..\..\3rdParty\libzmq\bin\libzmq$(PlatformArchitecture)$(Configuration).lib $(ProjectDir)..\..\Bin\ /y /i</Command>
+      <Command>xcopy "$(ProjectDir)..\..\3rdParty\libzmq\bin\libzmq$(PlatformArchitecture)$(Configuration).dll" "$(ProjectDir)..\..\Bin\" /y /i
+xcopy "$(ProjectDir)..\..\3rdParty\libzmq\bin\libzmq$(PlatformArchitecture)$(Configuration).lib" "$(ProjectDir)..\..\Bin\" /y /i</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">
@@ -296,7 +296,7 @@ xcopy $(ProjectDir)..\..\3rdParty\libzmq\bin\libzmq$(PlatformArchitecture)$(Conf
       </Command>
     </PostBuildEvent>
     <PreBuildEvent>
-      <Command>xcopy $(ProjectDir)..\..\3rdParty\libzmq\bin\libzmq$(PlatformArchitecture)$(Configuration).lib $(ProjectDir)..\..\Bin\ /y /i</Command>
+      <Command>xcopy "$(ProjectDir)..\..\3rdParty\libzmq\bin\libzmq$(PlatformArchitecture)$(Configuration).lib" "$(ProjectDir)..\..\Bin\" /y /i</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -392,8 +392,8 @@ xcopy $(ProjectDir)..\..\3rdParty\libzmq\bin\libzmq$(PlatformArchitecture)$(Conf
       </Command>
     </PostBuildEvent>
     <PreBuildEvent>
-      <Command>xcopy $(ProjectDir)..\..\3rdParty\libzmq\bin\libzmq$(PlatformArchitecture)$(Configuration).dll $(ProjectDir)..\..\Bin\ /y /i
-xcopy $(ProjectDir)..\..\3rdParty\libzmq\bin\libzmq$(PlatformArchitecture)$(Configuration).lib $(ProjectDir)..\..\Bin\ /y /i</Command>
+      <Command>xcopy "$(ProjectDir)..\..\3rdParty\libzmq\bin\libzmq$(PlatformArchitecture)$(Configuration).dll" "$(ProjectDir)..\..\Bin\" /y /i
+xcopy "$(ProjectDir)..\..\3rdParty\libzmq\bin\libzmq$(PlatformArchitecture)$(Configuration).lib" "$(ProjectDir)..\..\Bin\" /y /i</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">
@@ -421,7 +421,7 @@ xcopy $(ProjectDir)..\..\3rdParty\libzmq\bin\libzmq$(PlatformArchitecture)$(Conf
       </Command>
     </PostBuildEvent>
     <PreBuildEvent>
-      <Command>xcopy $(ProjectDir)..\..\3rdParty\libzmq\bin\libzmq$(PlatformArchitecture)$(Configuration).lib $(ProjectDir)..\..\Bin\ /y /i</Command>
+      <Command>xcopy "$(ProjectDir)..\..\3rdParty\libzmq\bin\libzmq$(PlatformArchitecture)$(Configuration).lib" "$(ProjectDir)..\..\Bin\" /y /i</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
