@@ -48,7 +48,7 @@ template <class T> void RCPClient::Send(T value)
     valueStream << "{\"Value\":";
     valueStream << ConvertToString(value);
     valueStream << "}";
-	RCPClient::Command("ParseJson()");
+	Set("DataType", "JSON");
     RCPClient::Send(valueStream.str().c_str());
 }
 

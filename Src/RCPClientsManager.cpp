@@ -50,7 +50,7 @@ RCPClient &RCPClientsManager::GetRcpClientForCurrentThread()
 		pRCPClient->SetPermanent("ApplicationName", GetApplicationName().c_str());
 		pRCPClient->SetPermanent("InstanceIdentifier", GetApplicationInstanceId().c_str());
 		pRCPClient->SetPermanent("ThreadId", GetCurrentThreadIdentifier().c_str());
-		pRCPClient->PushStreamName("StdOut");
+		pRCPClient->PushStreamName("TextHtml");
 
 
         //This thread does not have initialized implementation yet, so create it
