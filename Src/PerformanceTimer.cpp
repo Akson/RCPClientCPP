@@ -44,8 +44,8 @@ inline double PerformanceTimer::ReStart()
 void PerformanceTimer::Print(const char* name, bool reset)
 {
 	double curValue = reset?ReStart():GetCount();
-	if (curValue < 1000) RCPrintf("TIMER (%s): %7.3f ms (delta %7.3f ms)\n", name, curValue, curValue-m_LastPrintedValue);
-	else RCPrintf("TIMER (%s): %7.3f s (delta %7.3f ms)\n", name, curValue/1000.0, curValue-m_LastPrintedValue);
+	if (curValue < 1000) RCPrintf("TIMER (%s): %7.3f ms (delta %7.3f ms)", name, curValue, curValue-m_LastPrintedValue);
+	else RCPrintf("TIMER (%s): %7.3f s (delta %7.3f ms)", name, curValue/1000.0, curValue-m_LastPrintedValue);
 
 	m_LastPrintedValue = curValue;
 }
