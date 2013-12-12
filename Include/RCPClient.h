@@ -60,11 +60,9 @@ public:
 	//////////////////////////////////////////////////////////////////////////
 
 	//Send test data to a stream
-	void Send(char *stringData);
 	void Send(const char *stringData);
 
 	//Send specified amount of binary data to a stream
-	void SendBinary(void *binaryData, unsigned int binaryDataLengthInBytes);
 	void SendBinary(const void *binaryData, unsigned int binaryDataLengthInBytes);
 	
 	//Send boolean data to a stream.

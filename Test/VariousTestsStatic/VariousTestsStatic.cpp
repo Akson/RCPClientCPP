@@ -122,6 +122,10 @@ void PrintFunctions()
 		for each (auto var in m1)
 			printf("%f ", var);
 
+		RC.Send(1);
+		RC.Send(2.1);
+		RC.Send(true);
+		RC.Send("string");
 	}
 }
 

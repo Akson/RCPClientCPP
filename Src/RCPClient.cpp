@@ -87,18 +87,7 @@ void RCPClient::Send(const char *stringData)
     SendMessageToStream(0, stringData, strlen(stringData));
 }
 
-void RCPClient::Send(char *stringData)
-{
-    SendMessageToStream(0, stringData, strlen(stringData));
-}
-
 void RCPClient::SendBinary(const void *binaryData, unsigned int binaryDataLengthInBytes)
-{
-	Set("DataType", "Binary");
-    SendMessageToStream(0, binaryData, binaryDataLengthInBytes);
-}
-
-void RCPClient::SendBinary(void *binaryData, unsigned int binaryDataLengthInBytes)
 {
 	Set("DataType", "Binary");
     SendMessageToStream(0, binaryData, binaryDataLengthInBytes);
@@ -107,7 +96,7 @@ void RCPClient::SendBinary(void *binaryData, unsigned int binaryDataLengthInByte
 void RCPClient::Send(bool value)
 {
 	Set("DataType", "JSON");
-    Send(value ? "{\"Value\":true}" : "{\"Value\":false}");
+    Send(value ? "{\"_Value\":true}" : "{\"_Value\":false}");
 }
 
 void RCPClient::SendFormated(const char *fmt, ...)
@@ -121,7 +110,7 @@ void RCPClient::SendFormated(const char *fmt, ...)
     res = vsprintf_s(buffer, fmt, ap);
     va_end(ap);
 
-    Send(buffer);
+	SendMessageToStream(0, buffer, strlen(buffer));
 }
 #pragma endregion SENDING MESSAGES
 
