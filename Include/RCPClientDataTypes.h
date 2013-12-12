@@ -45,7 +45,7 @@ template <class T> ::std::string ConvertToString(::std::vector<T> values)
 template <class T> void RCPClient::Send(T value)
 {
     ::std::ostringstream valueStream;
-    valueStream << "{\"Value\":";
+    valueStream << "{\"_Value\":";
     valueStream << ConvertToString(value);
     valueStream << "}";
 	Set("DataType", "JSON");

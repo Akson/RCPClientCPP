@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <thread>
 #include <chrono>
+#include "RCPClientDataTypes.h"
 
 BOOL WINAPI CtrlHandler(DWORD dwType)
 {
@@ -66,6 +67,64 @@ void Streams()
 	}
 }
 
+template <class T> ::std::string ConvertToString(T value)
+{
+	::std::ostringstream valueStream;
+	valueStream << value;
+	return valueStream.str();
+}
+
+template <class T> ::std::string ConvertToString(::std::vector<T> values)
+{
+	::std::ostringstream valueStream;
+	valueStream << "[";
+	for(auto it = values.begin(); it != values.end(); it++)
+	{
+		if(it != values.begin())
+			valueStream << ",";
+		valueStream << ConvertToString<T>(*it);
+	}
+	valueStream << "]";
+	return valueStream.str();
+}
+
+void PrintFunctions()
+{
+	PerformanceTimer pt;
+	int messagesCounter = 0;
+	while(GetAsyncKeyState(VK_ESCAPE) == false)
+	{
+		RCPrintf("abs     asdf    %d", rand());
+		RCPrinth("<font size=\"3\" color=\"red\">This is some text!</font>");
+
+		std::vector<int> v(4);
+		::std::ostringstream valueStream;
+		valueStream << "{\"Field1\":123, \"Field2\":";
+		valueStream << ConvertToString(v);
+		valueStream << "}";
+		RCPrintj(valueStream.str().c_str());
+
+		RCVar(rand());
+		RCVar(valueStream.str().c_str());
+
+		printf("%d\n", messagesCounter++);
+		std::this_thread::sleep_for(std::chrono::milliseconds(500));
+
+		std::array<float, 4 * 4> matrix;
+		std::generate(matrix.begin(), matrix.end(), rand);
+		RC.Stream("@MatrixPrinter").Set("BinaryDataFormat", "f").Set("Dimensions", "4x4").SendBinary(matrix.data(), (matrix.end() - matrix.begin())* sizeof(float));
+		for each (auto var in matrix)
+			printf("%f ", var);
+
+		std::array<float, 4 * 4> m1;
+		std::generate(m1.begin(), m1.end(), rand);
+		RC.Stream("@MatrixPrinter/#4x4f").SendBinary(m1.data(), (m1.end() - m1.begin())* sizeof(float));
+		for each (auto var in m1)
+			printf("%f ", var);
+
+	}
+}
+
 int main()
 {
 	//We need this to close ZMQ connection correctly
@@ -74,8 +133,9 @@ int main()
 	RCSetServerAddress("tcp://127.0.0.1:55557");
 	RCThreadGuard("MainThread");
 
-	MatrixPrint();
+	//MatrixPrint();
 	//Streams();
+	PrintFunctions();
 
 	return 0;
 }

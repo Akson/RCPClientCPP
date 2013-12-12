@@ -8,15 +8,22 @@
 #define S_(x) S(x)
 #define S__LINE__ S_(__LINE__)
 
+
 #define RCSetServerAddress(ServerName) RCP::RCPClientsManager::GetInstance().SetServerAddress(ServerName)
 #define RCConnect(ServerName) RCP::RCPClientsManager::GetRcpClientForCurrentThread().ConnectToServer(ServerName)
 #define RCDisconnect RCP::RCPClientsManager::GetRcpClientForCurrentThread().Disconnect
+#define RCThreadGuard(ThreadName) RCP::RCPThreadGuard _rcpThreadGuard(&(RCP::RCPClientsManager::GetRcpClientForCurrentThread()), ThreadName)
 
 #define RC RCP::RCPClientsManager::GetRcpClientForCurrentThread().Set("FileName", __FILE__).Set("CodeLine", S__LINE__).Set("FunctionSignature", __FUNCSIG__)
 
-#define RCVar(Variable) RC.Stream("@Vars/"#Variable"").Send(RCP::ConvertToString(Variable).c_str())
 
-#define RCPrint RCP::RCPClientsManager::GetRcpClientForCurrentThread().Set("FileName", __FILE__).Set("CodeLine", S__LINE__).Set("FunctionSignature", __FUNCSIG__).Send
-#define RCPrintf RCP::RCPClientsManager::GetRcpClientForCurrentThread().Set("FileName", __FILE__).Set("CodeLine", S__LINE__).Set("FunctionSignature", __FUNCSIG__).SendFormated
+#define RCPrint RC.Send
+#define RCPrintText RC.Stream("@_TextOut").SendFormated
+#define RCPrintHtml RC.Stream("@_HtmlOut").SendFormated
+#define RCPrintJson RC.Set("DataType", "JSON").Stream("@_JsonOut").SendFormated
+#define RCPrintVariable(Variable) RC.Stream("@_VarOut").Set("VariableName", ""#Variable"").Send(RCP::ConvertToString(Variable).c_str())
 
-#define RCThreadGuard(ThreadName) RCP::RCPThreadGuard _rcpThreadGuard(&(RCP::RCPClientsManager::GetRcpClientForCurrentThread()), ThreadName)
+#define RCPrintf RCPrintText
+#define RCPrinth RCPrintHtml
+#define RCPrintj RCPrintJson
+#define RCVar RCPrintVariable
