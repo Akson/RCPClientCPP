@@ -11,7 +11,8 @@ struct RCP::RCPClientData
     std::vector<::std::string> m_SubstreamNamesStack;
     std::string m_SubstreamsSeparator;
     std::string m_StreamNameForNextMessage;
-    std::map<std::string, std::string> m_ExtraData;
+	std::map<std::string, std::string> m_ExtraData;
+	std::map<std::string, float> m_ExtraDataFloat;
 	std::map<std::string, std::string> m_PermanentExtraData;
 	std::vector<::std::string> m_Commands;
 };
@@ -65,11 +66,17 @@ void RCPClient::PopStreamName()
 #pragma region EXTRA INFO
 RCPClient& RCPClient::Set(const char *key, const char *value)
 {
-    m_pData->m_ExtraData[key] = value;
-    return *this;
+	m_pData->m_ExtraData[key] = value;
+	return *this;
 }
 
-void RCPClient::SetPermanent( const char *key, const char *value )
+RCPClient& RCPClient::Set(const char *key, float value)
+{
+	m_pData->m_ExtraDataFloat[key] = value;
+	return *this;
+}
+
+void RCPClient::SetPermanent(const char *key, const char *value)
 {
 	m_pData->m_PermanentExtraData[key] = value;
 }
@@ -170,7 +177,10 @@ void RCP::RCPClient::SendMessageWithAddedSystemInfo(const char *streamName, cons
 	for(auto mapIt = m_pData->m_ExtraData.begin(); mapIt != m_pData->m_ExtraData.end(); mapIt++)
 		root[mapIt->first.c_str()] = mapIt->second.c_str();
 
-	for(auto commandIt = m_pData->m_Commands.begin(); commandIt != m_pData->m_Commands.end() ; commandIt++)
+	for(auto mapIt = m_pData->m_ExtraDataFloat.begin(); mapIt != m_pData->m_ExtraDataFloat.end(); mapIt++)
+		root[mapIt->first.c_str()] = mapIt->second;
+
+	for(auto commandIt = m_pData->m_Commands.begin(); commandIt != m_pData->m_Commands.end(); commandIt++)
 		root["Commands"].append(*commandIt);
 
     root["TimeStampMsSince1970"] = MillisecondsSince1970();
