@@ -21,7 +21,7 @@
 #define RCPrintText RC.Stream("@_TextOut").SendFormated
 #define RCPrintHtml RC.Stream("@_HtmlOut").SendFormated
 #define RCPrintJson RC.Set("DataType", "JSON").Stream("@_JsonOut").SendFormated
-#define RCPrintVariable(Variable) RC.Stream("@_VarOut").Set("VariableName", ""#Variable"").Send(RCP::ConvertToString(Variable).c_str())
+#define RCPrintVariable(Variable) RC.Stream("@_VarOut").Set("VariableName", ""#Variable"").Send(Variable)
 
 #define RCPrintf RCPrintText
 #define RCPrinth RCPrintHtml
