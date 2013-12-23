@@ -61,9 +61,9 @@ template <class T>
 void RCPClient::Send(T value)
 {
     ::std::ostringstream valueStream;
-    valueStream << "{\"_Value\":";
+    valueStream << "{\"_Value\":\"";
 	valueStream << value;
-    valueStream << "}";
+    valueStream << "\"}";
 	Set("DataType", "JSON");
     RCPClient::Send(valueStream.str().c_str());
 }
