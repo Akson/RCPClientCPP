@@ -33,7 +33,6 @@ RCPClient::~RCPClient(void)
     delete(m_pNetworkLayerImplementation);
 }
 
-#pragma region NETWORKING
 void RCPClient::ConnectToServer(const char *ServerAddress)
 {
     m_pNetworkLayerImplementation->ConnectToServer(ServerAddress);
@@ -43,9 +42,7 @@ void RCPClient::Disconnect()
 {
     m_pNetworkLayerImplementation->Disconnect();
 }
-#pragma endregion NETWORKING
 
-#pragma region STREAMS
 RCPClient& RCPClient::Stream(const char *stream)
 {
     m_pData->m_StreamNameForNextMessage = stream;
@@ -61,9 +58,7 @@ void RCPClient::PopStreamName()
 {
     m_pData->m_SubstreamNamesStack.erase(m_pData->m_SubstreamNamesStack.end() - 1);
 }
-#pragma endregion STREAMS
 
-#pragma region EXTRA INFO
 RCPClient& RCPClient::Set(const char *key, const char *value)
 {
 	m_pData->m_ExtraData[key] = value;
@@ -87,9 +82,6 @@ void RCPClient::SetPermanent(const char *key, const char *value)
 	m_pData->m_PermanentExtraData[key] = value;
 }
 
-#pragma endregion EXTRA INFO
-
-#pragma region SENDING MESSAGES
 void RCPClient::Send(const char *stringData)
 {
     SendMessageToStream(0, stringData, strlen(stringData));
@@ -120,10 +112,8 @@ void RCPClient::SendFormated(const char *fmt, ...)
 
 	SendMessageToStream(0, buffer, strlen(buffer));
 }
-#pragma endregion SENDING MESSAGES
 
-#pragma region PRIVATE IMPLEMENTATION
-void RCP::RCPClient::SendMessageToStream(const char *substreamName, const void *messageData, size_t messgeLengthInBytes)
+void RCPClient::SendMessageToStream(const char *substreamName, const void *messageData, size_t messgeLengthInBytes)
 {
 	//Do nothing if there is no connection to a server
 	if (!m_pNetworkLayerImplementation->IsConnected())
@@ -167,7 +157,7 @@ void RCP::RCPClient::SendMessageToStream(const char *substreamName, const void *
 	m_pData->m_StreamNameForNextMessage.clear();
 }
 
-void RCP::RCPClient::SendMessageWithAddedSystemInfo(const char *streamName, const void *messageData, size_t messageDataLengthInBytes)
+void RCPClient::SendMessageWithAddedSystemInfo(const char *streamName, const void *messageData, size_t messageDataLengthInBytes)
 {
 	//Write JSON string message
     Json::Value root;
@@ -196,7 +186,7 @@ void RCP::RCPClient::SendMessageWithAddedSystemInfo(const char *streamName, cons
 	ClearDataForNextMessage();
 }
 
-void RCP::RCPClient::ClearDataForNextMessage()
+void RCPClient::ClearDataForNextMessage()
 {
 	m_pData->m_StreamNameForNextMessage.clear();
 	m_pData->m_ExtraData.clear();
@@ -204,4 +194,3 @@ void RCP::RCPClient::ClearDataForNextMessage()
 	m_pData->m_ExtraDataInt.clear();
 }
 
-#pragma endregion PRIVATE IMPLEMENTATION
