@@ -13,8 +13,8 @@ struct RCP::RCPClientData
     std::string m_StreamNameForNextMessage;
 	std::map<std::string, std::string> m_ExtraData;
 	std::map<std::string, float> m_ExtraDataFloat;
+	std::map<std::string, int> m_ExtraDataInt;
 	std::map<std::string, std::string> m_PermanentExtraData;
-	std::vector<::std::string> m_Commands;
 };
 
 RCPClient::RCPClient(void)
@@ -76,14 +76,15 @@ RCPClient& RCPClient::Set(const char *key, float value)
 	return *this;
 }
 
+RCPClient& RCPClient::Set(const char *key, int value)
+{
+	m_pData->m_ExtraDataInt[key] = value;
+	return *this;
+}
+
 void RCPClient::SetPermanent(const char *key, const char *value)
 {
 	m_pData->m_PermanentExtraData[key] = value;
-}
-RCPClient& RCPClient::Command( const char *command )
-{
-	m_pData->m_Commands.push_back(std::string(command));
-	return *this;
 }
 
 #pragma endregion EXTRA INFO
@@ -180,10 +181,10 @@ void RCP::RCPClient::SendMessageWithAddedSystemInfo(const char *streamName, cons
 	for(auto mapIt = m_pData->m_ExtraDataFloat.begin(); mapIt != m_pData->m_ExtraDataFloat.end(); mapIt++)
 		root[mapIt->first.c_str()] = mapIt->second;
 
-	for(auto commandIt = m_pData->m_Commands.begin(); commandIt != m_pData->m_Commands.end(); commandIt++)
-		root["Commands"].append(*commandIt);
+	for(auto mapIt = m_pData->m_ExtraDataInt.begin(); mapIt != m_pData->m_ExtraDataInt.end(); mapIt++)
+		root[mapIt->first.c_str()] = mapIt->second;
 
-    root["TimeStampMsSince1970"] = MillisecondsSince1970();
+	root["TimeStampMsSince1970"] = MillisecondsSince1970();
 
     Json::FastWriter writer;
     std::string messageInfoJson = writer.write(root);
@@ -199,7 +200,8 @@ void RCP::RCPClient::ClearDataForNextMessage()
 {
 	m_pData->m_StreamNameForNextMessage.clear();
 	m_pData->m_ExtraData.clear();
-	m_pData->m_Commands.clear();
+	m_pData->m_ExtraDataFloat.clear();
+	m_pData->m_ExtraDataInt.clear();
 }
 
 #pragma endregion PRIVATE IMPLEMENTATION

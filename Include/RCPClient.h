@@ -49,12 +49,10 @@ public:
 	//Set parameter value that will be passed to the server in a next message in JSON format
 	RCPClient& Set(const char *key, const char *value);
 	RCPClient& Set(const char *key, float value);
+	RCPClient& Set(const char *key, int value);
 
 	//Set parameter value that will be passed to the server in every message in JSON format
 	void SetPermanent(const char *key, const char *value);
-
-	//Add command to a list of commands that server should perform
-	RCPClient& Command(const char *command);
 
 	//////////////////////////////////////////////////////////////////////////
 	// SENDING MESSAGES
