@@ -18,10 +18,10 @@
 
 
 #define RCPrint RC.Send
-#define RCPrintText RC.Stream("@_TextOut").SendFormated
-#define RCPrintHtml RC.Stream("@_HtmlOut").SendFormated
-#define RCPrintJson RC.Set("DataType", "JSON").Stream("@_JsonOut").SendFormated
-#define RCPrintVariable(Variable) RC.Stream("@_VarOut").Set("VariableName", ""#Variable"").Send(Variable)
+#define RCPrintText RC.Set("ProcessingSequence", "_Text").SendFormated
+#define RCPrintHtml RC.Set("ProcessingSequence", "_Html").SendFormated
+#define RCPrintJson RC.Set("ProcessingSequence", "_Json").Set("DataType", "JSON").SendFormated
+#define RCPrintVariable(Variable) RC.Set("ProcessingSequence", "_Var").Set("VariableName", ""#Variable"").Send(Variable)
 
 #define RCPrintf RCPrintText
 #define RCPrinth RCPrintHtml

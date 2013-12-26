@@ -90,12 +90,16 @@ void PrintFunctions()
 
 		std::array<float, 4 * 4> matrix;
 		std::generate(matrix.begin(), matrix.end(), rand);
-		RC.Stream("@MatrixPrinter").Set("BinaryDataFormat", "f").Set("Dimensions", "4x4").SendBinary(matrix.data(), (matrix.end() - matrix.begin())* sizeof(float));
+		RC.Set("ProcessingSequence", "_2dMatrixTable").Set("MatrixDescription", "#4x4f").SendBinary(matrix.data(), (matrix.end() - matrix.begin())* sizeof(float));
+		RC.Set("ProcessingSequence", "_2dMatrixTable").Set("VariableName", "name 123").Set("BinaryDataFormat", "f").Set("Dimensions", "4x4").SendBinary(matrix.data(), (matrix.end() - matrix.begin())* sizeof(float));
+		RC.Set("VariableName", "name 123").Set("BinaryDataFormat", "f").Set("Dimensions", "4x4").SendBinary(matrix.data(), (matrix.end() - matrix.begin())* sizeof(float));
 
 		std::array<float, 4 * 4> m1;
 		std::generate(m1.begin(), m1.end(), rand);
-		RC.Stream("@MatrixPrinter/#4x4f").SendBinary(m1.data(), (m1.end() - m1.begin())* sizeof(float));
+		RC.Set("ProcessingSequence", "MatrixPrinter/#4x4f").SendBinary(m1.data(), (m1.end() - m1.begin())* sizeof(float));
 
+		RC.Stream("TestStream").Set("ProcessingSequence", "_Text").Send("test123123");
+		RC.Set("ProcessingSequence", "_Text").Send("testAAAAA");
 		RC.Send(1);
 		RC.Send(2.1);
 		RC.Send(true);
