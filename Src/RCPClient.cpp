@@ -43,13 +43,13 @@ RCPClient& RCP::RCPClient::Set(const char *key, float value, bool permanent)
 
 void RCPClient::Send(const char *stringData)
 {
-    SendMessageToStream(0, stringData, strlen(stringData));
+    SendMessageToStream(stringData, strlen(stringData));
 }
 
 void RCPClient::SendBinary(const void *binaryData, unsigned int binaryDataLengthInBytes)
 {
 	Set("DataType", "Binary");
-    SendMessageToStream(0, binaryData, binaryDataLengthInBytes);
+    SendMessageToStream(binaryData, binaryDataLengthInBytes);
 }
 
 void RCPClient::Send(bool value)
@@ -69,6 +69,6 @@ void RCPClient::SendFormated(const char *fmt, ...)
     res = vsprintf_s(buffer, fmt, ap);
     va_end(ap);
 
-	SendMessageToStream(0, buffer, strlen(buffer));
+	SendMessageToStream(buffer, strlen(buffer));
 }
 

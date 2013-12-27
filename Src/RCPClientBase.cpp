@@ -41,13 +41,8 @@ void RCPClientBase::PopStreamName()
 	m_pData->m_SubstreamNamesStack.erase(m_pData->m_SubstreamNamesStack.end() - 1);
 }
 
-void RCPClientBase::SendMessageToStream(const char *substreamName, const void *messageData, size_t messgeLengthInBytes)
+void RCPClientBase::SendMessageToStream(const void *messageData, size_t messgeLengthInBytes)
 {
-	std::string streamNameForNextMessage;
-	auto it = m_pData->m_ExtraData.find("Stream");
-	if(it != m_pData->m_ExtraData.end())
-		streamNameForNextMessage = it->second;
-
     //Do nothing if there is no connection to a server
     if(!IsConnected())
     {
@@ -55,36 +50,32 @@ void RCPClientBase::SendMessageToStream(const char *substreamName, const void *m
         return;
     }
 
-    if(substreamName == 0)
-		substreamName = streamNameForNextMessage.c_str();
+	std::string streamNameForNextMessage;
+	auto it = m_pData->m_ExtraData.find("Stream");
+	if(it != m_pData->m_ExtraData.end())
+		streamNameForNextMessage = it->second;
+
+	const char *substreamName = streamNameForNextMessage.c_str();
 
     //If substream name starts with @ symbol, it is threated as a full stream name
     std::string streamName;
+	for(auto substreamNameIt = m_pData->m_SubstreamNamesStack.begin(); substreamNameIt != m_pData->m_SubstreamNamesStack.end(); substreamNameIt++)
+	{
+		if(substreamNameIt != m_pData->m_SubstreamNamesStack.begin())
+			streamName += m_pData->m_SubstreamsSeparator;
+		streamName += *substreamNameIt;
+	}
 
-    if(substreamName && substreamName[0] == '@')
+	if(streamNameForNextMessage.length()>0)
     {
-        const char *absoluteStreamName = substreamName + 1;
-
-        if(absoluteStreamName == 0)
-			absoluteStreamName = streamNameForNextMessage.c_str();
-
-        streamName += absoluteStreamName;
-    }
-    else
-    {
-        for(auto substreamNameIt = m_pData->m_SubstreamNamesStack.begin(); substreamNameIt != m_pData->m_SubstreamNamesStack.end(); substreamNameIt++)
-        {
-            if(substreamNameIt != m_pData->m_SubstreamNamesStack.begin())
-                streamName += m_pData->m_SubstreamsSeparator;
-            streamName += *substreamNameIt;
-        }
-
-        if(substreamName && strlen(substreamName))
-        {
-            if(m_pData->m_SubstreamNamesStack.size() > 0)
-                streamName += m_pData->m_SubstreamsSeparator;
-            streamName.append(substreamName);
-        }
+		if(streamNameForNextMessage[0] == '@')
+			streamName = streamNameForNextMessage;
+		else
+		{
+			if(streamName.length() > 0)
+				streamName += m_pData->m_SubstreamsSeparator;
+			streamName += streamNameForNextMessage;
+		}
     }
     SendMessageWithAddedSystemInfo(streamName.c_str(), messageData, messgeLengthInBytes);
 }
