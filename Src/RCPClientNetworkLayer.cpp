@@ -1,7 +1,5 @@
 #include "RCPClientNetworkLayer.h"
 #include "zmq.h"
-#include <winbase.h>
-#include <stdio.h>
 
 using namespace RCP;
 
@@ -31,7 +29,6 @@ void RCPClientNetworkLayer::SendMessageToServer(const char *streamName, const ch
     zmq_msg_init_size(&zmqMsg, messageLength);
     char *pZmqMessage = reinterpret_cast<char *>(zmq_msg_data(&zmqMsg));
 
-
     //Copy stream name
     memcpy(pZmqMessage, streamName, streamNameLength);
     pZmqMessage += streamNameLength;
@@ -50,8 +47,6 @@ void RCPClientNetworkLayer::SendMessageToServer(const char *streamName, const ch
 
     //Copy binary data
     memcpy(pZmqMessage, messageData, dataLengthInBytes);
-
-	//printf("%s | %s | %s\n", streamName, messageInfo, (char*)messageData);
 
     //Send ZMQ message to the server
     int res = zmq_msg_send(&zmqMsg, m_Socket, 0);
@@ -87,4 +82,9 @@ void RCPClientNetworkLayer::Disconnect()
         m_Context = 0;
         m_Connected = false;
     }
+}
+
+bool RCP::RCPClientNetworkLayer::IsConnected()
+{
+	return m_Socket != 0;
 }

@@ -9,11 +9,16 @@ public:
     RCPClientNetworkLayer();
     virtual ~RCPClientNetworkLayer();
 
-    int ConnectToServer(const char *ServerAddress);
-    void Disconnect();
+	//Connects to a give server and port. Use ZMQ format like "tcp://127.0.0.1:55557"
+	int ConnectToServer(const char *ServerAddress);
+	
+	//Closes ZMQ socket and contexts (all other information is preserved)
+	void Disconnect();
 
-    void SendMessageToServer(const char *streamName, const char *info, const void *messageData, size_t messgeLengthInBytes);
-	bool IsConnected(){ return m_Socket!=0; }
+	bool IsConnected();
+
+protected:
+	void SendMessageToServer(const char *streamName, const char *info, const void *messageData, size_t messgeLengthInBytes);
 
 private:
     //ZMQ machinery

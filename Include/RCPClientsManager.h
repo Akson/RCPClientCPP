@@ -1,7 +1,7 @@
 #pragma once
 #include "RCPExport.h"
 #include "RCPClient.h"
-#include "RCPTools.h"
+#include <memory>
 
 namespace RCP
 {
@@ -28,11 +28,11 @@ private:
 
 public:
 	static RCPClient &GetRcpClientForCurrentThread();
-	void SetServerAddress(const char *pServerName);
+	void SetServerAddress(const char *serverName);
 
 private:
-    RcpClientsStorage *m_pRCPClientsStorage;
-	::std::string m_DefaultServerAddreess;
+	std::unique_ptr<RcpClientsStorage> m_pRCPClientsStorage;
+	std::string m_DefaultServerAddreess;
 };
 
 class RCPCLIENT_API RCPThreadGuard
@@ -41,7 +41,7 @@ public:
 	RCPThreadGuard(RCPClient *pRCPClient, const char *threadName)
 		:m_pRCPClient(pRCPClient)
 	{
-		pRCPClient->SetPermanent("ThreadName", threadName);
+		pRCPClient->Set("ThreadName", threadName, true);
 	}
 	~RCPThreadGuard()
 	{
