@@ -41,7 +41,7 @@ void RCPClientBase::PopStreamName()
 	m_pData->m_SubstreamNamesStack.erase(m_pData->m_SubstreamNamesStack.end() - 1);
 }
 
-void RCPClientBase::SendMessageToStream(const void *messageData, size_t messgeLengthInBytes)
+void RCPClientBase::PreprareAndSendMessage(const void *messageData, size_t messgeLengthInBytes)
 {
     //Do nothing if there is no connection to a server
     if(!IsConnected())
@@ -50,14 +50,6 @@ void RCPClientBase::SendMessageToStream(const void *messageData, size_t messgeLe
         return;
     }
 
-	std::string streamNameForNextMessage;
-	auto it = m_pData->m_ExtraData.find("Stream");
-	if(it != m_pData->m_ExtraData.end())
-		streamNameForNextMessage = it->second;
-
-	const char *substreamName = streamNameForNextMessage.c_str();
-
-    //If substream name starts with @ symbol, it is threated as a full stream name
     std::string streamName;
 	for(auto substreamNameIt = m_pData->m_SubstreamNamesStack.begin(); substreamNameIt != m_pData->m_SubstreamNamesStack.end(); substreamNameIt++)
 	{
@@ -66,6 +58,13 @@ void RCPClientBase::SendMessageToStream(const void *messageData, size_t messgeLe
 		streamName += *substreamNameIt;
 	}
 
+	//Stream name is a value for key "Stream"
+	std::string streamNameForNextMessage;
+	auto it = m_pData->m_ExtraData.find("Stream");
+	if(it != m_pData->m_ExtraData.end())
+		streamNameForNextMessage = it->second;
+
+	//If substream name starts with @ symbol, it is threated as a full stream name
 	if(streamNameForNextMessage.length()>0)
     {
 		if(streamNameForNextMessage[0] == '@')
@@ -77,30 +76,26 @@ void RCPClientBase::SendMessageToStream(const void *messageData, size_t messgeLe
 			streamName += streamNameForNextMessage;
 		}
     }
-    SendMessageWithAddedSystemInfo(streamName.c_str(), messageData, messgeLengthInBytes);
-}
 
-void RCPClientBase::SendMessageWithAddedSystemInfo(const char *streamName, const void *messageData, size_t messageDataLengthInBytes)
-{
-    //Write JSON string message
-    Json::Value root;
+	//Write JSON string message
+	Json::Value root;
 
-    for(auto mapIt = m_pData->m_PermanentExtraData.begin(); mapIt != m_pData->m_PermanentExtraData.end(); mapIt++)
-        root[mapIt->first.c_str()] = mapIt->second.c_str();
+	for(auto mapIt = m_pData->m_PermanentExtraData.begin(); mapIt != m_pData->m_PermanentExtraData.end(); mapIt++)
+		root[mapIt->first.c_str()] = mapIt->second.c_str();
 
-    for(auto mapIt = m_pData->m_ExtraData.begin(); mapIt != m_pData->m_ExtraData.end(); mapIt++)
-        root[mapIt->first.c_str()] = mapIt->second.c_str();
+	for(auto mapIt = m_pData->m_ExtraData.begin(); mapIt != m_pData->m_ExtraData.end(); mapIt++)
+		root[mapIt->first.c_str()] = mapIt->second.c_str();
 
-    root["TimeStampMsSince1970"] = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+	root["TimeStampMsSince1970"] = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
 
-    Json::FastWriter writer;
-    std::string messageInfoJson = writer.write(root);
+	Json::FastWriter writer;
+	std::string messageInfoJson = writer.write(root);
 
-    //Send ZMQ message to the server
-    SendMessageToServer(streamName, messageInfoJson.c_str(), messageData, messageDataLengthInBytes);
+	//Send ZMQ message to the server
+	SendMessageToServer(streamName.c_str(), messageInfoJson.c_str(), messageData, messgeLengthInBytes);
 
-    //All extra data are passed, new data will be added later
-    ClearDataForNextMessage();
+	//All extra data are passed, new data will be added later
+	ClearDataForNextMessage();
 }
 
 void RCPClientBase::ClearDataForNextMessage()

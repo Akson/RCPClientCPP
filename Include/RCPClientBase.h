@@ -25,8 +25,7 @@ public:
     void PopStreamName();
 
 protected:
-    void SendMessageToStream(const void *messageData, size_t messgeLengthInBytes);
-    void SendMessageWithAddedSystemInfo(const char *streamName, const void *messageData, size_t messageDataLengthInBytes);
+    void PreprareAndSendMessage(const void *messageData, size_t messgeLengthInBytes);
     void ClearDataForNextMessage();
 
     std::unique_ptr<RCPClientData> m_pData;
