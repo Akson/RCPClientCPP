@@ -7,6 +7,11 @@
 class RCPCLIENT_API PerformanceTimer
 {
 public:
+	static PerformanceTimer& Instance()
+	{
+		static PerformanceTimer pt;
+		return pt;
+	}
 	PerformanceTimer();
 	~PerformanceTimer();
 
