@@ -17,28 +17,28 @@ RCPClient::~RCPClient(void)
 {
 }
 
-RCPClient& RCPClient::Stream(const std::string &stream)
+RCPClient &RCPClient::Stream(const std::string &stream)
 {
-	SetValueForNextMessage("Stream", stream);
+    SetValueForNextMessage("Stream", stream);
     return *this;
 }
 
-RCPClient& RCP::RCPClient::Set(const char *key, const std::string &value, bool permanent)
+RCPClient &RCP::RCPClient::Set(const char *key, const std::string &value, bool permanent)
 {
-	SetValueForNextMessage(key, value, permanent);
-	return *this;
+    SetValueForNextMessage(key, value, permanent);
+    return *this;
 }
 
-RCPClient& RCP::RCPClient::Set(const char *key, int value, bool permanent)
+RCPClient &RCP::RCPClient::Set(const char *key, int value, bool permanent)
 {
-	SetValueForNextMessage(key, std::to_string(value), permanent);
-	return *this;
+    SetValueForNextMessage(key, std::to_string(value), permanent);
+    return *this;
 }
 
-RCPClient& RCP::RCPClient::Set(const char *key, float value, bool permanent)
+RCPClient &RCP::RCPClient::Set(const char *key, float value, bool permanent)
 {
-	SetValueForNextMessage(key, std::to_string(value), permanent);
-	return *this;
+    SetValueForNextMessage(key, std::to_string(value), permanent);
+    return *this;
 }
 
 void RCPClient::Send(const char *stringData)
@@ -48,13 +48,13 @@ void RCPClient::Send(const char *stringData)
 
 void RCPClient::SendBinary(const void *binaryData, unsigned int binaryDataLengthInBytes)
 {
-	Set("DataType", "Binary");
+    Set("DataType", "Binary");
     PreprareAndSendMessage(binaryData, binaryDataLengthInBytes);
 }
 
 void RCPClient::Send(bool value)
 {
-	Set("DataType", "JSON");
+    Set("DataType", "JSON");
     Send(value ? "{\"_Value\":true}" : "{\"_Value\":false}");
 }
 
@@ -69,6 +69,6 @@ void RCPClient::SendFormated(const char *fmt, ...)
     res = vsprintf_s(buffer, fmt, ap);
     va_end(ap);
 
-	PreprareAndSendMessage(buffer, strlen(buffer));
+    PreprareAndSendMessage(buffer, strlen(buffer));
 }
 

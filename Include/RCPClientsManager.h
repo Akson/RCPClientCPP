@@ -27,30 +27,30 @@ private:
     //////////////////////////////////////////////////////////////////////////
 
 public:
-	static RCPClient &GetRcpClientForCurrentThread();
-	void SetServerAddress(const char *serverName);
+    static RCPClient &GetRcpClientForCurrentThread();
+    void SetServerAddress(const char *serverName);
 
 private:
-	std::unique_ptr<RcpClientsStorage> m_pRCPClientsStorage;
-	std::string m_DefaultServerAddreess;
+    std::unique_ptr<RcpClientsStorage> m_pRCPClientsStorage;
+    std::string m_DefaultServerAddreess;
 };
 
 class RCPCLIENT_API RCPThreadGuard
 {
 public:
-	RCPThreadGuard(RCPClient *pRCPClient, const char *threadName)
-		:m_pRCPClient(pRCPClient)
-	{
-		pRCPClient->Set("ThreadName", threadName, true);
-	}
-	~RCPThreadGuard()
-	{
-		m_pRCPClient->Disconnect();
-	}
+    RCPThreadGuard(RCPClient *pRCPClient, const char *threadName)
+        : m_pRCPClient(pRCPClient)
+    {
+        pRCPClient->Set("ThreadName", threadName, true);
+    }
+    ~RCPThreadGuard()
+    {
+        m_pRCPClient->Disconnect();
+    }
 private:
-	RCPThreadGuard(RCPThreadGuard const &);
-	void operator=(RCPThreadGuard const &);
-	RCPClient *m_pRCPClient;
+    RCPThreadGuard(RCPThreadGuard const &);
+    void operator=(RCPThreadGuard const &);
+    RCPClient *m_pRCPClient;
 };
 
 }

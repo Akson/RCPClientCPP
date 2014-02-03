@@ -39,15 +39,15 @@ std::string GetApplicationInstanceId()
 
 std::string GetThreadIdString()
 {
-	std::ostringstream stringStream;
-	stringStream << std::this_thread::get_id();
-	return stringStream.str();
+    std::ostringstream stringStream;
+    stringStream << std::this_thread::get_id();
+    return stringStream.str();
 }
 
 
 struct RCP::RcpClientsStorage
 {
-	std::map<std::thread::id, std::unique_ptr<RCPClient>> m_pRcpClients;
+    std::map<std::thread::id, std::unique_ptr<RCPClient>> m_pRcpClients;
     std::mutex m_pRcpClientsMutex;
 };
 
@@ -65,27 +65,27 @@ RCPClientsManager::~RCPClientsManager(void)
 RCPClient &RCPClientsManager::GetRcpClientForCurrentThread()
 {
     std::thread::id threadId = std::this_thread::get_id();
-	auto &instance = RCPClientsManager::GetInstance();
-	auto &storage = instance.m_pRCPClientsStorage;
-	auto &rcpClients = storage->m_pRcpClients;
+    auto &instance = RCPClientsManager::GetInstance();
+    auto &storage = instance.m_pRCPClientsStorage;
+    auto &rcpClients = storage->m_pRcpClients;
 
     storage->m_pRcpClientsMutex.lock();
     auto clientIt = rcpClients.find(threadId);
     if(clientIt == rcpClients.end())
     {
-		std::unique_ptr<RCPClient> pRCPClient(new RCPClient());
+        std::unique_ptr<RCPClient> pRCPClient(new RCPClient());
 
-		pRCPClient->Set("ApplicationName", GetApplicationName().c_str(), true);
-		pRCPClient->Set("InstanceIdentifier", GetApplicationInstanceId().c_str(), true);
-		pRCPClient->Set("ThreadId", GetThreadIdString().c_str(), true);
-		pRCPClient->Set("ProcessingSequence", "_Text", true);
+        pRCPClient->Set("ApplicationName", GetApplicationName().c_str(), true);
+        pRCPClient->Set("InstanceIdentifier", GetApplicationInstanceId().c_str(), true);
+        pRCPClient->Set("ThreadId", GetThreadIdString().c_str(), true);
+        pRCPClient->Set("ProcessingSequence", "_Text", true);
         pRCPClient->PushStreamName("#");
 
         //This thread does not have initialized implementation yet, so create it
         clientIt = rcpClients.insert(std::make_pair(threadId, std::move(pRCPClient))).first;
         //Connect to default server when a new thread is created
-		if(instance.m_DefaultServerAddreess.size() > 0)
-			clientIt->second->ConnectToServer(instance.m_DefaultServerAddreess.c_str());
+        if(instance.m_DefaultServerAddreess.size() > 0)
+            clientIt->second->ConnectToServer(instance.m_DefaultServerAddreess.c_str());
     }
     storage->m_pRcpClientsMutex.unlock();
 
@@ -94,5 +94,5 @@ RCPClient &RCPClientsManager::GetRcpClientForCurrentThread()
 
 void RCP::RCPClientsManager::SetServerAddress(const char *serverName)
 {
-	RCPClientsManager::GetInstance().m_DefaultServerAddreess = serverName;
+    RCPClientsManager::GetInstance().m_DefaultServerAddreess = serverName;
 }

@@ -6,10 +6,10 @@ using namespace RCP;
 
 struct RCP::RCPClientData
 {
-	std::string m_SubstreamsSeparator;
-	std::vector<::std::string> m_SubstreamNamesStack;
-	std::map<std::string, std::string> m_ExtraData;
-	std::map<std::string, std::string> m_PermanentExtraData;
+    std::string m_SubstreamsSeparator;
+    std::vector<::std::string> m_SubstreamNamesStack;
+    std::map<std::string, std::string> m_ExtraData;
+    std::map<std::string, std::string> m_PermanentExtraData;
 };
 
 RCPClientBase::RCPClientBase()
@@ -33,12 +33,12 @@ void RCPClientBase::SetValueForNextMessage(const std::string &key, const std::st
 
 void RCPClientBase::PushStreamName(const std::string &substreamName)
 {
-	m_pData->m_SubstreamNamesStack.push_back(substreamName);
+    m_pData->m_SubstreamNamesStack.push_back(substreamName);
 }
 
 void RCPClientBase::PopStreamName()
 {
-	m_pData->m_SubstreamNamesStack.erase(m_pData->m_SubstreamNamesStack.end() - 1);
+    m_pData->m_SubstreamNamesStack.erase(m_pData->m_SubstreamNamesStack.end() - 1);
 }
 
 void RCPClientBase::PreprareAndSendMessage(const void *messageData, size_t messgeLengthInBytes)
@@ -51,51 +51,51 @@ void RCPClientBase::PreprareAndSendMessage(const void *messageData, size_t messg
     }
 
     std::string streamName;
-	for(auto substreamNameIt = m_pData->m_SubstreamNamesStack.begin(); substreamNameIt != m_pData->m_SubstreamNamesStack.end(); substreamNameIt++)
-	{
-		if(substreamNameIt != m_pData->m_SubstreamNamesStack.begin())
-			streamName += m_pData->m_SubstreamsSeparator;
-		streamName += *substreamNameIt;
-	}
-
-	//Stream name is a value for key "Stream"
-	std::string streamNameForNextMessage;
-	auto it = m_pData->m_ExtraData.find("Stream");
-	if(it != m_pData->m_ExtraData.end())
-		streamNameForNextMessage = it->second;
-
-	//If substream name starts with @ symbol, it is threated as a full stream name
-	if(streamNameForNextMessage.length()>0)
+    for(auto substreamNameIt = m_pData->m_SubstreamNamesStack.begin(); substreamNameIt != m_pData->m_SubstreamNamesStack.end(); substreamNameIt++)
     {
-		if(streamNameForNextMessage[0] == '@')
-			streamName = streamNameForNextMessage;
-		else
-		{
-			if(streamName.length() > 0)
-				streamName += m_pData->m_SubstreamsSeparator;
-			streamName += streamNameForNextMessage;
-		}
+        if(substreamNameIt != m_pData->m_SubstreamNamesStack.begin())
+            streamName += m_pData->m_SubstreamsSeparator;
+        streamName += *substreamNameIt;
     }
 
-	//Write JSON string message
-	Json::Value root;
+    //Stream name is a value for key "Stream"
+    std::string streamNameForNextMessage;
+    auto it = m_pData->m_ExtraData.find("Stream");
+    if(it != m_pData->m_ExtraData.end())
+        streamNameForNextMessage = it->second;
 
-	for(auto mapIt = m_pData->m_PermanentExtraData.begin(); mapIt != m_pData->m_PermanentExtraData.end(); mapIt++)
-		root[mapIt->first.c_str()] = mapIt->second.c_str();
+    //If substream name starts with @ symbol, it is threated as a full stream name
+    if(streamNameForNextMessage.length() > 0)
+    {
+        if(streamNameForNextMessage[0] == '@')
+            streamName = streamNameForNextMessage;
+        else
+        {
+            if(streamName.length() > 0)
+                streamName += m_pData->m_SubstreamsSeparator;
+            streamName += streamNameForNextMessage;
+        }
+    }
 
-	for(auto mapIt = m_pData->m_ExtraData.begin(); mapIt != m_pData->m_ExtraData.end(); mapIt++)
-		root[mapIt->first.c_str()] = mapIt->second.c_str();
+    //Write JSON string message
+    Json::Value root;
 
-	root["TimeStampMsSince1970"] = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+    for(auto mapIt = m_pData->m_PermanentExtraData.begin(); mapIt != m_pData->m_PermanentExtraData.end(); mapIt++)
+        root[mapIt->first.c_str()] = mapIt->second.c_str();
 
-	Json::FastWriter writer;
-	std::string messageInfoJson = writer.write(root);
+    for(auto mapIt = m_pData->m_ExtraData.begin(); mapIt != m_pData->m_ExtraData.end(); mapIt++)
+        root[mapIt->first.c_str()] = mapIt->second.c_str();
 
-	//Send ZMQ message to the server
-	SendMessageToServer(streamName.c_str(), messageInfoJson.c_str(), messageData, messgeLengthInBytes);
+    root["TimeStampMsSince1970"] = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
 
-	//All extra data are passed, new data will be added later
-	ClearDataForNextMessage();
+    Json::FastWriter writer;
+    std::string messageInfoJson = writer.write(root);
+
+    //Send ZMQ message to the server
+    SendMessageToServer(streamName.c_str(), messageInfoJson.c_str(), messageData, messgeLengthInBytes);
+
+    //All extra data are passed, new data will be added later
+    ClearDataForNextMessage();
 }
 
 void RCPClientBase::ClearDataForNextMessage()
