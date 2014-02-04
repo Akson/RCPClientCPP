@@ -7,6 +7,9 @@
     <ClCompile>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\3rdParty\libzmq\include;$(ProjectDir)..\..\3rdParty\libzmq\builds\msvc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
+    <Link>
+      <AdditionalDependencies>Advapi32.lib;Ws2_32.lib;Rpcrt4.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
   </ItemDefinitionGroup>
   <ItemGroup />
 </Project>
