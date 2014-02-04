@@ -218,7 +218,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;RCPCLIENT_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -277,7 +277,7 @@ xcopy "$(ProjectDir)..\..\3rdParty\libzmq\bin\libzmq$(PlatformArchitecture)$(Con
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">
     <ClCompile>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>ZMQ_STATIC;WIN32;_DEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -370,7 +370,7 @@ xcopy "$(ProjectDir)..\..\3rdParty\libzmq\bin\libzmq$(PlatformArchitecture)$(Con
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -399,7 +399,7 @@ xcopy "$(ProjectDir)..\..\3rdParty\libzmq\bin\libzmq$(PlatformArchitecture)$(Con
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -469,6 +469,101 @@ xcopy "$(ProjectDir)..\..\3rdParty\libzmq\bin\libzmq$(PlatformArchitecture)$(Con
   <ItemGroup>
     <ClInclude Include="..\..\3rdParty\JsonCpp_0.6.0-rc2\json\json-forwards.h" />
     <ClInclude Include="..\..\3rdParty\JsonCpp_0.6.0-rc2\json\json.h" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\address.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\array.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\atomic_counter.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\atomic_ptr.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\blob.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\clock.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\command.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\config.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\ctx.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\curve_client.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\curve_server.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\dbuffer.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\dealer.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\decoder.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\devpoll.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\dist.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\encoder.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\epoll.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\err.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\fd.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\fq.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\io_object.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\io_thread.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\ip.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\ipc_address.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\ipc_connecter.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\ipc_listener.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\i_decoder.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\i_encoder.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\i_engine.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\i_poll_events.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\kqueue.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\lb.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\likely.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\mailbox.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\mechanism.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\msg.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\mtrie.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\mutex.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\null_mechanism.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\object.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\options.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\own.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\pair.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\pgm_receiver.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\pgm_sender.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\pgm_socket.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\pipe.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\plain_mechanism.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\platform.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\poll.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\poller.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\poller_base.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\precompiled.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\proxy.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\pub.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\pull.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\push.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\random.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\raw_decoder.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\raw_encoder.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\reaper.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\rep.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\req.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\router.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\select.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\session_base.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\signaler.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\socket_base.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\stdint.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\stream.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\stream_engine.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\sub.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\tcp.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\tcp_address.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\tcp_connecter.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\tcp_listener.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\thread.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\tipc_address.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\tipc_connecter.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\tipc_listener.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\trie.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\v1_decoder.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\v1_encoder.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\v2_decoder.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\v2_encoder.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\v2_protocol.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\windows.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\wire.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\xpub.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\xsub.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\ypipe.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\ypipe_base.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\ypipe_conflate.hpp" />
+    <ClInclude Include="..\..\3rdParty\libzmq\src\yqueue.hpp" />
     <ClInclude Include="..\..\Include\PerformanceTimer.h" />
     <ClInclude Include="..\..\Include\RCP.h" />
     <ClInclude Include="..\..\Include\RCPClient.h" />
@@ -493,6 +588,77 @@ xcopy "$(ProjectDir)..\..\3rdParty\libzmq\bin\libzmq$(PlatformArchitecture)$(Con
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="..\..\3rdParty\libzmq\src\address.cpp" />
+    <ClCompile Include="..\..\3rdParty\libzmq\src\clock.cpp" />
+    <ClCompile Include="..\..\3rdParty\libzmq\src\ctx.cpp" />
+    <ClCompile Include="..\..\3rdParty\libzmq\src\curve_client.cpp" />
+    <ClCompile Include="..\..\3rdParty\libzmq\src\curve_server.cpp" />
+    <ClCompile Include="..\..\3rdParty\libzmq\src\dealer.cpp" />
+    <ClCompile Include="..\..\3rdParty\libzmq\src\devpoll.cpp" />
+    <ClCompile Include="..\..\3rdParty\libzmq\src\dist.cpp" />
+    <ClCompile Include="..\..\3rdParty\libzmq\src\epoll.cpp" />
+    <ClCompile Include="..\..\3rdParty\libzmq\src\err.cpp" />
+    <ClCompile Include="..\..\3rdParty\libzmq\src\fq.cpp" />
+    <ClCompile Include="..\..\3rdParty\libzmq\src\io_object.cpp" />
+    <ClCompile Include="..\..\3rdParty\libzmq\src\io_thread.cpp" />
+    <ClCompile Include="..\..\3rdParty\libzmq\src\ip.cpp" />
+    <ClCompile Include="..\..\3rdParty\libzmq\src\ipc_address.cpp" />
+    <ClCompile Include="..\..\3rdParty\libzmq\src\ipc_connecter.cpp" />
+    <ClCompile Include="..\..\3rdParty\libzmq\src\ipc_listener.cpp" />
+    <ClCompile Include="..\..\3rdParty\libzmq\src\kqueue.cpp" />
+    <ClCompile Include="..\..\3rdParty\libzmq\src\lb.cpp" />
+    <ClCompile Include="..\..\3rdParty\libzmq\src\mailbox.cpp" />
+    <ClCompile Include="..\..\3rdParty\libzmq\src\mechanism.cpp" />
+    <ClCompile Include="..\..\3rdParty\libzmq\src\msg.cpp" />
+    <ClCompile Include="..\..\3rdParty\libzmq\src\mtrie.cpp" />
+    <ClCompile Include="..\..\3rdParty\libzmq\src\null_mechanism.cpp" />
+    <ClCompile Include="..\..\3rdParty\libzmq\src\object.cpp" />
+    <ClCompile Include="..\..\3rdParty\libzmq\src\options.cpp" />
+    <ClCompile Include="..\..\3rdParty\libzmq\src\own.cpp" />
+    <ClCompile Include="..\..\3rdParty\libzmq\src\pair.cpp" />
+    <ClCompile Include="..\..\3rdParty\libzmq\src\pgm_receiver.cpp" />
+    <ClCompile Include="..\..\3rdParty\libzmq\src\pgm_sender.cpp" />
+    <ClCompile Include="..\..\3rdParty\libzmq\src\pgm_socket.cpp" />
+    <ClCompile Include="..\..\3rdParty\libzmq\src\pipe.cpp" />
+    <ClCompile Include="..\..\3rdParty\libzmq\src\plain_mechanism.cpp" />
+    <ClCompile Include="..\..\3rdParty\libzmq\src\poll.cpp" />
+    <ClCompile Include="..\..\3rdParty\libzmq\src\poller_base.cpp" />
+    <ClCompile Include="..\..\3rdParty\libzmq\src\precompiled.cpp" />
+    <ClCompile Include="..\..\3rdParty\libzmq\src\proxy.cpp" />
+    <ClCompile Include="..\..\3rdParty\libzmq\src\pub.cpp" />
+    <ClCompile Include="..\..\3rdParty\libzmq\src\pull.cpp" />
+    <ClCompile Include="..\..\3rdParty\libzmq\src\push.cpp" />
+    <ClCompile Include="..\..\3rdParty\libzmq\src\random.cpp" />
+    <ClCompile Include="..\..\3rdParty\libzmq\src\raw_decoder.cpp" />
+    <ClCompile Include="..\..\3rdParty\libzmq\src\raw_encoder.cpp" />
+    <ClCompile Include="..\..\3rdParty\libzmq\src\reaper.cpp" />
+    <ClCompile Include="..\..\3rdParty\libzmq\src\rep.cpp" />
+    <ClCompile Include="..\..\3rdParty\libzmq\src\req.cpp" />
+    <ClCompile Include="..\..\3rdParty\libzmq\src\router.cpp" />
+    <ClCompile Include="..\..\3rdParty\libzmq\src\select.cpp" />
+    <ClCompile Include="..\..\3rdParty\libzmq\src\session_base.cpp" />
+    <ClCompile Include="..\..\3rdParty\libzmq\src\signaler.cpp" />
+    <ClCompile Include="..\..\3rdParty\libzmq\src\socket_base.cpp" />
+    <ClCompile Include="..\..\3rdParty\libzmq\src\stream.cpp" />
+    <ClCompile Include="..\..\3rdParty\libzmq\src\stream_engine.cpp" />
+    <ClCompile Include="..\..\3rdParty\libzmq\src\sub.cpp" />
+    <ClCompile Include="..\..\3rdParty\libzmq\src\tcp.cpp" />
+    <ClCompile Include="..\..\3rdParty\libzmq\src\tcp_address.cpp" />
+    <ClCompile Include="..\..\3rdParty\libzmq\src\tcp_connecter.cpp" />
+    <ClCompile Include="..\..\3rdParty\libzmq\src\tcp_listener.cpp" />
+    <ClCompile Include="..\..\3rdParty\libzmq\src\thread.cpp" />
+    <ClCompile Include="..\..\3rdParty\libzmq\src\tipc_address.cpp" />
+    <ClCompile Include="..\..\3rdParty\libzmq\src\tipc_connecter.cpp" />
+    <ClCompile Include="..\..\3rdParty\libzmq\src\tipc_listener.cpp" />
+    <ClCompile Include="..\..\3rdParty\libzmq\src\trie.cpp" />
+    <ClCompile Include="..\..\3rdParty\libzmq\src\v1_decoder.cpp" />
+    <ClCompile Include="..\..\3rdParty\libzmq\src\v1_encoder.cpp" />
+    <ClCompile Include="..\..\3rdParty\libzmq\src\v2_decoder.cpp" />
+    <ClCompile Include="..\..\3rdParty\libzmq\src\v2_encoder.cpp" />
+    <ClCompile Include="..\..\3rdParty\libzmq\src\xpub.cpp" />
+    <ClCompile Include="..\..\3rdParty\libzmq\src\xsub.cpp" />
+    <ClCompile Include="..\..\3rdParty\libzmq\src\zmq.cpp" />
+    <ClCompile Include="..\..\3rdParty\libzmq\src\zmq_utils.cpp" />
     <ClCompile Include="..\..\Src\PerformanceTimer.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">NotUsing</PrecompiledHeader>
@@ -555,6 +721,12 @@ xcopy "$(ProjectDir)..\..\3rdParty\libzmq\bin\libzmq$(PlatformArchitecture)$(Con
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='StaticRelease|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\3rdParty\libzmq\src\libzmq.pc.cmake.in" />
+    <None Include="..\..\3rdParty\libzmq\src\libzmq.pc.in" />
+    <None Include="..\..\3rdParty\libzmq\src\Makefile.am" />
+    <None Include="..\..\3rdParty\libzmq\src\version.rc.in" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

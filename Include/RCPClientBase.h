@@ -1,16 +1,15 @@
 #pragma once
 #include "RCPClientNetworkLayer.h"
+#include "RCPExport.h"
 #include <memory>
-#include <vector>
-#include <map>
-#include <chrono>
+#include <string>
 
 namespace RCP
 {
 
 struct RCPClientData;
 
-class RCPClientBase : public RCPClientNetworkLayer
+class RCPCLIENT_API RCPClientBase : public RCPClientNetworkLayer
 {
 public:
     RCPClientBase();

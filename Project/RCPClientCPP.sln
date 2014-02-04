@@ -4,11 +4,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 12.0.30110.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RCPClient", "MSVS\RCPClient.vcxproj", "{0D270CF6-441A-4E9A-A833-61A98827F9FA}"
-	ProjectSection(ProjectDependencies) = postProject
-		{641C5F36-32EE-4323-B740-992B651CF9D6} = {641C5F36-32EE-4323-B740-992B651CF9D6}
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libzmq11", "..\3rdParty\libzmq\builds\msvc\libzmq\libzmq11.vcxproj", "{641C5F36-32EE-4323-B740-992B651CF9D6}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RCPClientTest", "..\Test\RCPClientTest.vcxproj", "{AD783869-7BD1-45E7-B8A0-3757C3C3959E}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -53,20 +48,6 @@ Global
 		{0D270CF6-441A-4E9A-A833-61A98827F9FA}.StaticRelease|Win32.Build.0 = StaticRelease|Win32
 		{0D270CF6-441A-4E9A-A833-61A98827F9FA}.StaticRelease|x64.ActiveCfg = StaticRelease|x64
 		{0D270CF6-441A-4E9A-A833-61A98827F9FA}.StaticRelease|x64.Build.0 = StaticRelease|x64
-		{641C5F36-32EE-4323-B740-992B651CF9D6}.Debug|Win32.ActiveCfg = Debug|Win32
-		{641C5F36-32EE-4323-B740-992B651CF9D6}.Debug|Win32.Build.0 = Debug|Win32
-		{641C5F36-32EE-4323-B740-992B651CF9D6}.Debug|x64.ActiveCfg = Debug|x64
-		{641C5F36-32EE-4323-B740-992B651CF9D6}.Debug|x64.Build.0 = Debug|x64
-		{641C5F36-32EE-4323-B740-992B651CF9D6}.Release|Win32.ActiveCfg = Release|Win32
-		{641C5F36-32EE-4323-B740-992B651CF9D6}.Release|Win32.Build.0 = Release|Win32
-		{641C5F36-32EE-4323-B740-992B651CF9D6}.Release|x64.ActiveCfg = Release|x64
-		{641C5F36-32EE-4323-B740-992B651CF9D6}.Release|x64.Build.0 = Release|x64
-		{641C5F36-32EE-4323-B740-992B651CF9D6}.StaticDebug|Win32.ActiveCfg = StaticDebug|Win32
-		{641C5F36-32EE-4323-B740-992B651CF9D6}.StaticDebug|Win32.Build.0 = StaticDebug|Win32
-		{641C5F36-32EE-4323-B740-992B651CF9D6}.StaticDebug|x64.ActiveCfg = StaticDebug|Win32
-		{641C5F36-32EE-4323-B740-992B651CF9D6}.StaticRelease|Win32.ActiveCfg = StaticRelease|Win32
-		{641C5F36-32EE-4323-B740-992B651CF9D6}.StaticRelease|Win32.Build.0 = StaticRelease|Win32
-		{641C5F36-32EE-4323-B740-992B651CF9D6}.StaticRelease|x64.ActiveCfg = StaticRelease|Win32
 		{AD783869-7BD1-45E7-B8A0-3757C3C3959E}.Debug|Win32.ActiveCfg = Debug|Win32
 		{AD783869-7BD1-45E7-B8A0-3757C3C3959E}.Debug|Win32.Build.0 = Debug|Win32
 		{AD783869-7BD1-45E7-B8A0-3757C3C3959E}.Debug|x64.ActiveCfg = Debug|Win32

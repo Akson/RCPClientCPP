@@ -1,9 +1,10 @@
 #pragma once
+#include "RCPExport.h"
 
 namespace RCP
 {
 
-class RCPClientNetworkLayer
+class RCPCLIENT_API RCPClientNetworkLayer
 {
 public:
     RCPClientNetworkLayer();
