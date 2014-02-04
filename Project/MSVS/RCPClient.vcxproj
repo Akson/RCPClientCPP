@@ -157,7 +157,7 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(ProjectDir)..\..\Bin</OutDir>
     <IntDir>$(Configuration)$(PlatformArchitecture)</IntDir>
-    <TargetName>$(ProjectName)$(PlatformArchitecture)$(Configuration)</TargetName>
+    <TargetName>$(ProjectName)$(PlatformArchitecture)$(Configuration)MSVC$(PlatformToolset)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='StaticDebug|Win32'">
     <LinkIncremental>true</LinkIncremental>
@@ -173,7 +173,7 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(ProjectDir)..\..\Bin</OutDir>
     <IntDir>$(Configuration)$(PlatformArchitecture)</IntDir>
-    <TargetName>$(ProjectName)$(PlatformArchitecture)$(Configuration)</TargetName>
+    <TargetName>$(ProjectName)$(PlatformArchitecture)$(Configuration)MSVC$(PlatformToolset)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -199,13 +199,13 @@
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(ProjectDir)..\..\Bin</OutDir>
     <IntDir>$(Configuration)$(PlatformArchitecture)</IntDir>
-    <TargetName>$(ProjectName)$(PlatformArchitecture)$(Configuration)</TargetName>
+    <TargetName>$(ProjectName)$(PlatformArchitecture)$(Configuration)MSVC$(PlatformToolset)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='StaticRelease|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(ProjectDir)..\..\Bin</OutDir>
     <IntDir>$(Configuration)$(PlatformArchitecture)</IntDir>
-    <TargetName>$(ProjectName)$(PlatformArchitecture)$(Configuration)</TargetName>
+    <TargetName>$(ProjectName)$(PlatformArchitecture)$(Configuration)MSVC$(PlatformToolset)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
