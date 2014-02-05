@@ -1,11 +1,9 @@
 #include "RCP.h"
-#include <Windows.h>
-#include "PerformanceTimer.h"
 #include <array>
 #include <algorithm>
 #include <thread>
 #include <chrono>
-#include "RCPClientDataTypes.h"
+#include <Windows.h>
 
 BOOL WINAPI CtrlHandler(DWORD dwType)
 {

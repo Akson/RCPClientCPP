@@ -1,5 +1,6 @@
 #pragma once
 #include "RCPExport.h"
+#include <cstring>
 
 namespace RCP
 {

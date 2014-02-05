@@ -2,6 +2,7 @@
 //Useful scripts for using Remote Console Plus
 
 #include "RCPClientsManager.h"
+#include "PerformanceTimer.h"
 
 //From: http://stackoverflow.com/questions/5641427/how-to-make-preprocessor-generate-a-string-for-line-keyword
 #define S(x) #x
