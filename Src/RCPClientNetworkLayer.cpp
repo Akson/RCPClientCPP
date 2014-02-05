@@ -1,5 +1,6 @@
 #include "RCPClientNetworkLayer.h"
 #include "zmq.h"
+#include <cstring>
 
 using namespace RCP;
 

@@ -117,7 +117,7 @@ int main()
 	//We need this to close ZMQ connection correctly
 	SetConsoleCtrlHandler(CtrlHandler, TRUE);
 
-	RCSetServerAddress("tcp://127.0.0.1:55557");
+	RCSetServerAddress("tcp://localhost:55557");
 	RCThreadGuard("MainThread");
 
 	//MatrixPrint();
