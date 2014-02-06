@@ -32,7 +32,6 @@ This is a C++ client for the "RemoteConsolePlus3" project (https://github.com/Ak
 </ol>
 
 <h3>How to test it:</h3>
-
 <ol>
 <li>Select dynamic linking configuration (Debug/Release)</li>
 <li>Build and run the "RCPClientTest" project</li>
