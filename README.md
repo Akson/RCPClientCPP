@@ -17,6 +17,15 @@ C++ RemoteConsolePlus Client<br>
 <ol>
 <li>Open the "RCPClientCPP\Project\RCPClientCPP.sln" solution<br>
 <li>Select appropriate build configuration (Release/Debug and Static/Dynamic linking)</li>
+<li>If you use something different from MSVS2013, you may want to change Platform Toolset</li>
+<ol>
+<li>Open Solution Explorer</li>
+<li>Select all projects</li>
+<li>Click on: Menu -> Project -> Properties</li>
+<li>Select: Configuration Properties -> General</li>
+<li>Select "All Configurations" in "Configuration" dropdown menu</li>
+<li>Change Platform Toolset to an appropriate value</li>
+</ol>
 <li>Build the "RCPClient" project <i>(NOT an entire solution, if you build an entire solution, you'll get some errors because some test projects can be built with static/dynamic linking only)</i><br>
 </ol>
 
