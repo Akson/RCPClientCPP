@@ -9,6 +9,7 @@ C++ RemoteConsolePlus Client<br>
 
 <h3>How to get it:</h3>
 <ol>
+<li>Decide where you want to put it. The easiest way, from an integration point of view, is to clone it to the folder where your solution (.sln) file is. I would reacommend to read this readme file completely to understand where to put it</li>
 <li>Download it: "git clone --recursive https://github.com/Akson/RCPClientCPP.git"</li>
 </ol>
 
@@ -16,7 +17,7 @@ C++ RemoteConsolePlus Client<br>
 <ol>
 <li>Open the "RCPClientCPP\Project\RCPClientCPP.sln" solution<br>
 <li>Select appropriate build configuration (Release/Debug and Static/Dynamic linking)</li>
-<li>Build the "RCPClient" project<br>
+<li>Build the "RCPClient" project <i>(NOT an entire solution, if you build an entire solution, you'll get some errors because some test projects can be built with static/dynamic linking only)</i><br>
 </ol>
 
 <h3>How to test it:</h3>
@@ -46,7 +47,7 @@ C++ RemoteConsolePlus Client<br>
 <li>Include "RCP.h" to your source files</li>
 </ol>
 <h4>Complicated way</h4>
-If your are reading this, you probably already know how to use 3rd party libraries already:)<br>
+If your are reading this, you probably already know how to use 3rd party libraries:)<br>
 So you just need to know that:
 <ol>
 <li>Header files live in "RCPClientCPP\Include\"</li>
