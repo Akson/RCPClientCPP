@@ -1,6 +1,8 @@
 C++ RemoteConsolePlus Client<br>
 ============
 
+This is a C++ client for the "RemoteConsolePlus3" project (https://github.com/Akson/RemoteConsolePlus3).
+
 <h3>Requirements:</h3>
 <ol>
 <li>Visual Studio 2013 <i>(Visual Studio 2012 should also work but it is not tested, 2010 will not work because C++11 is used in this project)</i></li>
@@ -30,7 +32,6 @@ C++ RemoteConsolePlus Client<br>
 </ol>
 
 <h3>How to test it:</h3>
-
 <ol>
 <li>Select dynamic linking configuration (Debug/Release)</li>
 <li>Build and run the "RCPClientTest" project</li>
