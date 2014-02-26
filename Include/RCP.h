@@ -28,3 +28,5 @@
 #define RCPrinth RCPrintHtml
 #define RCPrintj RCPrintJson
 #define RCVar RCPrintVariable
+
+#define RCP_SCOPE_BLOCK(name) RCP::RCScopeBlock _RCP_SCOPE_BLOCK(name)

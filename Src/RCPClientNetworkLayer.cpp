@@ -17,6 +17,9 @@ RCPClientNetworkLayer::~RCPClientNetworkLayer(void)
 
 void RCPClientNetworkLayer::SendMessageToServer(const char *streamName, const char *messageInfo, const void *messageData, size_t dataLengthInBytes)
 {
+    printf(streamName);
+    printf("\n");
+
     //Send message only if we are connected
     if(m_Socket == 0) return;
 

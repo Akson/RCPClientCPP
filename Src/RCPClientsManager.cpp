@@ -79,7 +79,7 @@ RCPClient &RCPClientsManager::GetRcpClientForCurrentThread()
         pRCPClient->Set("InstanceIdentifier", GetApplicationInstanceId().c_str(), true);
         pRCPClient->Set("ThreadId", GetThreadIdString().c_str(), true);
         pRCPClient->Set("ProcessingSequence", "_Text", true);
-        pRCPClient->PushStreamName("#");
+        pRCPClient->PushStreamName(GetApplicationName().c_str());
 
         //This thread does not have initialized implementation yet, so create it
         clientIt = rcpClients.insert(std::make_pair(threadId, std::move(pRCPClient))).first;

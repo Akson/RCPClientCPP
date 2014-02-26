@@ -78,6 +78,8 @@ void RCPClientBase::PreprareAndSendMessage(const void *messageData, size_t messg
         }
     }
 
+    streamName += "#";
+
     //Write JSON string message
     Json::Value root;
 

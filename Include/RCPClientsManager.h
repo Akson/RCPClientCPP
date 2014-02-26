@@ -53,4 +53,16 @@ private:
     RCPClient *m_pRCPClient;
 };
 
+
+class RCScopeBlock
+{
+public:
+    RCScopeBlock(const char* name){
+        RCPClientsManager::GetRcpClientForCurrentThread().PushStreamName(name);
+    }
+    ~RCScopeBlock(){
+        RCPClientsManager::GetRcpClientForCurrentThread().PopStreamName();
+    }
+};
+
 }
