@@ -22,7 +22,7 @@
 #define RCPrintText RC.Set("ProcessingSequence", "_Text").SendFormated
 #define RCPrintHtml RC.Set("ProcessingSequence", "_Html").SendFormated
 #define RCPrintJson RC.Set("ProcessingSequence", "_Json").Set("DataType", "JSON").SendFormated
-#define RCPrintVariable(Variable) RC.Set("ProcessingSequence", "_Var").Set("VariableName", ""#Variable"").Send(Variable)
+#define RCPrintVariable(Variable) RC.Stream("Vars/"#Variable"").Set("ProcessingSequence", "_Var").Set("VariableName", ""#Variable"").Send(Variable)
 
 #define RCPrintf RCPrintText
 #define RCPrinth RCPrintHtml
@@ -30,3 +30,4 @@
 #define RCVar RCPrintVariable
 
 #define RCP_SCOPE_BLOCK(name) RCP::RCScopeBlock _RCP_SCOPE_BLOCK(name)
+#define RCP_FUNCTION_BLOCK RCP::RCScopeBlock _RCP_SCOPE_BLOCK(__FUNCTION__)
