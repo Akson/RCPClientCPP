@@ -2,12 +2,15 @@
 #include "RCP.h"
 #include <windows.h>
 
-PerformanceTimer::PerformanceTimer()
+PerformanceTimer::PerformanceTimer(const char *timerFileName/* = ""*/, int timerCodeLine/* = -1*/)
 {
     m_PCFreq = 0.0;
     m_CounterStart = 0;
     Start();
     m_LastPrintedValue = 0;
+    m_TimerInitializationTime = m_CounterStart;
+    m_TimerFileName = timerFileName;
+    m_TimerCodeLine = timerCodeLine;
 }
 
 PerformanceTimer::~PerformanceTimer()
@@ -48,6 +51,14 @@ void PerformanceTimer::Print(const char *name, bool reset)
     streamName += name;
     if(curValue < 1000) RC.Stream(streamName).Set("ProcessingSequence", "_Text").SendFormated("TIMER (%s): %7.3f ms (delta %7.3f ms)", name, curValue, curValue - m_LastPrintedValue);
     else RC.Stream(streamName).Set("ProcessingSequence", "_Text").SendFormated("TIMER (%s): %7.3f s (delta %7.3f ms)", name, curValue / 1000.0, curValue - m_LastPrintedValue);
+
+    RC.Stream(streamName).
+        Set("ProcessingSequence", "_Timer").
+        Set("EventName", name).
+        Set("TimerInitializationTime", m_TimerInitializationTime).
+        Set("TimerFileName", m_TimerFileName).
+        Set("TimerCodeLine", m_TimerCodeLine).
+        Send(curValue);
 
     m_LastPrintedValue = curValue;
 }

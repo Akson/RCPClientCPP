@@ -12,7 +12,7 @@ public:
         static PerformanceTimer pt;
         return pt;
     }
-    PerformanceTimer();
+    PerformanceTimer(const char *timerFileName = "", int timerCodeLine = -1);
     ~PerformanceTimer();
 
     //Restarts a timer and returns number of ms since start or last restart
@@ -32,4 +32,7 @@ private:
     int64_t m_CounterStart;
     double m_PCFreq;
     double m_LastPrintedValue;
+    float m_TimerInitializationTime;
+    const char *m_TimerFileName;
+    int m_TimerCodeLine;
 };
