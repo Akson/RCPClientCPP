@@ -50,9 +50,8 @@ void PerformanceTimer::Tick(const char *eventName)
     double curValue = GetCount();
     std::string streamName = "[TIMER] ";
     streamName += m_TimerName;
-//     streamName += eventName;
-//     if(curValue < 1000) RC.Stream(streamName).Set("ProcessingSequence", "_Text").SendFormated("TIMER (%s): %7.3f ms (delta %7.3f ms)", eventName, curValue, curValue - m_LastPrintedValue);
-//     else RC.Stream(streamName).Set("ProcessingSequence", "_Text").SendFormated("TIMER (%s): %7.3f s (delta %7.3f ms)", eventName, curValue / 1000.0, curValue - m_LastPrintedValue);
+    if(curValue < 1000) RC.Stream(streamName).Set("ProcessingSequence", "_Text").SendFormated("TIMER (%s): %7.3f ms (delta %7.3f ms)", eventName, curValue, curValue - m_LastPrintedValue);
+    else RC.Stream(streamName).Set("ProcessingSequence", "_Text").SendFormated("TIMER (%s): %7.3f s (delta %7.3f ms)", eventName, curValue / 1000.0, curValue - m_LastPrintedValue);
 
     RC.Stream(streamName).
         Set("ProcessingSequence", "_Timer").
