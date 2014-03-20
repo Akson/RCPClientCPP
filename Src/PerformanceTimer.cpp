@@ -2,7 +2,7 @@
 #include "RCP.h"
 #include <windows.h>
 
-PerformanceTimer::PerformanceTimer(const char *timerFileName/* = ""*/, int timerCodeLine/* = -1*/)
+PerformanceTimer::PerformanceTimer(const char *timerName/* = ""*/, const char *timerFileName/* = ""*/, int timerCodeLine/* = -1*/)
 {
     m_PCFreq = 0.0;
     m_CounterStart = 0;
@@ -11,6 +11,7 @@ PerformanceTimer::PerformanceTimer(const char *timerFileName/* = ""*/, int timer
     m_TimerInitializationTime = m_CounterStart;
     m_TimerFileName = timerFileName;
     m_TimerCodeLine = timerCodeLine;
+    m_TimerName = timerName;
 }
 
 PerformanceTimer::~PerformanceTimer()
@@ -44,20 +45,22 @@ inline double PerformanceTimer::ReStart()
     return res;
 }
 
-void PerformanceTimer::Print(const char *name, bool reset)
+void PerformanceTimer::Tick(const char *eventName)
 {
-    double curValue = reset ? ReStart() : GetCount();
+    double curValue = GetCount();
     std::string streamName = "[TIMER] ";
-    streamName += name;
-    if(curValue < 1000) RC.Stream(streamName).Set("ProcessingSequence", "_Text").SendFormated("TIMER (%s): %7.3f ms (delta %7.3f ms)", name, curValue, curValue - m_LastPrintedValue);
-    else RC.Stream(streamName).Set("ProcessingSequence", "_Text").SendFormated("TIMER (%s): %7.3f s (delta %7.3f ms)", name, curValue / 1000.0, curValue - m_LastPrintedValue);
+    streamName += m_TimerName;
+//     streamName += eventName;
+//     if(curValue < 1000) RC.Stream(streamName).Set("ProcessingSequence", "_Text").SendFormated("TIMER (%s): %7.3f ms (delta %7.3f ms)", eventName, curValue, curValue - m_LastPrintedValue);
+//     else RC.Stream(streamName).Set("ProcessingSequence", "_Text").SendFormated("TIMER (%s): %7.3f s (delta %7.3f ms)", eventName, curValue / 1000.0, curValue - m_LastPrintedValue);
 
     RC.Stream(streamName).
         Set("ProcessingSequence", "_Timer").
-        Set("EventName", name).
+        Set("EventName", eventName).
         Set("TimerInitializationTime", m_TimerInitializationTime).
         Set("TimerFileName", m_TimerFileName).
         Set("TimerCodeLine", m_TimerCodeLine).
+        Set("TimerName", m_TimerName).
         Send(curValue);
 
     m_LastPrintedValue = curValue;

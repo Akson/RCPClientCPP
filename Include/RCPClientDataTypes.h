@@ -50,22 +50,17 @@ inline ::std::ostream &operator<<(::std::ostream &out, const ::std::list<T> &val
 }
 
 template <class T>
-::std::string ConvertToString(T value)
-{
-    ::std::ostringstream valueStream;
-    valueStream << value;
-    return valueStream.str();
-}
-
-template <class T>
 void RCPClient::Send(T value)
 {
-    ::std::ostringstream valueStream;
-    valueStream << "{\"_Value\":\"";
-    valueStream << value;
-    valueStream << "\"}";
     Set("DataType", "JSON");
-    RCPClient::Send(valueStream.str().c_str());
+
+    ::std::ostringstream valueStream;
+    valueStream << "{\"_Value\":";
+    valueStream << value;
+    valueStream << "}";
+
+    auto str = valueStream.str();
+    PreprareAndSendMessage(str.c_str(), str.length());
 }
 
 }

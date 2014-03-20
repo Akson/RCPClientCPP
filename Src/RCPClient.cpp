@@ -55,7 +55,8 @@ void RCPClient::SendBinary(const void *binaryData, unsigned int binaryDataLength
 void RCPClient::Send(bool value)
 {
     Set("DataType", "JSON");
-    Send(value ? "{\"_Value\":true}" : "{\"_Value\":false}");
+    const char* stringData = value ? "{\"_Value\":true}" : "{\"_Value\":false}";
+    PreprareAndSendMessage(stringData, strlen(stringData));
 }
 
 void RCPClient::SendFormated(const char *fmt, ...)

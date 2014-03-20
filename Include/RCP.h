@@ -32,5 +32,5 @@
 #define RCP_SCOPE_BLOCK(name) RCP::RCScopeBlock _RCP_SCOPE_BLOCK(name)
 #define RCP_FUNCTION_BLOCK RCP::RCScopeBlock _RCP_SCOPE_BLOCK(__FUNCTION__)
 
-#define RCP_TIMER(v) \
-    PerformanceTimer v(__FILE__, __LINE__);
+#define RCP_TIMER(variableName, timerName) \
+    PerformanceTimer variableName(timerName, __FILE__, __LINE__);

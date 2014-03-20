@@ -12,7 +12,7 @@ public:
         static PerformanceTimer pt;
         return pt;
     }
-    PerformanceTimer(const char *timerFileName = "", int timerCodeLine = -1);
+    PerformanceTimer(const char *timerName = "", const char *timerFileName = "", int timerCodeLine = -1);
     ~PerformanceTimer();
 
     //Restarts a timer and returns number of ms since start or last restart
@@ -22,7 +22,7 @@ public:
     double GetCount();
 
     //Prints to RCP
-    void Print(const char *name, bool reset = false);
+    void Tick(const char *eventName);
 
     //Print to local console
     void PrintLocal(const char *name, bool reset = false);
@@ -35,4 +35,5 @@ private:
     float m_TimerInitializationTime;
     const char *m_TimerFileName;
     int m_TimerCodeLine;
+    const char *m_TimerName;
 };

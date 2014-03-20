@@ -71,20 +71,22 @@ void PrintFunctions()
 	int messagesCounter = 0;
 	while(GetAsyncKeyState(VK_ESCAPE) == false)
 	{
-		RCPrinth("<hr>");
-		RCPrintf("abs     asdf    %d", rand());
-		RCPrinth("<font size=\"3\" color=\"red\">This is some text!</font>");
+        const char *jsonStr = "{\"glossary\": {\"title\": \"example glossary\",\"GlossDiv\" : {\"title\": \"S\",\"GlossList\" : {\"GlossEntry\": {\"ID\": \"SGML\",\"SortAs\" : \"SGML\",\"GlossTerm\" : \"Standard Generalized Markup Language\",\"Acronym\" : \"SGML\",\"Abbrev\" : \"ISO 8879:1986\",\"GlossDef\" : {\"para\": \"A meta-markup language, used to create markup languages such as DocBook.\",\"GlossSeeAlso\" : [\"GML\", \"XML\"]},\"GlossSee\" : \"markup\"}}}}}";
 
-		std::vector<int> v(4);
-		RCVar(v);
-		::std::ostringstream valueStream;
-		valueStream << "{\"Field1\":123, \"Field2\":";
-		valueStream << RCP::ConvertToString(v);
-		valueStream << "}";
-		RCPrintj(valueStream.str().c_str());
+
+		RCPrinth("<hr>");
+		RCPrintf("Just formatted text with a number %d (printf style)", rand());
+		RCPrinth("<font size=\"10\" color=\"red\">Html text with custom font!</font>");
+
+        RCPrintj(jsonStr);
+
+        std::vector<int> v(rand()%10);
+        for(auto &element : v)
+            element = rand();
+        RCVar(v);
+        RC.Send(v);
 
 		RCVar(rand());
-		RCVar(valueStream.str().c_str());
 
 		std::array<float, 4 * 4> matrix;
 		std::generate(matrix.begin(), matrix.end(), rand);
@@ -96,12 +98,12 @@ void PrintFunctions()
 		std::generate(m1.begin(), m1.end(), rand);
 		RC.Set("ProcessingSequence", "MatrixPrinter/#4x4f").SendBinary(m1.data(), (m1.end() - m1.begin())* sizeof(float));
 
-		RC.Stream("TestStream").Set("ProcessingSequence", "_Text").Send("test123123");
-		RC.Set("ProcessingSequence", "_Text").Send("testAAAAA");
+		RC.Stream("TestStream").Set("ProcessingSequence", "_Text").Send("Test to stream 'TestStream'");
+		RC.Set("ProcessingSequence", "_Text").Send("Just text");
 		RC.Send(1);
 		RC.Send(2.1);
 		RC.Send(true);
-		RC.Send("string");
+		RC.Send("Just string");
 
 
 		printf("%d\n", messagesCounter++);
