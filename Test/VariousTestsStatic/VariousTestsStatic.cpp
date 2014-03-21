@@ -112,6 +112,26 @@ void PrintFunctions()
 	}
 }
 
+void TimerTest()
+{
+    int i = 0;
+    //while(GetAsyncKeyState(VK_ESCAPE) == false)
+    {
+        RCPrinth("<br>");
+        RCP_TIMER(pt, "Test timer"); 
+        std::chrono::milliseconds dura1(200);
+        std::this_thread::sleep_for(dura1);
+        pt.Tick("Sleep 1 - 200ms");
+        std::chrono::milliseconds dura2(500);
+        std::this_thread::sleep_for(dura2);
+        pt.Tick("Sleep 2 - 500ms");
+        std::chrono::milliseconds dura3(300);
+        std::this_thread::sleep_for(dura3);
+        pt.Tick("Sleep 3 - 300ms");
+        printf("Done %d\n", i++);
+    }
+}
+
 int main()
 {
 	//We need this to close ZMQ connection correctly
@@ -122,7 +142,8 @@ int main()
 
 	//MatrixPrint();
 	//Streams();
-	PrintFunctions();
+	//PrintFunctions();
+    TimerTest();
 
 	return 0;
 }
