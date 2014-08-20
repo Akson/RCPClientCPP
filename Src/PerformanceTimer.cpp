@@ -60,7 +60,7 @@ void PerformanceTimer::Print()
     Json::Value root;
     root["Timer name"] = m_TimerName;
     root["Total time"] = GetCount();
-    for(int i = 0; i < m_TickTimes.size(); i++)
+    for(size_t i = 0; i < m_TickTimes.size(); i++)
     {
         Json::Value tick;
         tick["Name"] = m_TickNames[i];
